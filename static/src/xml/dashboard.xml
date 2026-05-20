@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="med_iot_command_center.Dashboard">
+        <div class="med_dashboard med_exact_dashboard">
+
+            <!-- HERO -->
+            <div class="mediot_compact_source_header">
+    <div>
+        <div class="mediot_compact_source_title">Welcome, Doctor</div>
+        <div class="mediot_compact_source_subtitle">Welcome to MedIoT Command Center</div>
+    </div>
+    <button type="button" class="mediot_compact_source_save">Dashboard Overview</button>
+</div>
+
+            <t t-if="state.loading">
+                <div class="med_loading">
+                    <div class="med_spinner"/>
+                    <p>Loading...</p>
+                </div>
+            </t>
+
+            <t t-else="">
+
+                <!-- TRENDS PANEL -->
+                <div class="mediot_trends_exact">
+
+                    <div class="mediot_trends_header">
+                        <div class="mediot_trends_title_side">
+                            <div class="mediot_trends_icon">
+                                <i class="fa fa-line-chart" title="Trends"/>
+                            </div>
+
+                            <div>
+                                <h2>Patient Monitoring Trends</h2>
+                                <p>Real-time overview of vital signs</p>
+                                <span class="mediot_live_chip">
+                                    <span></span>
+                                    Live
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="mediot_trends_controls">
+                            <select class="mediot_patient_select" t-on-change="(ev) => ev.target.value and this.openPatient(parseInt(ev.target.value))">
+                                <option value="">Select patient</option>
+                                <t t-foreach="state.live" t-as="p" t-key="p.id">
+                                    <option t-att-value="p.id">
+                                        <t t-esc="p.name"/>
+                                    </option>
+                                </t>
+                            </select>
+
+                            <button type="button" class="mediot_time_btn">
+                                <i class="fa fa-calendar-o" title="Period"/>
+                                Last 24 Hours
+                            </button>
+
+                            <button type="button" class="mediot_refresh_btn" t-on-click="() => this._load()">
+                                <i class="fa fa-refresh" title="Refresh"/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mediot_trends_grid">
+
+                        <!-- HEART RATE -->
+                        <div class="mediot_trend_card heart">
+                            <div class="mediot_trend_top">
+                                <i class="fa fa-heart" title="Heart Rate"/>
+                                <strong>Heart Rate (BPM)</strong>
+                                <span>
+                                    <t t-esc="state.chart.ecgLast or 0"/>
+                                </span>
+                            </div>
+
+                            <div class="mediot_chart_box">
+                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
+                                    <path d="M0,118 L0,60 L18,56 L36,58 L54,52 L70,80 L78,40 L88,78 L104,62 L122,58 L142,60 L162,60 L182,59 L202,60 L220,58 L236,60 L252,60 L270,40 L282,80 L292,62 L310,56 L330,58 L360,60 L360,118 Z" class="trend-fill"/>
+                                    <path d="M0,60 L18,56 L36,58 L54,52 L70,80 L78,40 L88,78 L104,62 L122,58 L142,60 L162,60 L182,59 L202,60 L220,58 L236,60 L252,60 L270,40 L282,80 L292,62 L310,56 L330,58 L360,60" class="trend-line"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- SPO2 -->
+                        <div class="mediot_trend_card spo2">
+                            <div class="mediot_trend_top">
+                                <i class="fa fa-tint" title="SpO2"/>
+                                <strong>SpO2 (%)</strong>
+                                <span>
+                                    <t t-esc="state.chart.spo2Last or 0"/>%
+                                </span>
+                            </div>
+
+                            <div class="mediot_chart_box">
+                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
+                                    <path d="M0,118 L0,30 L18,70 L36,52 L54,54 L72,54 L90,50 L108,48 L126,50 L144,36 L162,18 L180,16 L198,48 L216,82 L234,88 L252,82 L270,72 L288,54 L306,34 L324,42 L342,50 L360,80 L360,118 Z" class="trend-fill"/>
+                                    <path d="M0,30 L18,70 L36,52 L54,54 L72,54 L90,50 L108,48 L126,50 L144,36 L162,18 L180,16 L198,48 L216,82 L234,88 L252,82 L270,72 L288,54 L306,34 L324,42 L342,50 L360,80" class="trend-line"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- TEMP -->
+                        <div class="mediot_trend_card temp">
+                            <div class="mediot_trend_top">
+                                <i class="fa fa-thermometer-half" title="Temperature"/>
+                                <strong>Temperature (°C)</strong>
+                                <span>
+                                    <t t-esc="state.chart.tempLast or 0"/>°C
+                                </span>
+                            </div>
+
+                            <div class="mediot_chart_box">
+                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
+                                    <path d="M0,118 L0,36 L36,38 L72,48 L108,64 L144,74 L180,70 L216,52 L252,38 L288,42 L324,56 L360,34 L360,118 Z" class="trend-fill"/>
+                                    <path d="M0,36 L36,38 L72,48 L108,64 L144,74 L180,70 L216,52 L252,38 L288,42 L324,56 L360,34" class="trend-line"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- PATIENT WORKBOARD -->
+                <div class="mediot_workboard_wrap">
+
+                    <div class="mediot_toolbar_exact">
+                        <button type="button" class="mediot_total_pill" t-on-click="() => this.openPatients()">
+                            <i class="fa fa-user-o" title="Patients"/>
+                            <span>
+                                <t t-esc="state.kpis.total"/> Total Patients
+                            </span>
+                        </button>
+
+                        <div class="mediot_toolbar_right">
+                            <div class="mediot_tool_group">
+                                <label>Patient Name</label>
+                                <div class="mediot_tool_input">
+                                    <input t-on-input="onSearchInput" t-att-value="state.searchQuery" placeholder="Please enter here"/>
+                                    <i class="fa fa-search" title="Search"/>
+                                </div>
+                            </div>
+
+                            <div class="mediot_tool_group">
+                                <label>Patient Status</label>
+                                <div class="mediot_tool_select">
+                                    <select t-on-change="onStatusChange" t-att-value="state.statusFilter">
+                                        <option value="all">Please choose</option>
+                                        <option value="stable">Stable</option>
+                                        <option value="warning">Warning</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="button" class="mediot_alert_btn" t-on-click="() => this.openAlerts()">
+                                <i class="fa fa-bell" title="Alerts"/>
+                                Alerts
+                                <t t-if="state.kpis.pending_alerts > 0">
+                                    <span class="med_alert_badge" t-esc="state.kpis.pending_alerts"/>
+                                </t>
+                            </button>
+
+                            <button type="button" class="mediot_add_btn" t-on-click="() => this.openPatients()">
+                                <i class="fa fa-plus" title="Add Patient"/>
+                                Add Patient
+                            </button>
+                        </div>
+                    </div>
+
+                    <t t-if="state.live.length == 0">
+                        <div class="lpm_empty">No patients currently monitored</div>
+                    </t>
+
+                    <t t-else="">
+                        <table class="lpm_table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Age</th>
+                                    <th>Condition</th>
+                                    <th>ECG AI</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="this.filteredLive" t-as="p" t-key="p.id">
+                                    <tr class="lpm_row" t-on-click="() => this.openPatient(p.id)">
+
+                                        <td>
+                                            <div class="lpm_namecell">
+                                                <div t-att-class="'lpm_avatar lpm_av_' + (p.status || 'stable')">
+                                                    <t t-if="p.image_128">
+                                                        <img t-att-src="'data:image/png;base64,' + p.image_128" t-att-alt="p.name"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="p.name ? p.name[0].toUpperCase() : '?'"/>
+                                                    </t>
+                                                </div>
+                                                <span class="lpm_name" t-esc="p.name"/>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <span class="lpm_id" t-esc="p.ref or '—'"/>
+                                        </td>
+
+                                        <td>
+                                            <t t-if="p.age"><t t-esc="p.age"/> yrs</t>
+                                            <t t-else="">—</t>
+                                        </td>
+
+                                        <td>
+                                            <span class="lpm_condition">
+                                                <t t-if="p.latest_spo2 and p.latest_ecg_bpm">
+                                                    SpO2: <t t-esc="p.latest_spo2"/>% · <t t-esc="p.latest_ecg_bpm"/> BPM
+                                                </t>
+                                                <t t-elif="p.latest_spo2">
+                                                    SpO2: <t t-esc="p.latest_spo2"/>%
+                                                </t>
+                                                <t t-elif="p.latest_ecg_bpm">
+                                                    <t t-esc="p.latest_ecg_bpm"/> BPM
+                                                </t>
+                                                <t t-else="">Monitoring</t>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span t-att-class="'lpm_ai_badge lpm_ai_' + (p.arrhythmia_risk || 'unknown')">
+                                                <t t-if="p.arrhythmia_risk and p.arrhythmia_risk !== 'unknown'">
+                                                    <t t-esc="p.arrhythmia_ecg_class || 'ECG'"/> ·
+                                                    <t t-esc="p.arrhythmia_risk.charAt(0).toUpperCase() + p.arrhythmia_risk.slice(1)"/>
+                                                </t>
+                                                <t t-else="">Not computed</t>
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span t-att-class="'lpm_badge lpm_badge_' + (p.status || 'stable')">
+                                                <t t-esc="p.status ? p.status.charAt(0).toUpperCase() + p.status.slice(1) : '—'"/>
+                                            </span>
+                                        </td>
+
+                                        <td t-on-click.stop="">
+                                            <div class="lpm_actions">
+                                                <button type="button" class="lpm_btn" title="Edit" t-on-click="() => this.openPatient(p.id)">
+                                                    <i class="fa fa-pencil" title="Edit"/>
+                                                </button>
+                                                <button type="button" class="lpm_btn" title="Alerts" t-on-click="() => this.openPatientAlerts(p.id)">
+                                                    <i class="fa fa-bell" title="Alerts"/>
+                                                </button>
+                                                <button type="button" class="lpm_btn" title="Download Report" t-on-click="() => this.downloadPatientReport(p.id)">
+                                                    <i class="fa fa-download" title="Download"/>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+            </t>
+        </div>
+    </t>
+
+</templates>

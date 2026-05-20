@@ -1,0 +1,429 @@
+/* ===== Patient screen match pic 2 ===== */
+
+.o_form_view.mediot-patient-fullscreen .o_FormRenderer_chatterContainer,
+.o_form_view.mediot-patient-fullscreen .o-mail-Form-chatter,
+.o_form_view.mediot-patient-fullscreen .oe_chatter {
+    display: none !important;
+}
+
+.o_form_view.mediot-patient-fullscreen .o_form_sheet_bg {
+    background: #f5f7fb !important;
+    padding: 0 !important;
+}
+
+.o_form_view.mediot-patient-fullscreen .o_form_sheet {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #f5f7fb !important;
+    padding: 16px !important;
+}
+
+.o_form_view.mediot-patient-fullscreen .o_inner_group,
+.o_form_view.mediot-patient-fullscreen .o_group {
+    width: 100% !important;
+}
+
+.mediot_patient_header_bar {
+    background: linear-gradient(90deg, #1f2f42 0%, #173454 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 16px 22px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mediot_patient_header_left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mediot_patient_status_badge {
+    background: #23c15a;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.mediot_patient_pid {
+    color: #d8e3ef;
+    font-size: 18px;
+}
+
+.mediot_patient_last_reading {
+    color: #d8e3ef;
+    font-size: 16px;
+}
+
+.mediot_patient_main_grid {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.mediot_patient_left_col,
+.mediot_patient_content_col {
+    min-width: 0;
+}
+
+.mediot_info_card,
+.mediot_panel_card,
+.mediot-vital-card {
+    background: #fff;
+    border: 1px solid #e4eaf2;
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.mediot_info_card {
+    padding: 16px;
+}
+
+.mediot_profile_photo_box {
+    width: 118px;
+    height: 118px;
+    border-radius: 18px;
+    border: 1px solid #dbe3ef;
+    overflow: hidden;
+    margin: 0 auto 16px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f7f9fc;
+}
+
+.mediot_profile_name_box {
+    border: 1px solid #dde5ef;
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3a4a;
+    background: #fbfcfe;
+    margin-bottom: 12px;
+}
+
+.mediot_info_label {
+    font-size: 12px;
+    color: #8b98ab;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 6px;
+    margin-top: 12px;
+    font-weight: 700;
+}
+
+.mediot_info_value_box {
+    border: 1px solid #dde5ef;
+    border-radius: 10px;
+    background: #fbfcfe;
+    padding: 12px 14px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #2f3d4d;
+}
+
+.mediot_vitals_grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.mediot-vital-card {
+    padding: 14px 14px 12px 14px;
+    min-height: 170px;
+}
+
+.mediot-vital-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    gap: 8px;
+}
+
+.mediot-vital-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mediot-vital-icon {
+    font-size: 16px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef3fa;
+}
+
+.mediot-vital-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #667085;
+}
+
+.mediot-vital-current {
+    font-size: 13px;
+    color: #7b8798;
+    white-space: nowrap;
+}
+
+.mediot-vital-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.mediot-vital-main-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2b3e56;
+    line-height: 1;
+}
+
+.mediot-vital-main-unit {
+    font-size: 15px;
+    color: #7b8798;
+    font-weight: 600;
+}
+
+.mediot-vital-plot-wrap {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 6px;
+    align-items: stretch;
+    margin-top: 4px;
+}
+
+.mediot-vital-ylabels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6f7e92;
+    padding: 8px 0 24px 0;
+    text-align: right;
+}
+
+.mediot-vital-plot {
+    min-width: 0;
+}
+
+.mediot-vital-svg {
+    display: block;
+    width: 100%;
+    height: 120px;
+}
+
+.mediot-grid-line {
+    stroke: #d9e1ec;
+    stroke-dasharray: 4 4;
+    stroke-width: 1;
+}
+
+.mediot-vital-xlabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6f7e92;
+    margin-top: 4px;
+    padding: 0 6px;
+}
+
+.mediot_panel_card {
+    padding: 18px 18px 16px 18px;
+    margin-bottom: 16px;
+}
+
+.mediot_panel_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.mediot_panel_title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #182230;
+}
+
+.mediot_accuracy_badge {
+    border: 1px solid #dde5ef;
+    background: #f7f9fc;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #667085;
+    font-weight: 600;
+}
+
+.mediot_risk_grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.mediot_risk_box {
+    border-radius: 14px;
+    padding: 18px 16px;
+    border: 1px solid #e8e1da;
+    min-height: 86px;
+    background: #fff;
+}
+
+.mediot_risk_box .o_field_boolean { margin-right: 8px; }
+
+.mediot_alert_table .o_list_table,
+.mediot_alert_table table {
+    width: 100%;
+}
+
+.mediot-vital-empty {
+    padding: 28px;
+    text-align: center;
+    color: #7b8798;
+}
+
+@media (max-width: 1200px) {
+    .mediot_vitals_grid { grid-template-columns: 1fr; }
+    .mediot_risk_grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px) {
+    .mediot_patient_main_grid {
+        grid-template-columns: 1fr;
+    }
+    .mediot_risk_grid { grid-template-columns: 1fr; }
+}
+
+/* === NO_DUPLICATE_CURVE_FIX_START === */
+.o_form_view.mediot-patient-fullscreen .mediot_chart_field {
+    margin-top: 6px !important;
+}
+
+.o_form_view.mediot-patient-fullscreen .mediot_chart_field .o_field_html,
+.o_form_view.mediot-patient-fullscreen .mediot_chart_field .o_field_widget {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.o_form_view.mediot-patient-fullscreen .mediot_chart_field p {
+    margin: 0 !important;
+}
+
+.mediot-chart-only {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    margin-top: 4px;
+}
+
+.mediot-chart-current {
+    position: absolute;
+    right: 8px;
+    top: -2px;
+    font-size: 13px;
+    color: #71809a;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.mediot-chart-grid {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px;
+    padding-top: 18px;
+}
+
+.mediot-chart-ylabels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 125px;
+    padding: 10px 0 32px 0;
+    color: #60718b;
+    font-size: 13px;
+    text-align: right;
+}
+
+.mediot-chart-plot {
+    min-width: 0;
+}
+
+.mediot-chart-svg {
+    width: 100%;
+    height: 125px;
+    display: block;
+}
+
+.mediot-grid-line {
+    stroke: #dce5f0;
+    stroke-width: 1;
+    stroke-dasharray: 4 5;
+}
+
+.mediot-chart-xlabels {
+    display: flex;
+    justify-content: space-between;
+    color: #60718b;
+    font-size: 13px;
+    padding: 0 6px 0 2px;
+    margin-top: 2px;
+}
+
+.mediot-chart-only-empty {
+    color: #71809a;
+    padding: 22px 0;
+    text-align: center;
+}
+/* === NO_DUPLICATE_CURVE_FIX_END === */
+
+/* === DOWNLOAD_REPORT_POSITION_FIX_START === */
+
+/* Pull the Download Report button up so it visually belongs to the dark patient header */
+.o_form_view.mediot-patient-fullscreen button[name="action_download_report"] {
+    position: absolute !important;
+    right: 42px !important;
+    top: 134px !important;
+    z-index: 20 !important;
+
+    background: #16b8c8 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 9px !important;
+    padding: 9px 15px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    box-shadow: 0 6px 14px rgba(22, 184, 200, 0.22) !important;
+}
+
+.o_form_view.mediot-patient-fullscreen button[name="action_download_report"]:hover {
+    background: #0ea5b8 !important;
+    color: #fff !important;
+}
+
+/* Remove the visual gap left by the old button row */
+.o_form_view.mediot-patient-fullscreen .o_form_statusbar + .o_form_sheet_bg,
+.o_form_view.mediot-patient-fullscreen .o_form_sheet_bg {
+    margin-top: 0 !important;
+}
+
+/* === DOWNLOAD_REPORT_POSITION_FIX_END === */

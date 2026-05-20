@@ -1,0 +1,385 @@
+﻿/* =========================================================
+   MedIoT Dashboard - Restored Good Purple Design
+   ========================================================= */
+
+.o_action_manager,
+.o_action,
+.o_view_controller,
+.o_component {
+    overflow: auto !important;
+    height: auto !important;
+}
+
+.o_content {
+    overflow-y: auto !important;
+    height: 100% !important;
+}
+
+.med_dashboard,
+.med_dashboard_root {
+    padding: 0 !important;
+    background: #eef0fb !important;
+    min-height: 100% !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    color: #334155 !important;
+}
+
+/* BANNER - restore purple header */
+.med_banner {
+    background: linear-gradient(135deg, #6073cf 0%, #7583d5 45%, #9c79de 100%) !important;
+    padding: 16px 28px !important;
+    min-height: 140px !important;
+    margin-bottom: 18px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+.med_banner_left {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.med_banner_greeting {
+    font-size: 26px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.med_banner_sub {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+    margin: 0 0 12px 0 !important;
+}
+
+.med_banner_date {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: fit-content !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+.med_banner_right {
+    margin-left: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 12px !important;
+}
+
+.med_banner_refresh {
+    font-size: 13px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    margin: 0 !important;
+}
+
+.med_banner_actions {
+    display: flex !important;
+    gap: 12px !important;
+}
+
+.med_btn_alert,
+.med_btn_add {
+    height: 48px !important;
+    min-width: 124px !important;
+    padding: 0 24px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+.med_btn_alert {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    color: white !important;
+}
+
+.med_btn_add {
+    background: white !important;
+    border: 1px solid white !important;
+    color: #5f6fd1 !important;
+}
+
+/* KPI cards */
+.med_kpi_row {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0 24px !important;
+}
+
+.med_kpi_stack {
+    width: 100% !important;
+    max-width: 1020px !important;
+    margin: 18px auto 30px auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(250px, 1fr)) !important;
+    gap: 22px !important;
+}
+
+.med_kpi_card {
+    background: white !important;
+    border: 1px solid #dfe5f3 !important;
+    border-radius: 18px !important;
+    height: 130px !important;
+    min-height: 130px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 18px !important;
+    padding: 20px 24px !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02) !important;
+}
+
+.med_kpi_inner {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 18px !important;
+}
+
+.med_kpi_icon,
+.med_kpi_icon_box,
+.med_kpi_iconbox {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Total icon */
+.med_kpi_icon.blue_bg,
+.med_kpi_icon_box,
+.med_kpi_iconbox.total {
+    width: 64px !important;
+    height: 64px !important;
+    border-radius: 16px !important;
+    background: #5b67d6 !important;
+    color: white !important;
+    overflow: hidden !important;
+}
+
+.med_kpi_icon.blue_bg i,
+.med_kpi_icon_box i,
+.med_kpi_iconbox.total i {
+    font-size: 30px !important;
+    color: white !important;
+}
+
+.med_kpi_icon.blue_bg img,
+.med_kpi_icon_box img,
+.med_kpi_iconbox.total img {
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: contain !important;
+}
+
+/* Critical / Warning icons */
+.med_kpi_icon_img,
+.med_kpi_iconbox.plain {
+    width: 64px !important;
+    height: 64px !important;
+    background: transparent !important;
+}
+
+.med_kpi_icon_img img,
+.med_kpi_iconbox.plain img {
+    width: 52px !important;
+    height: 52px !important;
+    object-fit: contain !important;
+}
+
+.med_kpi_body,
+.med_kpi_text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 6px !important;
+}
+
+.med_kpi_label,
+.med_kpi_title {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+.med_kpi_value {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+
+.med_kpi_trend,
+.med_kpi_sub {
+    font-size: 13px !important;
+    color: #9aa9c2 !important;
+    margin: 0 !important;
+}
+
+.med_kpi_card.blue .med_kpi_label,
+.med_kpi_card.blue .med_kpi_value,
+.total_text,
+.total_value {
+    color: #5968d8 !important;
+}
+
+.med_kpi_card.red .med_kpi_label,
+.med_kpi_card.red .med_kpi_value,
+.critical_text,
+.critical_value {
+    color: #ff3d39 !important;
+}
+
+.med_kpi_card.orange .med_kpi_label,
+.med_kpi_card.orange .med_kpi_value,
+.warning_text,
+.warning_value {
+    color: #ff9300 !important;
+}
+
+/* Toolbar */
+.lpm_toolbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 14px !important;
+    padding: 18px 28px !important;
+    border-bottom: 1px solid #edf1f8 !important;
+}
+
+.lpm_toolbar_spacer {
+    flex: 1 !important;
+}
+
+.lpm_search_box {
+    width: 170px !important;
+    height: 42px !important;
+    border: 1px solid #d9e1ef !important;
+    border-radius: 10px !important;
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow: hidden !important;
+}
+
+.lpm_search_input {
+    flex: 1 !important;
+    height: 100% !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 12px !important;
+    font-size: 14px !important;
+    color: #475569 !important;
+    background: transparent !important;
+}
+
+.lpm_search_input::placeholder {
+    color: #98a7c0 !important;
+}
+
+.lpm_search_btn {
+    width: 38px !important;
+    height: 42px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #8fa0be !important;
+    font-size: 18px !important;
+}
+
+.lpm_status_select,
+.lpm_status_filter {
+    width: 240px !important;
+    height: 42px !important;
+    border: 1px solid #d9e1ef !important;
+    border-radius: 10px !important;
+    background: white !important;
+    padding: 0 14px !important;
+    font-size: 14px !important;
+    color: #334155 !important;
+    outline: none !important;
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+}
+
+/* Live table panel */
+.lpm_wrap {
+    margin: 20px 30px 36px !important;
+    background: white !important;
+    border: 1px solid #dfe5f3 !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+}
+
+.lpm_header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 20px 26px !important;
+    border-bottom: 1px solid #edf1f8 !important;
+}
+
+.lpm_title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+}
+
+.lpm_viewall,
+.lpm_view_all {
+    color: #6574dc !important;
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.lpm_table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.lpm_table thead tr {
+    background: #f5f7fc !important;
+}
+
+.lpm_table thead th {
+    padding: 14px 18px !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    color: #5f708b !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 1px solid #edf1f8 !important;
+}
+
+.lpm_row td,
+.lpm_table tbody td {
+    padding: 14px 18px !important;
+    font-size: 14px !important;
+    color: #334155 !important;
+    vertical-align: middle !important;
+}
+
+.lpm_empty {
+    padding: 48px 20px !important;
+    text-align: center !important;
+    color: #98a7c0 !important;
+    font-size: 16px !important;
+}

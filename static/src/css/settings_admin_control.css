@@ -1,0 +1,1162 @@
+/* Premium Settings / Device Management page only */
+
+.o_form_view.mediot-settings-premium-form .o_form_sheet_bg {
+    background: #f5f7fb !important;
+    padding: 0 !important;
+}
+
+.o_form_view.mediot-settings-premium-form .o_form_sheet {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #f5f7fb !important;
+    padding: 16px !important;
+}
+
+.mediot_settings_page {
+    background: #f5f7fb !important;
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+.mediot_settings_hero {
+    background: linear-gradient(90deg, #1f2f42 0%, #173454 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 24px 28px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.mediot_settings_eyebrow {
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    color: #9de7f0;
+    margin-bottom: 8px;
+}
+
+.mediot_settings_hero h1 {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 900;
+    margin: 0 0 6px;
+}
+
+.mediot_settings_hero p {
+    margin: 0;
+    color: #d8e3ef;
+    font-size: 15px;
+}
+
+.mediot_settings_hero_badges {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mediot_settings_status_pill,
+.mediot_settings_btn {
+    border: 1px solid rgba(255,255,255,.22) !important;
+    background: rgba(255,255,255,.12) !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    font-weight: 900 !important;
+}
+
+.mediot_settings_status_pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mediot_settings_status_pill .dot {
+    width: 9px;
+    height: 9px;
+    background: #22c55e;
+    border-radius: 999px;
+    box-shadow: 0 0 0 4px rgba(34,197,94,.14);
+}
+
+.mediot_settings_btn i {
+    margin-right: 7px;
+}
+
+.mediot_settings_overview_grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.mediot_settings_overview_card {
+    background: #fff;
+    border: 1px solid #e4eaf2;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+
+.mediot_settings_overview_card .icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.mediot_settings_overview_card.device .icon { background: #ecfeff; color: #0891b2; }
+.mediot_settings_overview_card.patient .icon { background: #eef2ff; color: #4f46e5; }
+.mediot_settings_overview_card.interval .icon { background: #f0fdf4; color: #16a34a; }
+
+.mediot_settings_overview_card .label {
+    font-size: 13px;
+    color: #667085;
+    font-weight: 800;
+    margin-bottom: 3px;
+}
+
+.mediot_settings_overview_card .value {
+    font-size: 19px;
+    color: #182230;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.mediot_settings_overview_card .hint {
+    font-size: 13px;
+    color: #98a2b3;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.mediot_settings_main_grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(340px, .65fr);
+    gap: 16px;
+    align-items: start;
+}
+
+.mediot_settings_panel {
+    background: #fff;
+    border: 1px solid #e4eaf2;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+    min-width: 0;
+}
+
+.thresholds_panel {
+    grid-column: 1 / -1;
+}
+
+.mediot_settings_panel_head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.mediot_settings_panel_head h2 {
+    margin: 0 0 4px;
+    font-size: 19px;
+    font-weight: 900;
+    color: #182230;
+}
+
+.mediot_settings_panel_head p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.mediot_settings_chip {
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: #ecfeff;
+    color: #0e7490;
+    border: 1px solid #bae6fd;
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.mediot_settings_chip.calm {
+    background: #eef3fa;
+    color: #173454;
+    border-color: #dce5f0;
+}
+
+.mediot_settings_chip i {
+    margin-right: 6px;
+}
+
+.mediot_device_showcase {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 16px;
+}
+
+.device_visual {
+    border: 1px solid #e4eaf2;
+    background: linear-gradient(180deg, #fbfdff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.device_circle {
+    width: 84px;
+    height: 84px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #ecfeff 0%, #eef2ff 100%);
+    color: #0891b2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    margin: 0 auto 14px;
+    border: 1px solid #dcebf5;
+}
+
+.device_name {
+    font-size: 17px;
+    font-weight: 900;
+    color: #182230;
+    margin-bottom: 4px;
+}
+
+.device_subtitle {
+    font-size: 13px;
+    color: #98a2b3;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.device_status_line .badge {
+    border-radius: 999px !important;
+    padding: 6px 12px !important;
+    font-weight: 900 !important;
+}
+
+.device_config_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.settings_input_card {
+    border: 1px solid #e4eaf2;
+    background: #fbfcfe;
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.input_label {
+    font-size: 12px;
+    color: #667085;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 7px;
+}
+
+.input_hint {
+    color: #98a2b3;
+    font-size: 12px;
+    margin-top: 7px;
+    font-weight: 600;
+}
+
+.settings_input_card .o_field_widget,
+.settings_input_card .o_input,
+.settings_input_card input,
+.admin_setting_card .o_input,
+.threshold_input .o_input {
+    border-radius: 11px !important;
+}
+
+.admin_setting_card {
+    border: 1px solid #e4eaf2;
+    background: #fbfcfe;
+    border-radius: 14px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.admin_setting_note {
+    background: #f0fbff;
+    border: 1px solid #dceaf1;
+    color: #425466;
+    border-radius: 13px;
+    padding: 12px 14px;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.admin_setting_note i {
+    color: #16b8c8;
+    margin-right: 8px;
+}
+
+.threshold_cards_grid {
+    display: grid;
+    grid-template-columns: 1.25fr .9fr 1.25fr;
+    gap: 14px;
+}
+
+.threshold_card {
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid #e4eaf2;
+    background: #fbfcfe;
+}
+
+.threshold_card_head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.threshold_icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.threshold_card.heart .threshold_icon { background: #fee2e2; color: #e11d48; }
+.threshold_card.spo2 .threshold_icon { background: #dbeafe; color: #2563eb; }
+.threshold_card.temp .threshold_icon { background: #ffedd5; color: #f97316; }
+
+.threshold_card h3 {
+    margin: 0 0 3px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #182230;
+}
+
+.threshold_card p {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.threshold_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.threshold_grid.two {
+    grid-template-columns: 1fr;
+}
+
+.threshold_input {
+    border-radius: 13px;
+    padding: 12px;
+    border: 1px solid #e4eaf2;
+    background: #fff;
+}
+
+.threshold_input.danger {
+    background: #fff7f7;
+    border-color: #fecaca;
+}
+
+.threshold_input.warning {
+    background: #fffaf0;
+    border-color: #fde68a;
+}
+
+.threshold_input span {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #667085;
+    letter-spacing: .05em;
+    margin-bottom: 6px;
+}
+
+.threshold_input small {
+    display: block;
+    color: #98a2b3;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+@media (max-width: 1200px) {
+    .mediot_settings_overview_grid,
+    .mediot_settings_main_grid,
+    .threshold_cards_grid,
+    .mediot_device_showcase {
+        grid-template-columns: 1fr;
+    }
+    .thresholds_panel {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 800px) {
+    .mediot_settings_hero,
+    .mediot_settings_panel_head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .device_config_grid,
+    .threshold_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* === SETTINGS_COMPACT_POLISH_START === */
+
+/* Overall compact Settings page */
+.o_form_view.mediot-settings-page .o_form_sheet,
+.o_form_view.mediot-settings-premium-form .o_form_sheet {
+    padding: 10px !important;
+}
+
+.mediot_settings_page {
+    padding: 0 !important;
+}
+
+/* Smaller hero */
+.mediot_settings_hero {
+    padding: 18px 24px !important;
+    min-height: 118px !important;
+    margin-bottom: 12px !important;
+    border-radius: 16px !important;
+}
+
+.mediot_settings_hero h1 {
+    font-size: 26px !important;
+    margin-bottom: 4px !important;
+}
+
+.mediot_settings_hero p {
+    font-size: 14px !important;
+}
+
+.mediot_settings_eyebrow {
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Smaller layout spacing */
+.mediot_settings_main_grid {
+    gap: 12px !important;
+}
+
+.mediot_settings_panel {
+    padding: 14px !important;
+    border-radius: 15px !important;
+}
+
+.mediot_settings_panel_head {
+    margin-bottom: 12px !important;
+    padding-bottom: 10px !important;
+}
+
+.mediot_settings_panel_head h2 {
+    font-size: 17px !important;
+}
+
+.mediot_settings_panel_head p {
+    font-size: 12.5px !important;
+}
+
+/* Device section smaller */
+.mediot_device_showcase {
+    grid-template-columns: 175px minmax(0, 1fr) !important;
+    gap: 12px !important;
+}
+
+.device_visual {
+    padding: 14px !important;
+    border-radius: 15px !important;
+}
+
+.device_circle {
+    width: 62px !important;
+    height: 62px !important;
+    border-radius: 18px !important;
+    font-size: 25px !important;
+    margin-bottom: 10px !important;
+}
+
+.device_name {
+    font-size: 15px !important;
+}
+
+.device_subtitle {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+}
+
+.device_config_grid {
+    gap: 10px !important;
+}
+
+.settings_input_card {
+    padding: 11px 12px !important;
+    border-radius: 13px !important;
+    min-height: 112px !important;
+}
+
+.input_label {
+    font-size: 11px !important;
+    margin-bottom: 5px !important;
+}
+
+.input_hint {
+    font-size: 11.5px !important;
+    margin-top: 5px !important;
+}
+
+/* Inputs smaller and cleaner */
+.settings_input_card .o_field_widget input,
+.settings_input_card .o_input,
+.settings_input_card input,
+.admin_setting_card .o_input,
+.threshold_input .o_input {
+    min-height: 38px !important;
+    height: 38px !important;
+    border-radius: 12px !important;
+    font-size: 13px !important;
+}
+
+/* Admin/System panel smaller */
+.admin_panel {
+    max-width: 100% !important;
+}
+
+.admin_setting_card {
+    padding: 12px !important;
+    border-radius: 13px !important;
+    margin-bottom: 10px !important;
+}
+
+.admin_setting_note {
+    padding: 10px 12px !important;
+    font-size: 12.5px !important;
+    border-radius: 12px !important;
+}
+
+/* Use uploaded s.png as system image */
+.mediot_system_title_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mediot_system_img {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: #eef3fa;
+    border: 1px solid #d8e2ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mediot_system_img img {
+    width: 31px;
+    height: 31px;
+    object-fit: contain;
+}
+
+/* Make threshold section less huge too */
+.thresholds_panel {
+    margin-top: 0 !important;
+}
+
+.threshold_cards_grid {
+    gap: 10px !important;
+}
+
+.threshold_card {
+    padding: 13px !important;
+    border-radius: 14px !important;
+}
+
+.threshold_icon {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 13px !important;
+    font-size: 18px !important;
+}
+
+.threshold_card h3 {
+    font-size: 15px !important;
+}
+
+.threshold_card p {
+    font-size: 11.5px !important;
+}
+
+.threshold_input {
+    padding: 9px 10px !important;
+    border-radius: 12px !important;
+}
+
+.threshold_input span {
+    font-size: 10.5px !important;
+}
+
+/* Hide leftover Odoo control panel on Settings */
+.o_action_manager:has(.mediot-settings-page) .o_control_panel,
+.o_action_manager:has(.mediot-settings-premium-form) .o_control_panel {
+    display: none !important;
+}
+
+/* === SETTINGS_COMPACT_POLISH_END === */
+/* === SETTINGS_DEVICE_IMAGE_COMPACT_START === */
+
+/* Hide Odoo top control strip on Settings page */
+.o_action_manager:has(.mediot-settings-page) .o_control_panel,
+.o_action_manager:has(.mediot-settings-premium-form) .o_control_panel {
+    display: none !important;
+}
+
+.o_action_manager:has(.mediot-settings-page) .o_content,
+.o_action_manager:has(.mediot-settings-premium-form) .o_content {
+    padding-top: 0 !important;
+}
+
+/* Better page breathing room */
+.o_form_view.mediot-settings-page .o_form_sheet,
+.o_form_view.mediot-settings-premium-form .o_form_sheet {
+    padding: 14px 18px 24px !important;
+}
+
+.mediot_settings_page {
+    padding: 0 8px 24px !important;
+}
+
+/* Hero cleaner with corner spacing */
+.mediot_settings_hero {
+    margin: 10px 0 18px !important;
+    padding: 22px 28px !important;
+    border-radius: 24px !important;
+    min-height: 130px !important;
+    box-shadow: 0 12px 28px rgba(15, 35, 60, 0.10) !important;
+}
+
+/* Remove right hero toggle area if any old markup survives */
+.mediot_settings_hero_badges {
+    display: none !important;
+}
+
+/* Smaller Device Management */
+.mediot_device_showcase {
+    grid-template-columns: 190px minmax(0, 1fr) !important;
+    gap: 14px !important;
+}
+
+.device_identity_card {
+    min-height: 250px !important;
+    padding: 16px 14px !important;
+    border-radius: 24px !important;
+    background: linear-gradient(180deg, #fbfdff 0%, #f5f9fd 100%) !important;
+    border: 1px solid #dce7f2 !important;
+    text-align: center !important;
+}
+
+.device_identity_icon_wrap {
+    width: 92px !important;
+    height: 92px !important;
+    margin: 10px auto 16px !important;
+    border-radius: 26px !important;
+    background: #eaf6ff !important;
+    border: 1px solid #d4e7f5 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.device_identity_img {
+    width: 62px !important;
+    height: 62px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.device_identity_name_box {
+    max-width: 165px !important;
+    margin: 0 auto 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 18px !important;
+    border: 1px solid #d8e2ee !important;
+    background: #ffffff !important;
+}
+
+.device_identity_name_box .o_field_widget,
+.device_identity_name_box .o_input,
+.device_identity_name_box input {
+    border: none !important;
+    background: transparent !important;
+    text-align: center !important;
+    color: #94a3b8 !important;
+    font-weight: 700 !important;
+    min-height: 28px !important;
+    padding: 0 !important;
+}
+
+.device_identity_title {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    color: #7b8aa0 !important;
+    margin-top: 6px !important;
+}
+
+.device_status_line {
+    margin-top: 10px !important;
+}
+
+/* More space in card corners */
+.mediot_settings_panel {
+    border-radius: 24px !important;
+    padding: 18px !important;
+}
+
+.settings_input_card,
+.admin_setting_card,
+.threshold_card {
+    border-radius: 20px !important;
+}
+
+/* Compact inputs */
+.settings_input_card .o_input,
+.settings_input_card input,
+.admin_setting_card .o_input,
+.admin_setting_card input,
+.threshold_input .o_input,
+.threshold_input input {
+    min-height: 40px !important;
+    height: 40px !important;
+    border-radius: 14px !important;
+}
+
+/* === SETTINGS_DEVICE_IMAGE_COMPACT_END === */
+/* === SETTINGS_SIMPLE_LINES_START === */
+
+/* Remove old slider-style threshold visuals */
+.mediot-settings-page .threshold_cards_grid,
+.mediot-settings-page .threshold_card,
+.mediot-settings-page .threshold_grid,
+.mediot-settings-page .threshold_input {
+    all: unset;
+}
+
+/* Simple professional threshold lines */
+.simple_thresholds_panel {
+    padding: 16px 18px !important;
+    border-radius: 20px !important;
+}
+
+.simple_threshold_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e6edf5;
+}
+
+.simple_threshold_head h2 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 900;
+    color: #172033;
+}
+
+.simple_threshold_head p {
+    margin: 0;
+    color: #8b98ad;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.simple_threshold_body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+}
+
+.simple_threshold_section {
+    background: #fbfdff;
+    border: 1px solid #e1e9f2;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.simple_threshold_section_head {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 10px;
+}
+
+.simple_threshold_icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    background: #eef3fa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+}
+
+.simple_threshold_section h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 900;
+    color: #172033;
+}
+
+.simple_threshold_row {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) 135px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid #edf2f7;
+}
+
+.simple_threshold_label {
+    font-size: 13px;
+    font-weight: 800;
+    color: #53647c;
+}
+
+.simple_threshold_row.danger .simple_threshold_label {
+    color: #b42318;
+}
+
+.simple_threshold_row.warning .simple_threshold_label {
+    color: #b7791f;
+}
+
+.simple_threshold_value {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.simple_threshold_value .o_field_widget,
+.simple_threshold_value input,
+.simple_threshold_value .o_input {
+    width: 82px !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    border-radius: 11px !important;
+    text-align: center !important;
+    font-weight: 800 !important;
+    background: #fff !important;
+    border: 1px solid #d8e2ee !important;
+}
+
+.simple_threshold_value span {
+    min-width: 28px;
+    color: #8b98ad;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* Hide any leftover slider elements if browser cached old assets */
+.mediot-settings-page .settings-slider,
+.mediot-settings-page .range-slider,
+.mediot-settings-page input[type="range"] {
+    display: none !important;
+}
+
+@media (max-width: 1200px) {
+    .simple_threshold_body {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === SETTINGS_SIMPLE_LINES_END === */
+
+/* === MEDIOT SETTINGS COMPACT POLISH START === */
+
+/* Scope: Settings page only, detected by existing device image */
+.o_action_manager:has(.device_identity_img) .o_control_panel {
+    display: none !important;
+}
+
+.o_action_manager:has(.device_identity_img) .o_form_view,
+.o_action_manager:has(.device_identity_img) .o_form_sheet_bg {
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
+        linear-gradient(135deg, #f8fafc 0%, #eef4ff 42%, #f8fafc 100%) !important;
+}
+
+.o_action_manager:has(.device_identity_img) .o_form_sheet {
+    max-width: 1180px !important;
+    margin: 22px auto 34px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 28px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.o_action_manager:has(.device_identity_img) h1 {
+    margin: 0 0 8px !important;
+    font-size: 28px !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.04em !important;
+}
+
+.o_action_manager:has(.device_identity_img) h2 {
+    margin: 0 0 14px !important;
+    font-size: 17px !important;
+    letter-spacing: -0.02em !important;
+}
+
+.o_action_manager:has(.device_identity_img) p {
+    margin-bottom: 0 !important;
+}
+
+.o_action_manager:has(.device_identity_img) .device_identity_img {
+    width: 86px !important;
+    height: 86px !important;
+    object-fit: contain !important;
+    border-radius: 22px !important;
+    padding: 12px !important;
+    background: #ffffff !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10) !important;
+}
+
+.o_action_manager:has(.device_identity_img) img[src*="s.png"] {
+    max-width: 92px !important;
+    max-height: 92px !important;
+    object-fit: contain !important;
+    border-radius: 24px !important;
+    padding: 12px !important;
+    background: #ffffff !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10) !important;
+}
+
+/* Compact Pinterest-like cards */
+.o_action_manager:has(.device_identity_img) .settings_card,
+.o_action_manager:has(.device_identity_img) .settings_panel,
+.o_action_manager:has(.device_identity_img) .device_card,
+.o_action_manager:has(.device_identity_img) .threshold_card,
+.o_action_manager:has(.device_identity_img) .admin_settings_card,
+.o_action_manager:has(.device_identity_img) section,
+.o_action_manager:has(.device_identity_img) .o_group {
+    border-radius: 24px !important;
+}
+
+/* Simple line inputs, no slider feeling */
+.o_action_manager:has(.device_identity_img) input[type="range"],
+.o_action_manager:has(.device_identity_img) .o_field_widget input[type="range"],
+.o_action_manager:has(.device_identity_img) .threshold_slider,
+.o_action_manager:has(.device_identity_img) .slider,
+.o_action_manager:has(.device_identity_img) .range,
+.o_action_manager:has(.device_identity_img) .progress {
+    display: none !important;
+}
+
+.o_action_manager:has(.device_identity_img) .o_field_widget[name*="critical"],
+.o_action_manager:has(.device_identity_img) .o_field_widget[name*="warning"],
+.o_action_manager:has(.device_identity_img) .o_field_widget[name="check_interval_seconds"] {
+    max-width: 96px !important;
+}
+
+.o_action_manager:has(.device_identity_img) .o_field_widget[name*="critical"] input,
+.o_action_manager:has(.device_identity_img) .o_field_widget[name*="warning"] input,
+.o_action_manager:has(.device_identity_img) .o_field_widget[name="check_interval_seconds"] input {
+    min-height: 34px !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    background: #ffffff !important;
+}
+
+/* More breathing room, but still compact */
+.o_action_manager:has(.device_identity_img) .o_inner_group {
+    gap: 8px 18px !important;
+}
+
+.o_action_manager:has(.device_identity_img) .o_wrap_field {
+    margin-bottom: 7px !important;
+}
+
+/* Remove old heavy top KPI/toggle leftovers if still present */
+.o_action_manager:has(.device_identity_img) .settings_kpi,
+.o_action_manager:has(.device_identity_img) .settings_kpis,
+.o_action_manager:has(.device_identity_img) .hero_toggle,
+.o_action_manager:has(.device_identity_img) .settings_toggle,
+.o_action_manager:has(.device_identity_img) .top_toggle {
+    display: none !important;
+}
+
+/* === MEDIOT SETTINGS COMPACT POLISH END === */
+
+/* === DEVICE LOGO REQUEST PATCH START === */
+
+/* Bigger device logo, less empty white space */
+.o_action_manager:has(.device_identity_img) .device_identity_card {
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.o_action_manager:has(.device_identity_img) .device_identity_icon_wrap {
+    width: 148px !important;
+    height: 148px !important;
+    padding: 6px !important;
+    border-radius: 34px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.o_action_manager:has(.device_identity_img) .device_identity_img {
+    width: 132px !important;
+    height: 132px !important;
+    max-width: 132px !important;
+    max-height: 132px !important;
+    padding: 0 !important;
+    object-fit: contain !important;
+    border-radius: 28px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Remove the device name input area completely */
+.o_action_manager:has(.device_identity_img) .device_identity_name_box {
+    display: none !important;
+}
+
+/* Keep the title below the logo clean */
+.o_action_manager:has(.device_identity_img) .device_identity_title {
+    margin-top: 4px !important;
+    text-align: center !important;
+}
+
+/* Better readable explanation for Last Seen */
+.o_action_manager:has(.device_identity_img) .settings_input_card.readonly .input_hint {
+    line-height: 1.45 !important;
+    max-width: 260px !important;
+}
+
+/* === DEVICE LOGO REQUEST PATCH END === */
+
+
+
+
+
+
+/* SETTINGS_SOURCE_ALERT_ONLY_SELECTOR_FIX_START */
+
+/* Hide only the unwanted Settings sections, NOT the grid wrapper */
+.o_form_view.mediot-settings-premium-form .mediot_settings_hero,
+.o_form_view.mediot-settings-premium-form .device_panel,
+.o_form_view.mediot-settings-premium-form .admin_panel {
+    display: none !important;
+}
+
+/* Keep Alert Thresholds visible */
+.o_form_view.mediot-settings-premium-form .thresholds_panel,
+.o_form_view.mediot-settings-premium-form .simple_thresholds_panel {
+    display: block !important;
+    width: 100% !important;
+    max-width: 1420px !important;
+    margin: 48px auto 0 !important;
+    grid-column: 1 / -1 !important;
+}
+
+/* Native Save / Cancel buttons purple */
+.o_form_view.mediot-settings-premium-form .o_form_button_save {
+    background: #6B4A60 !important;
+    border-color: #6B4A60 !important;
+    color: #ffffff !important;
+    border-radius: 14px !important;
+    font-weight: 900 !important;
+}
+
+.o_form_view.mediot-settings-premium-form .o_form_button_cancel {
+    background: #ffffff !important;
+    border: 2px solid #6B4A60 !important;
+    color: #6B4A60 !important;
+    border-radius: 14px !important;
+    font-weight: 900 !important;
+}
+
+/* SETTINGS_SOURCE_ALERT_ONLY_SELECTOR_FIX_END */
+
+
+/* SETTINGS_SOURCE_BUTTONS_FINAL_START */
+.o_form_view.mediot-settings-premium-form .mediot_settings_actions_source_final {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 14px !important;
+    margin-top: 26px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid #e4edf7 !important;
+}
+
+.o_form_view.mediot-settings-premium-form .mediot_settings_btn_source_final {
+    height: 48px !important;
+    min-width: 145px !important;
+    border-radius: 14px !important;
+    padding: 0 24px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    cursor: pointer !important;
+}
+
+.o_form_view.mediot-settings-premium-form .mediot_settings_cancel_source_final {
+    background: #ffffff !important;
+    border: 2px solid #6B4A60 !important;
+    color: #6B4A60 !important;
+}
+
+.o_form_view.mediot-settings-premium-form .mediot_settings_save_source_final {
+    background: #6B4A60 !important;
+    border: 2px solid #6B4A60 !important;
+    color: #ffffff !important;
+}
+
+.o_form_view.mediot-settings-premium-form .mediot_settings_save_source_final:hover {
+    background: #5f4055 !important;
+    border-color: #5f4055 !important;
+}
+/* SETTINGS_SOURCE_BUTTONS_FINAL_END */

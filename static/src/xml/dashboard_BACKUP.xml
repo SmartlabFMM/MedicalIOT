@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="med_iot_command_center.Dashboard">
+        <div class="med_dashboard">
+
+            <!-- WELCOME BANNER -->
+            <div class="med_banner">
+                <div class="med_banner_left">
+                    <div class="med_banner_greeting">Hi!</div>
+                    <div class="med_banner_sub">Welcome to MedIoT Command Center</div>
+                    <div class="med_banner_date"><i class="fa fa-calendar"/> <t t-esc="state.todayDate"/></div>
+                </div>
+                <div class="med_banner_right">
+                    <div class="med_banner_refresh">
+                        <i class="fa fa-clock-o"/> Auto-refreshes every 15s · Last updated: <t t-esc="state.lastRefresh or '—'"/>
+                    </div>
+                    <div class="med_banner_actions">
+                        <button class="med_btn_alert" t-on-click="() => this.openAlerts()">
+                            <i class="fa fa-bell"/> Alerts
+                            <t t-if="state.kpis.pending_alerts > 0">
+                                <span class="med_alert_badge" t-esc="state.kpis.pending_alerts"/>
+                            </t>
+                        </button>
+                        <button class="med_btn_add" t-on-click="() => this.openPatients()">
+                            <i class="fa fa-plus"/> Add Patient
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="med_loading"><div class="med_spinner"/><p>Loading...</p></div>
+            </t>
+
+            <t t-else="">
+
+                <div class="med_main_row">
+
+                    <!-- TOP ROW: 3 KPI cards -->
+                    <div class="med_kpi_stack">
+                        <div class="med_kpi_card blue" t-on-click="() => this.openPatients()">
+                            <div class="med_kpi_icon blue_bg"><i class="fa fa-users"/></div>
+                            <div class="med_kpi_body">
+                                <div class="med_kpi_label">Total Patients</div>
+                                <div class="med_kpi_value" t-esc="state.kpis.total"/>
+                                <div class="med_kpi_trend">Active patients monitored</div>
+                            </div>
+                        </div>
+                        <div class="med_kpi_card red" t-on-click="() => this.openCriticalPatients()">
+                            <div class="med_kpi_icon med_kpi_icon_img">
+                                <img src="/med_iot_command_center/static/description/critical.png" alt="Critical" style="width:42px;height:42px;object-fit:contain;"/>
+                            </div>
+                            <div class="med_kpi_body">
+                                <div class="med_kpi_label">Critical</div>
+                                <div class="med_kpi_value" t-esc="state.kpis.critical"/>
+                                <div class="med_kpi_trend">Needs immediate attention</div>
+                            </div>
+                        </div>
+                        <div class="med_kpi_card orange" t-on-click="() => this.openWarningPatients()">
+                            <div class="med_kpi_icon med_kpi_icon_img">
+                                <img src="/med_iot_command_center/static/description/Warning.png" alt="Warning" style="width:42px;height:42px;object-fit:contain;"/>
+                            </div>
+                            <div class="med_kpi_body">
+                                <div class="med_kpi_label">Warning</div>
+                                <div class="med_kpi_value" t-esc="state.kpis.warning"/>
+                                <div class="med_kpi_trend">Monitoring clinically</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM ROW: Line Chart (left) + Calendar (right) -->
+                    <div class="med_left_col">
+
+                        <!-- Vitals Line Chart -->
+                        <div class="med_chart_card">
+                            <div class="med_chart_header">
+                                <div class="med_chart_title">Vitals Overview</div>
+                                <div class="med_chart_legend">
+                                    <span class="med_leg_item"><span class="med_leg_dot" style="background:#6C8EFF;"/><span>SpO2</span></span>
+                                    <span class="med_leg_item"><span class="med_leg_dot" style="background:#FF2D78;"/><span>ECG</span></span>
+                                    <span class="med_leg_item"><span class="med_leg_dot" style="background:#a78bfa;"/><span>Temp</span></span>
+                                </div>
+                            </div>
+
+                            <!-- Last values row -->
+                            <div class="med_chart_vals">
+                                <div class="med_cv_item blue">
+                                    <span class="med_cv_val"><t t-esc="state.chart.spo2Last != null ? state.chart.spo2Last + '%' : '—'"/></span>
+                                    <span class="med_cv_label">SpO2</span>
+                                </div>
+                                <div class="med_cv_item red">
+                                    <span class="med_cv_val"><t t-esc="state.chart.ecgLast != null ? state.chart.ecgLast + ' bpm' : '—'"/></span>
+                                    <span class="med_cv_label">Heart Rate</span>
+                                </div>
+                                <div class="med_cv_item amber">
+                                    <span class="med_cv_val"><t t-esc="state.chart.tempLast != null ? state.chart.tempLast + '°C' : '—'"/></span>
+                                    <span class="med_cv_label">Temp</span>
+                                </div>
+                            </div>
+
+                            <!-- SVG Line Chart -->
+                            <div class="med_chart_svg_wrap">
+                                <t t-if="state.chart.spo2.length > 1 or state.chart.ecg.length > 1">
+                                    <svg viewBox="0 0 560 100" preserveAspectRatio="none" style="width:100%;height:130px;overflow:visible;">
+                                        <defs>
+                                            <linearGradient id="spo2Grad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#6C8EFF" stop-opacity="0.30"/>
+                                                <stop offset="100%" stop-color="#6C8EFF" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                            <linearGradient id="ecgGrad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#FF2D78" stop-opacity="0.22"/>
+                                                <stop offset="100%" stop-color="#FF2D78" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                            <linearGradient id="tempGrad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.20"/>
+                                                <stop offset="100%" stop-color="#a78bfa" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- grid lines -->
+                                        <line x1="0" y1="25"  x2="560" y2="25"  stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="0" y1="50"  x2="560" y2="50"  stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="0" y1="75"  x2="560" y2="75"  stroke="#f1f5f9" stroke-width="1"/>
+                                        <line x1="0" y1="100" x2="560" y2="100" stroke="#f1f5f9" stroke-width="1"/>
+                                        <!-- Temp area fill -->
+                                        <t t-if="state.chart.tempAreaPath">
+                                            <path t-att-d="state.chart.tempAreaPath" fill="url(#tempGrad)" stroke="none"/>
+                                        </t>
+                                        <!-- SpO2 area fill -->
+                                        <t t-if="state.chart.spo2AreaPath">
+                                            <path t-att-d="state.chart.spo2AreaPath" fill="url(#spo2Grad)" stroke="none"/>
+                                        </t>
+                                        <!-- ECG area fill -->
+                                        <t t-if="state.chart.ecgAreaPath">
+                                            <path t-att-d="state.chart.ecgAreaPath" fill="url(#ecgGrad)" stroke="none"/>
+                                        </t>
+                                        <!-- Temp smooth line -->
+                                        <t t-if="state.chart.tempPath">
+                                            <path t-att-d="state.chart.tempPath" fill="none" stroke="#a78bfa" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                                        </t>
+                                        <!-- SpO2 smooth line -->
+                                        <t t-if="state.chart.spo2Path">
+                                            <path t-att-d="state.chart.spo2Path" fill="none" stroke="#6C8EFF" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                                        </t>
+                                        <!-- ECG smooth line -->
+                                        <t t-if="state.chart.ecgPath">
+                                            <path t-att-d="state.chart.ecgPath" fill="none" stroke="#FF2D78" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+                                        </t>
+                                    </svg>
+                                </t>
+                                <t t-else="">
+                                    <div class="med_chart_empty">No vital readings available yet</div>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Mini Calendar -->
+                        <div class="med_cal_card">
+                            <div class="med_cal_header">
+                                <button class="med_cal_nav" t-on-click="() => this.calPrev()">&#8249;</button>
+                                <span class="med_cal_title" t-esc="state.cal.label"/>
+                                <button class="med_cal_nav" t-on-click="() => this.calNext()">&#8250;</button>
+                            </div>
+                            <div class="med_cal_grid">
+                                <span class="med_cal_dow">Mo</span>
+                                <span class="med_cal_dow">Tu</span>
+                                <span class="med_cal_dow">We</span>
+                                <span class="med_cal_dow">Th</span>
+                                <span class="med_cal_dow">Fr</span>
+                                <span class="med_cal_dow">Sa</span>
+                                <span class="med_cal_dow">Su</span>
+                                <t t-foreach="state.cal.cells" t-as="c" t-key="c_index">
+                                    <span t-att-class="'med_cal_cell' + (c.empty ? ' med_cal_empty' : '') + (c.today ? ' med_cal_today' : '')">
+                                        <t t-esc="c.label"/>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- LIVE PATIENT TABLE -->
+                <div class="lpm_wrap">
+                    <div class="lpm_header">
+                        <span class="lpm_title">Live Patient Monitors</span>
+                        <a href="#" class="lpm_viewall" t-on-click.prevent="() => this.openPatients()">View all &#8594;</a>
+                    </div>
+                    <t t-if="state.live.length == 0">
+                        <div class="lpm_empty">No patients currently monitored</div>
+                    </t>
+                    <t t-else="">
+                        <table class="lpm_table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Patient ID</th>
+                                    <th>Age</th>
+                                    <th>Condition</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.live" t-as="p" t-key="p.id">
+                                    <tr class="lpm_row" t-on-click="() => this.openPatient(p.id)">
+                                        <td>
+                                            <div class="lpm_namecell">
+                                                <div t-att-class="'lpm_avatar lpm_av_' + (p.status || 'stable')" style="overflow:hidden;padding:0;">
+                                                    <t t-if="p.image_128">
+                                                        <img t-att-src="'data:image/png;base64,' + p.image_128" style="width:36px;height:36px;border-radius:50%;object-fit:cover;display:block;"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="p.name ? p.name[0].toUpperCase() : '?'"/>
+                                                    </t>
+                                                </div>
+                                                <span class="lpm_name" t-esc="p.name"/>
+                                            </div>
+                                        </td>
+                                        <td><span class="lpm_id" t-esc="p.ref or '—'"/></td>
+                                        <td><span class="lpm_age"><t t-if="p.age"><t t-esc="p.age"/> yrs</t><t t-else="">—</t></span></td>
+                                        <td>
+                                            <span class="lpm_condition">
+                                                <t t-if="p.latest_spo2 and p.latest_ecg_bpm">SpO2: <t t-esc="p.latest_spo2"/>% · <t t-esc="p.latest_ecg_bpm"/> BPM</t>
+                                                <t t-elif="p.latest_spo2">SpO2: <t t-esc="p.latest_spo2"/>%</t>
+                                                <t t-elif="p.latest_ecg_bpm"><t t-esc="p.latest_ecg_bpm"/> BPM</t>
+                                                <t t-else="">Monitoring</t>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span t-att-class="'lpm_badge lpm_badge_' + (p.status || 'stable')">
+                                                <t t-esc="p.status ? p.status.charAt(0).toUpperCase() + p.status.slice(1) : '—'"/>
+                                            </span>
+                                        </td>
+                                        <td t-on-click.stop="">
+                                            <div class="lpm_actions">
+                                                <button class="lpm_btn lpm_btn_view" title="View" t-on-click="() => this.openPatient(p.id)"><i class="fa fa-eye"/></button>
+                                                <button class="lpm_btn lpm_btn_edit" title="Edit" t-on-click="() => this.openPatient(p.id)"><i class="fa fa-pencil"/></button>
+                                                <button class="lpm_btn lpm_btn_alert" title="Alerts" t-on-click="() => this.openPatientAlerts(p.id)"><i class="fa fa-bell"/></button>
+                                                <button class="lpm_btn lpm_btn_download" title="Download Report" t-on-click="() => this.downloadPatientReport(p.id)"><i class="fa fa-download"/></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+            </t>
+        </div>
+    </t>
+
+</templates>

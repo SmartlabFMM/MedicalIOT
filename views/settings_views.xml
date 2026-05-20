@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="med_settings_singleton" model="med.settings">
+        <field name="name">Alert Threshold Settings</field>
+    </record>
+    <record id="view_med_settings_form" model="ir.ui.view">
+        <field name="name">med.settings.form</field>
+        <field name="model">med.settings</field>
+        <field name="arch" type="xml">
+            <form string="Settings" class="mediot-settings-premium-form mediot-settings-page">
+                <sheet class="mediot_settings_page">
+                    <div class="mediot_settings_hero">
+                        <div>
+                            <div class="mediot_settings_eyebrow">MedIoT Administration</div>
+                            <h1>Settings Control Center</h1>
+                            <p>Configure alert thresholds, device assignment, IoT connection details, and monitoring intervals.</p>
+                        </div>
+                    </div>
+                    <div class="mediot_settings_main_grid">
+                        <div class="mediot_settings_panel device_panel">
+                            <div class="mediot_settings_panel_head">
+                                <div>
+                                    <h2>Device Management</h2>
+                                    <p>Configure the wearable, MQTT topic, room assignment, and patient binding.</p>
+                                </div>
+                                <div class="mediot_settings_chip">
+                                    <i class="fa fa-wifi" title="Connection" />
+                                    Live IoT Config
+                                </div>
+                            </div>
+                            <div class="mediot_device_showcase">
+                                <div class="device_visual device_identity_card">
+                                    <div class="device_identity_icon_wrap">
+                                        <img src="/med_iot_command_center/static/description/critical-v2-cropped.png" alt="Device" class="device_identity_img" />
+                                    </div>
+                                    <div class="device_identity_title">ESP32 Wearable Unit</div>
+                                    <div class="device_status_line">
+                                        <field name="device_status" widget="badge" nolabel="1" decoration-success="device_status=='online'" decoration-danger="device_status=='offline'" />
+                                    </div>
+                                </div>
+                                <div class="device_config_grid">
+                                    <div class="settings_input_card">
+                                        <div class="input_label">MQTT Topic</div>
+                                        <field name="device_uid" nolabel="1" placeholder="esp32/vitals" />
+                                        <div class="input_hint">Topic used by the device to stream vitals.</div>
+                                    </div>
+                                    <div class="settings_input_card">
+                                        <div class="input_label">Room / Bed</div>
+                                        <field name="device_room" nolabel="1" placeholder="ICU2 or Room 4" />
+                                        <div class="input_hint">Clinical location for this device.</div>
+                                    </div>
+                                    <div class="settings_input_card">
+                                        <div class="input_label">Monitoring Patient</div>
+                                        <field name="device_patient_id" nolabel="1" options="{'no_create': True}" />
+                                        <div class="input_hint">Bind this wearable to a patient.</div>
+                                    </div>
+                                    <div class="settings_input_card readonly">
+                                        <div class="input_label">Last Seen</div>
+                                        <field name="device_last_seen" nolabel="1" readonly="1" />
+                                        <div class="input_hint">Shows the latest ping received from the ESP32 wearable unit. If empty, the device has not sent data yet.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mediot_settings_panel admin_panel">
+                            <div class="mediot_settings_panel_head">
+                                <div class="mediot_system_title_row">
+                                    <div class="mediot_system_img">
+                                        <img src="/med_iot_command_center/static/description/s.png" alt="System" />
+                                    </div>
+                                    <div>
+                                        <h2>Admin Settings</h2>
+                                        <p>System-level monitoring parameters.</p>
+                                    </div>
+                                </div>
+                                <div class="mediot_settings_chip calm">
+                                    <i class="fa fa-shield" title="Admin" />
+                                    Safe Defaults
+                                </div>
+                            </div>
+                            <div class="admin_setting_card">
+                                <div>
+                                    <div class="input_label">Monitoring Check Interval</div>
+                                    <div class="input_hint">How often the command center evaluates readings and alerts.</div>
+                                </div>
+                                <field name="check_interval_seconds" nolabel="1" />
+                            </div>
+                            <div class="admin_setting_note">
+                                <i class="fa fa-info-circle" title="Info" />
+                                Keep thresholds clinically reasonable before live demonstrations.
+                            </div>
+                        </div>
+                        <div class="mediot_settings_panel thresholds_panel simple_thresholds_panel">
+                            <div class="simple_threshold_head">
+                                <div>
+                                    <h2>Alert Thresholds</h2>
+                                    <p>Simple clinical limits for warnings and critical alerts.</p>
+                                </div>
+                            </div>
+                            <div class="simple_threshold_body">
+                                <div class="simple_threshold_section">
+                                    <div class="simple_threshold_section_head">
+                                        <span class="simple_threshold_icon">❤</span>
+                                        <h3>Heart Rate</h3>
+                                    </div>
+                                    <div class="simple_threshold_row danger">
+                                        <div class="simple_threshold_label">Critical minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="hr_critical_min" nolabel="1" />
+                                            <span>bpm</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row danger">
+                                        <div class="simple_threshold_label">Critical maximum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="hr_critical_max" nolabel="1" />
+                                            <span>bpm</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row warning">
+                                        <div class="simple_threshold_label">Warning minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="hr_warning_min" nolabel="1" />
+                                            <span>bpm</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row warning">
+                                        <div class="simple_threshold_label">Warning maximum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="hr_warning_max" nolabel="1" />
+                                            <span>bpm</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simple_threshold_section">
+                                    <div class="simple_threshold_section_head">
+                                        <span class="simple_threshold_icon">💧</span>
+                                        <h3>Blood Oxygen</h3>
+                                    </div>
+                                    <div class="simple_threshold_row danger">
+                                        <div class="simple_threshold_label">Critical minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="spo2_critical_min" nolabel="1" />
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row warning">
+                                        <div class="simple_threshold_label">Warning minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="spo2_warning_min" nolabel="1" />
+                                            <span>%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simple_threshold_section">
+                                    <div class="simple_threshold_section_head">
+                                        <span class="simple_threshold_icon">🌡</span>
+                                        <h3>Temperature</h3>
+                                    </div>
+                                    <div class="simple_threshold_row danger">
+                                        <div class="simple_threshold_label">Critical minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="temp_critical_min" nolabel="1" />
+                                            <span>°C</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row danger">
+                                        <div class="simple_threshold_label">Critical maximum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="temp_critical_max" nolabel="1" />
+                                            <span>°C</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row warning">
+                                        <div class="simple_threshold_label">Warning minimum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="temp_warning_min" nolabel="1" />
+                                            <span>°C</span>
+                                        </div>
+                                    </div>
+                                    <div class="simple_threshold_row warning">
+                                        <div class="simple_threshold_label">Warning maximum</div>
+                                        <div class="simple_threshold_value">
+                                            <field name="temp_warning_max" nolabel="1" />
+                                            <span>°C</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                            <!-- SETTINGS_SOURCE_BUTTONS_FINAL_START -->
+                            <div class="mediot_settings_actions_source_final">
+                                <button string="Cancel"
+                                        special="cancel"
+                                        class="mediot_settings_btn_source_final mediot_settings_cancel_source_final"/>
+                                <button string="Save Settings"
+                                        special="save"
+                                        class="mediot_settings_btn_source_final mediot_settings_save_source_final"/>
+                            </div>
+                            <!-- SETTINGS_SOURCE_BUTTONS_FINAL_END -->
+</div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_med_settings" model="ir.actions.act_window">
+        <field name="name">Settings Control Center</field>
+        <field name="res_model">med.settings</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_med_settings_form" />
+        <field name="res_id" ref="med_settings_singleton" />
+        <field name="target">current</field>
+    </record>
+</odoo>
+

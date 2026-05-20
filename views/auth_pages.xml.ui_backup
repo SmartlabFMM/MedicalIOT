@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<template id="med_landing_page" name="MedIoT Landing Page">
+        <t t-call="website.layout">
+            <div class="med_video_page">
+
+                <section class="med_video_hero">
+                    <img class="med_video_bg" src="/med_iot_command_center/static/description/hero_new.jpg?v=2" alt="Medical background"/>
+                    <div class="med_video_overlay"></div>
+
+                    <header class="med_video_nav">
+                        <div class="med_video_brand">
+                            <div class="med_video_brand_icon med_video_heart_logo"><span>♡</span></div>
+                            <div class="med_video_brand_text">MedIoT</div>
+                        </div>
+
+                        <nav class="med_video_menu">
+                            <a href="#why">Why?</a>
+                            <a href="#services">Services</a>
+                            <a href="#contact">Contact Us</a>
+                            <a href="/mediot/role" class="med_video_btn ghost">Login</a>
+                            <a href="/mediot/signup" class="med_video_btn solid">Sign Up</a>
+                        </nav>
+                    </header>
+
+                    <div class="med_video_content">
+
+                        <h1 style="margin:0; font-size:52px; line-height:1.02; font-weight:800; letter-spacing:-1px;">
+                            <span style="display:block; white-space:nowrap; color:#ffffff;">Transform Mental</span>
+                            <span style="display:block; white-space:nowrap; color:#ffffff;">
+                                Health Care with <span style="color:#f28b58;">AI</span>
+                            </span>
+                            <span style="display:block; white-space:nowrap; color:#f28b58;">&amp; IoT Solutions</span>
+                        </h1>
+
+                        <p>
+                            Personalized therapeutic progress tracking at your fingertips.<br/>
+                            Empowering patients and healthcare providers with innovative tools.
+                        </p>
+
+                        <div class="med_video_actions">
+                            <a href="/mediot/role" class="med_video_cta primary">Get Started</a>
+                            <a href="#services" class="med_video_cta secondary">Learn More</a>
+                        </div>
+
+                        <!-- ✅ FIX: MOVED HERE -->
+                        <div class="med_video_stats">
+                            <div class="med_video_stat">
+                                <div class="med_video_stat_num">200+</div>
+                                <div class="med_video_stat_label">Patients Monitored</div>
+                            </div>
+                            <div class="med_video_stat">
+                                <div class="med_video_stat_num">15+</div>
+                                <div class="med_video_stat_label">Doctors Onboarded</div>
+                            </div>
+                            <div class="med_video_stat">
+                                <div class="med_video_stat_num">500+</div>
+                                <div class="med_video_stat_label">Active Patients</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- باقي الكود يبقى نفسه بدون تغيير -->
+
+                <section id="why" class="med_section med_section_light">
+                    <div class="med_section_intro mediot-why-polished-intro">
+                        <span class="med_tag mediot-why-badge">Why MedIoT</span>
+                        <h2 class="mediot-why-title">Healthcare intelligence designed for real-time monitoring</h2>
+                        <p class="mediot-why-subtitle">
+                            MedIoT combines AI, patient dashboards, and IoT integration to give doctors
+                            a clear and connected view of every patient.
+                        </p>
+                    </div>
+                    ...
+                </section>
+
+            </div>
+        </t>
+        <script type="text/javascript" src="/med_iot_command_center/static/src/js/landing_stats_counter.js"></script>
+</template>
+    </data>
+</odoo>

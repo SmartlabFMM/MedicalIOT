@@ -1,0 +1,172 @@
+﻿/** @odoo-module **/
+
+(function () {
+    "use strict";
+
+    const CARDS = [
+        {
+            label: "SPO2",
+            title: "SpO2",
+            unit: "%",
+            color: "#2563eb",
+            icon: "💧",
+            bg: "#eaf2ff",
+            min: 90,
+            max: 100,
+            ticks: ["100%", "95%", "90%"],
+            values: (v) => [v-0.6, v-0.4, v+0.1, v-0.5, v-0.1, v-0.1, v+0.2, v+0.1, v-0.4, v-0.1, v-0.2, v],
+        },
+        {
+            label: "HEART RATE",
+            title: "Heart Rate",
+            unit: "bpm",
+            color: "#22a047",
+            icon: "💚",
+            bg: "#eafbea",
+            min: 40,
+            max: 100,
+            ticks: ["100", "80", "60", "40"],
+            values: (v) => [v-4, v-4, v-3, v+2, v+1, v+8, v+5, v+3, v-1, v-2, v+1, v],
+        },
+        {
+            label: "TEMPERATURE",
+            title: "Temperature",
+            unit: "°C",
+            color: "#f97316",
+            icon: "🌡️",
+            bg: "#fff1e8",
+            min: 35,
+            max: 38,
+            ticks: ["38.0", "37.0", "36.0", "35.0"],
+            values: (v) => [v-0.1, v, v-0.1, v+0.1, v, v-0.05, v+0.15, v+0.1, v-0.1, v-0.12, v-0.02, v],
+        },
+    ];
+
+    function getNumber(text, card) {
+        const normalized = text.replace(",", ".");
+        if (card.label === "HEART RATE") {
+            const m = normalized.match(/(\d+(?:\.\d+)?)\s*bpm/i);
+            return m ? Number(m[1]) : null;
+        }
+        if (card.label === "TEMPERATURE") {
+            const m = normalized.match(/(\d+(?:\.\d+)?)\s*°?\s*C/i);
+            return m ? Number(m[1]) : null;
+        }
+        const m = normalized.match(/(\d+(?:\.\d+)?)\s*%/);
+        return m ? Number(m[1]) : null;
+    }
+
+    function pointPath(values, min, max, w, h) {
+        const padX = 34;
+        const padY = 16;
+        const cw = w - padX - 12;
+        const ch = h - padY - 22;
+
+        const xy = values.map((v, i) => {
+            const x = padX + (cw * i / Math.max(values.length - 1, 1));
+            const y = padY + ch - ((v - min) / (max - min)) * ch;
+            return [x, Math.max(padY, Math.min(padY + ch, y))];
+        });
+
+        const line = xy.map((p, i) => `${i ? "L" : "M"} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+        const area = `${line} L ${xy[xy.length - 1][0].toFixed(1)} ${h - 20} L ${xy[0][0].toFixed(1)} ${h - 20} Z`;
+        return { line, area, last: xy[xy.length - 1] };
+    }
+
+    function buildCard(card, value) {
+        const values = card.values(value);
+        const svgW = 330;
+        const svgH = 118;
+        const p = pointPath(values, card.min, card.max, svgW, svgH);
+
+        const mainValue = card.unit === "%"
+            ? value.toFixed(2)
+            : card.unit === "°C"
+                ? value.toFixed(2)
+                : Math.round(value);
+
+        const currentValue = card.unit === "%"
+            ? value.toFixed(1) + "%"
+            : card.unit === "°C"
+                ? value.toFixed(1) + "°C"
+                : Math.round(value) + " bpm";
+
+        return `
+            <div class="mediot-chart-head">
+                <div class="mediot-chart-icon" style="background:${card.bg}; color:${card.color};">${card.icon}</div>
+                <div class="mediot-chart-title">${card.title}</div>
+                <div class="mediot-chart-current">curr. ${currentValue}</div>
+            </div>
+
+            <div class="mediot-chart-value" style="color:${card.color};">
+                ${mainValue}<span>${card.unit}</span>
+            </div>
+
+            <svg class="mediot-chart-svg" viewBox="0 0 ${svgW} ${svgH}" preserveAspectRatio="none">
+                <line x1="34" y1="18" x2="318" y2="18" class="mediot-grid"/>
+                <line x1="34" y1="54" x2="318" y2="54" class="mediot-grid"/>
+                <line x1="34" y1="90" x2="318" y2="90" class="mediot-grid"/>
+
+                <text x="2" y="22" class="mediot-axis">${card.ticks[0]}</text>
+                <text x="2" y="58" class="mediot-axis">${card.ticks[1]}</text>
+                <text x="2" y="94" class="mediot-axis">${card.ticks[2]}</text>
+
+                <path d="${p.area}" fill="${card.color}" opacity="0.08"/>
+                <path d="${p.line}" fill="none" stroke="${card.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="${p.last[0]}" cy="${p.last[1]}" r="4" fill="${card.color}"/>
+
+                <text x="45" y="114" class="mediot-axis">00h</text>
+                <text x="125" y="114" class="mediot-axis">06h</text>
+                <text x="205" y="114" class="mediot-axis">12h</text>
+                <text x="285" y="114" class="mediot-axis">18h</text>
+            </svg>
+        `;
+    }
+
+    function findCard(label) {
+        const nodes = Array.from(document.querySelectorAll(".o_form_view *"))
+            .filter((el) => (el.textContent || "").trim().toUpperCase() === label);
+
+        for (const node of nodes) {
+            let cur = node;
+            for (let i = 0; i < 8 && cur; i++) {
+                const txt = (cur.textContent || "").toUpperCase();
+                if (
+                    txt.includes(label) &&
+                    txt.length < 180 &&
+                    cur.getBoundingClientRect().width > 180 &&
+                    cur.getBoundingClientRect().height > 80
+                ) {
+                    return cur;
+                }
+                cur = cur.parentElement;
+            }
+        }
+        return null;
+    }
+
+    function applyCharts() {
+        if (!document.querySelector(".o_form_view")) return;
+
+        for (const card of CARDS) {
+            const el = findCard(card.label);
+            if (!el || el.dataset.mediotChartDone === "1") continue;
+
+            const value = getNumber(el.textContent || "", card);
+            if (value === null || Number.isNaN(value)) continue;
+
+            el.dataset.mediotChartDone = "1";
+            el.classList.add("mediot-chart-card");
+            el.innerHTML = buildCard(card, value);
+        }
+    }
+
+    const observer = new MutationObserver(() => {
+        window.requestAnimationFrame(applyCharts);
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("load", applyCharts);
+    setTimeout(applyCharts, 600);
+    setTimeout(applyCharts, 1400);
+})();

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="med_login_page" name="MedIoT Custom Login Page">
+        <t t-call="website.layout">
+            <div class="med_login_role_page">
+
+                <a href="/mediot" class="med_role_home">
+                    <i class="fa fa-arrow-left" title="Back"></i>
+                    <span>Home</span>
+                </a>
+
+                <div class="med_login_role_shell">
+
+                    <section class="med_login_role_left">
+                        <h1>WELCOME!</h1>
+                        <p>Sign in to access your dashboard</p>
+                    </section>
+
+                    <section class="med_login_role_right">
+                        <div class="med_login_box">
+
+                            <h2>Login</h2>
+                            <p class="med_login_hint">Enter your credentials to continue</p>
+
+                            <t t-if="error">
+                                <div class="med_err">
+                                    <t t-esc="error"/>
+                                </div>
+                            </t>
+
+                            <form action="/web/login" method="post">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="redirect" t-att-value="redirect"/>
+
+                                <div class="med_field">
+                                    <label>Email</label>
+                                    <input type="text"
+                                           name="login"
+                                           placeholder="your@email.com"
+                                           t-att-value="login"
+                                           required="required"
+                                           autofocus="autofocus"/>
+                                </div>
+
+                                <div class="med_field">
+                                    <label>Password</label>
+                                    <input type="password"
+                                           name="password"
+                                           placeholder="••••••••"
+                                           required="required"/>
+                                </div>
+
+                                <a href="/mediot/reset" class="med_forgot_link">Forgot Password?</a>
+
+                                <button type="submit" class="med_btn">Sign In</button>
+                            </form>
+
+                            <div class="med_login_signup_hint">
+                                <span>Don't have an account? </span>
+                                <a href="/mediot/signup">Sign Up</a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- KANBAN VIEW -->
+<record id="view_med_patient_kanban" model="ir.ui.view">
+    <field name="name">med.patient.kanban</field>
+    <field name="model">med.patient</field>
+    <field name="arch" type="xml">
+        <kanban records_draggable="0" class="mediot_patient_kanban_force">
+            <field name="id"/>
+            <field name="name"/>
+            <field name="ref"/>
+            <field name="room"/>
+            <field name="status"/>
+            <field name="latest_spo2"/>
+            <field name="latest_ecg_bpm"/>
+            <field name="latest_temp"/>
+            <field name="image_128"/>
+            <field name="write_date"/>
+            <field name="pending_alert_count"/>
+            <field name="age"/>
+            <field name="gender"/>
+            <field name="smoker"/>
+            <field name="sporty"/>
+
+            <templates>
+                <t t-name="card">
+                    <div class="mediot_patient_card_force">
+                        <div class="mediot_patient_real_photo_shell">
+                            <img t-att-src="'/mediot/patient_photo/' + record.id.raw_value + '?unique=' + record.write_date.raw_value"
+                                 class="mediot_patient_real_photo_img"
+                                 alt="Patient Photo"/>
+
+                            <t t-if="record.pending_alert_count.raw_value &gt; 0">
+                                <div class="mediot_patient_alert_force">
+                                    <t t-esc="record.pending_alert_count.raw_value"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="mediot_patient_body_force">
+                            <div class="mediot_patient_top_force">
+                                <div>
+                                    <div class="mediot_patient_name_force">
+                                        <t t-esc="record.name.value"/>
+                                    </div>
+                                    <div class="mediot_patient_meta_force">
+                                        <t t-esc="record.gender.value"/> · Age <t t-esc="record.age.raw_value or '—'"/>
+                                    </div>
+                                </div>
+
+                                <span t-att-class="'mediot_patient_status_force ' + (record.status.raw_value or 'stable')">
+                                    <t t-esc="record.status.value"/>
+                                </span>
+                            </div>
+
+                            <div class="mediot_patient_line_force">
+                                <i class="fa fa-id-card-o"/>
+                                <t t-esc="record.ref.value"/>
+                            </div>
+
+                            <div class="mediot_patient_line_force">
+                                <i class="fa fa-bed"/>
+                                <t t-esc="record.room.value or '—'"/>
+                            </div>
+
+                            <div class="mediot_patient_divider_force"/>
+
+                            <div class="mediot_patient_vitals_force">
+                                <div>
+                                    <strong><t t-esc="record.latest_spo2.raw_value or '—'"/><t t-if="record.latest_spo2.raw_value">%</t></strong>
+                                    <span>SpO2</span>
+                                </div>
+                                <div>
+                                    <strong><t t-esc="record.latest_ecg_bpm.raw_value or '—'"/><t t-if="record.latest_ecg_bpm.raw_value"><small>bpm</small></t></strong>
+                                    <span>HR</span>
+                                </div>
+                                <div>
+                                    <strong><t t-esc="record.latest_temp.raw_value or '—'"/><t t-if="record.latest_temp.raw_value">°C</t></strong>
+                                    <span>Temp</span>
+                                </div>
+                            </div>
+
+                            <div class="mediot_patient_bottom_force">
+                                <span class="mediot_patient_green_dot_force"></span>
+                                <button name="action_print_medical_report"
+                                        type="object"
+                                        class="btn btn-primary mediot_patient_download_force">
+                                    <i class="fa fa-download"/> Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+<!-- LIST VIEW -->
+<record id="view_med_patient_tree" model="ir.ui.view">
+    <field name="name">med.patient.tree</field>
+    <field name="model">med.patient</field>
+    <field name="arch" type="xml">
+        <list decoration-danger="status=='critical'" decoration-warning="status=='warning'">
+            <field name="ref"/>
+            <field name="name"/>
+            <field name="age"/>
+            <field name="room"/>
+            <field name="smoker"/>
+            <field name="sporty"/>
+            <field name="status" widget="badge"
+                   decoration-danger="status == 'critical'"
+                   decoration-warning="status == 'warning'"
+                   decoration-success="status == 'stable'"/>
+            <field name="latest_temp"/>
+            <field name="latest_spo2"/>
+            <field name="latest_ecg_bpm"/>
+            <field name="assigned_doctor_id"/>
+            <field name="pending_alert_count"/>
+            <button name="action_print_medical_report" type="object" icon="fa-download" title="Download Medical Report"/>
+        </list>
+    </field>
+</record>
+
+
+<!-- FORM VIEW -->
+<record id="view_med_patient_form" model="ir.ui.view">
+    <field name="name">med.patient.form</field>
+    <field name="model">med.patient</field>
+    <field name="arch" type="xml">
+        <form class="mediot-patient-fullscreen o_mediot_patient_detail_dashboard">
+            <header>
+            </header>
+            <sheet class="o_mediot_patient_detail_sheet">
+                <!-- TOP STATUS BAR -->
+                <div style="background:#1e2d3d;border-radius:10px;padding:12px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <field name="status" widget="badge" nolabel="1"
+                               decoration-danger="status=='critical'"
+                               decoration-warning="status=='warning'"
+                               decoration-success="status=='stable'"/>
+                        <span style="font-size:.82rem;color:rgba(255,255,255,.5);">
+                            Patient ID:
+                            <field name="ref" nolabel="1" readonly="1"
+                                   style="display:inline;background:transparent;border:none;padding:0;font-size:inherit;color:rgba(255,255,255,.85);font-weight:600;"/>
+                        </span>
+                    </div>
+                    <span style="font-size:.78rem;color:rgba(255,255,255,.45);">
+                        <button name="action_print_medical_report" type="object" string="Download Report" icon="fa-download" class="btn-info"/>
+                        <field name="latest_reading_at" nolabel="1" readonly="1" widget="datetime"
+                               style="display:inline;background:transparent;border:none;padding:0;font-size:inherit;color:rgba(255,255,255,.7);"/>
+                    </span>
+                </div>
+
+                <!-- MAIN LAYOUT: LEFT PANEL + RIGHT CONTENT -->
+                <div style="display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start;">
+
+                    <!-- LEFT PANEL -->
+                    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:24px 18px;text-align:center;">
+                        <div style="margin-bottom:16px;display:flex;justify-content:center;">
+                            <field name="image_128" widget="image" class="oe_avatar"
+                                   options="{'size':[96,96],'preview_image':'image_128'}"
+                                   style="width:96px;height:96px;border-radius:16px;object-fit:cover;border:2px solid #e2e8f0;"/>
+                        </div>
+                        <field name="name" nolabel="1"
+                               style="font-size:1.05rem;font-weight:700;color:#1e293b;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:7px;padding:6px 10px;text-align:center;width:100%;display:block;margin-bottom:8px;"
+                               placeholder="Patient Name"/>
+                        <div style="font-size:.82rem;color:#64748b;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:6px;">
+                            <span>Age:</span>
+                            <field name="age" nolabel="1"
+                                   style="display:inline;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:6px;padding:3px 8px;font-size:.88rem;color:#1e293b;font-weight:600;width:50px;text-align:center;"/>
+                        </div>
+                        <div style="border-top:1px solid #f1f5f9;margin-bottom:16px;"/>
+                        <div style="text-align:left;">
+                            <div style="margin-bottom:12px;">
+                                <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:4px;font-weight:600;">Gender</div>
+                                <field name="gender" nolabel="1"
+                                       style="font-size:.88rem;color:#1e293b;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:7px;padding:6px 8px;width:100%;"/>
+                            </div>
+                            <div style="margin-bottom:12px;">
+                                <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:4px;font-weight:600;">Room / Bed</div>
+                                <field name="room" nolabel="1" placeholder="e.g. ICU-01"
+                                       style="font-size:.88rem;color:#1e293b;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:7px;padding:6px 8px;width:100%;"/>
+                            </div>
+                            <div style="margin-bottom:12px;">
+                                <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:4px;font-weight:600;">Department</div>
+                                <field name="department" nolabel="1" placeholder="—"
+                                       style="font-size:.88rem;color:#1e293b;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:7px;padding:6px 8px;width:100%;"/>
+                            </div>
+                            <div style="margin-bottom:12px;">
+                                <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:4px;font-weight:600;">Assigned Doctor</div>
+                                <field name="assigned_doctor_id" nolabel="1"
+                                       options="{'no_create':True}"/>
+                            </div>
+                            <div style="padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;">
+                                <span style="font-size:.82rem;color:#475569;font-weight:500;">Active Patient</span>
+                                <field name="active" nolabel="1"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT CONTENT -->
+                    <div>
+
+                        <!-- VITALS ROW -->
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;">
+                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
+                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                    <div style="width:32px;height:32px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">💧</div>
+                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">SpO2</span>
+                                </div>
+                                <div style="display:flex;align-items:baseline;gap:4px;">
+                                    <field name="latest_spo2" nolabel="1" readonly="1"
+                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
+                                    <span style="font-size:.9rem;color:#94a3b8;">%</span>
+                                </div>
+                                <field name="spo2_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
+                            </div>
+                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
+                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                    <div style="width:32px;height:32px;background:#fef2f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">❤️</div>
+                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">Heart Rate</span>
+                                </div>
+                                <div style="display:flex;align-items:baseline;gap:4px;">
+                                    <field name="latest_ecg_bpm" nolabel="1" readonly="1"
+                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
+                                    <span style="font-size:.9rem;color:#94a3b8;">bpm</span>
+                                </div>
+                                <field name="hr_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
+                            </div>
+                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
+                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                                    <div style="width:32px;height:32px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">🌡️</div>
+                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">Temperature</span>
+                                </div>
+                                <div style="display:flex;align-items:baseline;gap:4px;">
+                                    <field name="latest_temp" nolabel="1" readonly="1"
+                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
+                                    <span style="font-size:.9rem;color:#94a3b8;">°C</span>
+                                </div>
+                                <field name="temp_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
+                            </div>
+                        </div>
+
+                        <!-- CVD AI RESULT -->
+                        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;margin-top:18px;box-shadow:0 8px 24px rgba(15,23,42,.04);">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+                                <div>
+                                    <div style="font-size:1.08rem;font-weight:900;color:#0f172a;">CVD AI Prediction</div>
+                                    <div style="font-size:.82rem;color:#64748b;margin-top:4px;">FastAPI XGBoost cardiovascular risk analysis</div>
+                                </div>
+                                <button name="action_compute_cvd_risk" type="object" string="Compute Risk" icon="fa-heartbeat" class="btn-primary"/>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+                                <div style="border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#f8fafc;">
+                                    <div style="background:#f1f5f9;color:#0f172a;font-weight:800;font-size:.82rem;padding:12px 16px;border-bottom:1px solid #e5e7eb;">
+                                        Clinical Input Data
+                                    </div>
+                                    <group style="padding:12px 16px;margin:0;">
+                                        <field name="cvd_height"/>
+                                        <field name="cvd_weight"/>
+                                        <field name="cvd_ap_hi"/>
+                                        <field name="cvd_ap_lo"/>
+                                        <field name="cvd_cholesterol"/>
+                                        <field name="cvd_gluc"/>
+                                        <field name="cvd_alco"/>
+                                        <field name="cvd_active"/>
+                                    </group>
+                                </div>
+
+                                <div style="border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#f8fafc;">
+                                    <div style="background:#f1f5f9;color:#0f172a;font-weight:800;font-size:.82rem;padding:12px 16px;border-bottom:1px solid #e5e7eb;">
+                                        Prediction Result
+                                    </div>
+                                    <group style="padding:12px 16px;margin:0;">
+                                        <field name="cvd_risk" readonly="1" widget="badge"
+                                               decoration-success="cvd_risk == 'low'"
+                                               decoration-warning="cvd_risk == 'medium'"
+                                               decoration-danger="cvd_risk in ('high', 'critical')"/>
+                                        <field name="cvd_probability" readonly="1"/>
+                                        <field name="cvd_alert" readonly="1" widget="boolean_toggle"/>
+                                        <field name="cvd_message" readonly="1"/>
+                                        <field name="cvd_last_checked" readonly="1"/>
+                                    </group>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ALERTS -->
+                        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:22px 24px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                                <div style="font-size:.95rem;font-weight:700;color:#1e293b;">Alerts</div>
+                                <field name="pending_alert_count" nolabel="1" readonly="1"
+                                       style="display:inline;background:#fef2f2;color:#ef4444;font-size:.82rem;font-weight:700;border:1.5px solid #fecaca;padding:3px 14px;border-radius:20px;min-width:32px;text-align:center;"/>
+                            </div>
+                        <field name="alert_ids" nolabel="1">
+                                <list decoration-danger="severity=='critical'" decoration-warning="severity=='warning'" limit="5" editable="bottom">
+                                    <field name="create_date" string="Date" readonly="1"/>
+                                    <field name="alert_type" string="Type"/>
+                                    <field name="severity" widget="badge"
+                                           decoration-danger="severity=='critical'"
+                                           decoration-warning="severity=='warning'"/>
+                                    <field name="message" string="Message"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state=='resolved'"
+                                           decoration-danger="state=='active'"/>
+                                </list>
+                            </field>
+                        </div>
+
+                    </div><!-- /right -->
+                </div><!-- /grid -->
+            </sheet>
+            <chatter/>
+        </form>
+    </field>
+</record>
+
+
+<!-- SEARCH VIEW -->
+<record id="view_med_patient_search" model="ir.ui.view">
+    <field name="name">med.patient.search</field>
+    <field name="model">med.patient</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="ref"/>
+            <field name="room"/>
+            <field name="assigned_doctor_id"/>
+            <filter string="Critical" name="critical" domain="[('status','=','critical')]"/>
+            <filter string="Warning"  name="warning"  domain="[('status','=','warning')]"/>
+            <filter string="Stable"   name="stable"   domain="[('status','=','stable')]"/>
+            <filter string="Smoker"   name="smoker"   domain="[('smoker','=',True)]"/>
+            <filter string="Sporty"   name="sporty"   domain="[('sporty','=',True)]"/>
+            <filter string="Age 60+"  name="elderly"  domain="[('age','&gt;=',60)]"/>
+        </search>
+    </field>
+</record>
+
+
+<!-- ACTION -->
+<record id="action_med_patient" model="ir.actions.act_window">
+    <field name="name">Patients</field>
+    <field name="res_model">med.patient</field>
+    <field name="view_mode">kanban,list,form</field>
+    <field name="search_view_id" ref="view_med_patient_search"/>
+</record>
+
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+

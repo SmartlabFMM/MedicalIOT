@@ -1,0 +1,138 @@
+﻿/* =========================================================
+   WHY MEDIOT — polished and professional
+   Only affects the "Why MedIoT" section
+========================================================= */
+
+.mediot-why-polished {
+    position: relative;
+}
+
+.mediot-why-polished::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(85, 108, 150, 0.08), transparent 35%),
+        radial-gradient(circle at 10% 80%, rgba(137, 217, 214, 0.06), transparent 30%);
+    z-index: 0;
+}
+
+.mediot-why-polished > * {
+    position: relative;
+    z-index: 1;
+}
+
+.mediot-why-badge {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, rgba(85,108,150,0.10), rgba(137,217,214,0.18)) !important;
+    color: #1f3560 !important;
+    border: 1px solid rgba(85,108,150,0.10) !important;
+    box-shadow: 0 10px 25px rgba(26, 42, 74, 0.08) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.mediot-why-title {
+    position: relative;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em;
+}
+
+.mediot-why-title::after {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 5px;
+    margin: 18px auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #556C96, #89D9D6);
+    opacity: 0.9;
+}
+
+.mediot-why-subtitle {
+    max-width: 860px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    color: #6A7EA3 !important;
+    line-height: 1.75 !important;
+}
+
+.mediot-why-card {
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 30px !important;
+    border: 1px solid rgba(85,108,150,0.10) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%) !important;
+    box-shadow: 0 18px 45px rgba(31, 48, 86, 0.08) !important;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+
+.mediot-why-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #556C96, #89D9D6, #F2995A);
+    opacity: 0.95;
+}
+
+.mediot-why-card:hover,
+.mediot-why-card.is-active {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 24px 55px rgba(31, 48, 86, 0.14) !important;
+    border-color: rgba(85,108,150,0.22) !important;
+}
+
+.mediot-why-card:active {
+    transform: translateY(-4px) scale(0.995) !important;
+}
+
+.mediot-why-icon-wrap {
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, rgba(85,108,150,0.08), rgba(137,217,214,0.18)) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.85),
+        0 12px 28px rgba(31,48,86,0.08) !important;
+    transition: transform 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+.mediot-why-card:hover .mediot-why-icon-wrap,
+.mediot-why-card.is-active .mediot-why-icon-wrap {
+    transform: scale(1.08) rotate(-4deg) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        0 16px 34px rgba(85,108,150,0.16) !important;
+}
+
+.mediot-why-card h3,
+.mediot-why-card h4,
+.mediot-why-card h5 {
+    color: #13264a !important;
+    letter-spacing: -0.02em;
+}
+
+.mediot-why-card p {
+    color: #667A9C !important;
+    line-height: 1.75 !important;
+}
+
+.mediot-why-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.mediot-why-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}

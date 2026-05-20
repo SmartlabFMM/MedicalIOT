@@ -1,0 +1,35 @@
+﻿/* MedIoT full top navbar color */
+
+.o_main_navbar,
+.o_web_client .o_main_navbar,
+body .o_main_navbar,
+.o_main_navbar .o_menu_brand,
+.o_main_navbar .o_menu_sections,
+.o_main_navbar .o_menu_sections > *,
+.o_main_navbar .o_menu_systray,
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .dropdown-toggle {
+    background: #112D4E !important;
+    background-color: #112D4E !important;
+    background-image: none !important;
+    border: none !important;
+}
+
+.o_main_navbar *,
+.o_web_client .o_main_navbar * {
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_nav_entry:hover,
+.o_main_navbar .dropdown-toggle:hover,
+.o_main_navbar .o_menu_sections a:hover,
+.o_main_navbar .o_nav_entry.o_active,
+.o_main_navbar .o_menu_sections .active {
+    background: #0B223D !important;
+    background-color: #0B223D !important;
+    color: #ffffff !important;
+}
+
+.o_main_navbar .o_menu_brand {
+    font-weight: 700 !important;
+}

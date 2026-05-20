@@ -1,0 +1,501 @@
+﻿.o_action_manager,
+.o_action,
+.o_view_controller,
+.o_component {
+    overflow: auto !important;
+    height: auto !important;
+}
+
+.o_content {
+    overflow-y: auto !important;
+    height: 100% !important;
+}
+
+.med_dashboard {
+    padding: 0;
+    background: #eef0fb;
+    min-height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #334155;
+}
+
+/* Banner */
+.med_banner {
+    background: linear-gradient(135deg, #6073cf 0%, #7583d5 45%, #9c79de 100%);
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.med_banner_greeting {
+    font-size: 26px;
+    line-height: 1;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.med_banner_sub {
+    font-size: 16px;
+    color: rgba(255,255,255,.92);
+    margin-bottom: 14px;
+}
+
+.med_banner_date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,.18);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.med_banner_right {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.med_banner_refresh {
+    font-size: 14px;
+    color: rgba(255,255,255,.88);
+    margin-top: 6px;
+}
+
+.med_banner_actions {
+    display: flex;
+    gap: 14px;
+}
+
+.med_btn_alert,
+.med_btn_add {
+    height: 54px;
+    min-width: 128px;
+    padding: 0 26px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    transition: all .2s ease;
+}
+
+.med_btn_alert {
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.45);
+    color: #ffffff;
+}
+
+.med_btn_add {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    color: #5f6fd1;
+}
+
+/* KPI */
+.med_kpi_stack {
+    width: 100%;
+    max-width: 1080px;
+    margin: 22px auto 32px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.med_kpi_card {
+    background: #ffffff;
+    border: 1px solid #dfe5f3;
+    border-radius: 20px;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 28px;
+    cursor: pointer;
+    transition: all .18s ease;
+    box-shadow: 0 1px 0 rgba(0,0,0,.02);
+}
+
+.med_kpi_card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(99,114,201,.12);
+}
+
+.med_kpi_icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.med_kpi_icon_box {
+    width: 66px;
+    height: 66px;
+    border-radius: 18px;
+    background: #5b67d6;
+    overflow: hidden;
+}
+
+.med_kpi_icon_box img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.med_kpi_icon_img img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+}
+
+.med_kpi_body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.med_kpi_label {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.med_kpi_value {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.med_kpi_trend {
+    font-size: 13px;
+    color: #9aa9c2;
+}
+
+.med_kpi_card.blue .med_kpi_label,
+.med_kpi_card.blue .med_kpi_value {
+    color: #5968d8;
+}
+
+.med_kpi_card.red .med_kpi_label,
+.med_kpi_card.red .med_kpi_value {
+    color: #ff3d39;
+}
+
+.med_kpi_card.orange .med_kpi_label,
+.med_kpi_card.orange .med_kpi_value {
+    color: #ff9300;
+}
+
+/* Live patient table */
+.lpm_wrap {
+    margin: 26px 28px 36px;
+    background: #ffffff;
+    border: 1px solid #dfe5f3;
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.lpm_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid #edf1f8;
+}
+
+.lpm_title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.lpm_viewall {
+    color: #6574dc;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.lpm_toolbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 28px;
+}
+
+.lpm_toolbar_spacer {
+    flex: 1;
+}
+
+.lpm_search_box {
+    width: 260px;
+    height: 44px;
+    border: 1px solid #d9e1ef;
+    border-radius: 14px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.lpm_search_input {
+    flex: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #475569;
+    background: transparent;
+}
+
+.lpm_search_input::placeholder {
+    color: #98a7c0;
+}
+
+.lpm_search_btn {
+    width: 46px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: #8fa0be;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.lpm_status_select {
+    width: 220px;
+    height: 44px;
+    border: 1px solid #d9e1ef;
+    border-radius: 14px;
+    background: #ffffff;
+    padding: 0 16px;
+    font-size: 14px;
+    color: #475569;
+    outline: none;
+}
+
+.lpm_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lpm_table thead tr {
+    background: #f5f7fc;
+}
+
+.lpm_table thead th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 800;
+    color: #5f708b;
+    letter-spacing: .04em;
+    border-bottom: 1px solid #edf1f8;
+    white-space: nowrap;
+}
+
+.lpm_row {
+    border-bottom: 1px solid #edf1f8;
+}
+
+.lpm_row:last-child {
+    border-bottom: none;
+}
+
+.lpm_row td {
+    padding: 14px 18px;
+    font-size: 15px;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.lpm_namecell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lpm_avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #19c37d;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.lpm_name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.lpm_id,
+.lpm_age,
+.lpm_condition {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.lpm_badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 74px;
+    height: 30px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.lpm_badge_stable {
+    background: #ccf5df;
+    color: #0f8b56;
+}
+
+.lpm_badge_warning {
+    background: #fff1c7;
+    color: #c88300;
+}
+
+.lpm_badge_critical {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.lpm_actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lpm_btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #dbe4f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #7586a4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.lpm_empty {
+    padding: 48px 20px;
+    text-align: center;
+    color: #98a7c0;
+    font-size: 16px;
+}
+
+.med_loading {
+    text-align: center;
+    padding: 70px;
+    color: #94a3b8;
+}
+
+.med_spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #dbe3f3;
+    border-top-color: #6677d8;
+    border-radius: 50%;
+    animation: medspin 1s linear infinite;
+    margin: 0 auto 14px;
+}
+
+@keyframes medspin {
+    to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   FINAL DASHBOARD HEADER SIZE FIX
+   Makes the purple top banner shorter like the old design
+   ========================================================= */
+
+.med_banner {
+    padding: 10px 36px !important;
+    min-height: 115px !important;
+    margin-bottom: 22px !important;
+    align-items: center !important;
+}
+
+.med_banner_left {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.med_banner_greeting {
+    font-size: 24px !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    margin: 0 0 6px 0 !important;
+    color: #ffffff !important;
+}
+
+.med_banner_sub {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    margin: 0 0 10px 0 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.med_banner_date {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    padding: 6px 14px !important;
+    border-radius: 999px !important;
+    gap: 7px !important;
+}
+
+.med_banner_right {
+    justify-content: center !important;
+    gap: 12px !important;
+}
+
+.med_banner_refresh {
+    font-size: 13px !important;
+    margin: 0 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.med_banner_actions {
+    gap: 12px !important;
+}
+
+.med_btn_alert,
+.med_btn_add {
+    height: 44px !important;
+    min-width: 112px !important;
+    padding: 0 20px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.med_kpi_stack {
+    margin-top: 18px !important;
+}
+
+.lpm_wrap {
+    margin-top: 20px !important;
+}

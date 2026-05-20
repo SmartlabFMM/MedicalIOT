@@ -1,0 +1,39 @@
+﻿(function () {
+    "use strict";
+
+    const LANDING_URL = "/";
+    const LOGOUT_URL = "/web/session/logout?redirect=" + encodeURIComponent(LANDING_URL);
+
+    function patchLogoutLinks() {
+        document.querySelectorAll('a[href*="/web/session/logout"]').forEach((a) => {
+            a.setAttribute("href", LOGOUT_URL);
+        });
+    }
+
+    document.addEventListener("click", function (ev) {
+        const target = ev.target.closest("a, button, .dropdown-item, [role='menuitem']");
+        if (!target) return;
+
+        const href = target.getAttribute("href") || "";
+        const text = (target.textContent || "").toLowerCase();
+
+        const isLogout =
+            href.includes("/web/session/logout") ||
+            text.includes("log out") ||
+            text.includes("logout") ||
+            text.includes("se déconnecter") ||
+            text.includes("déconnexion") ||
+            text.includes("deconnexion");
+
+        if (isLogout) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            window.location.href = LOGOUT_URL;
+        }
+    }, true);
+
+    patchLogoutLinks();
+
+    const obs = new MutationObserver(patchLogoutLinks);
+    obs.observe(document.body, { childList: true, subtree: true });
+})();

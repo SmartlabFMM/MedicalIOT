@@ -1,0 +1,16 @@
+﻿/* Hide only the big MedIoT welcome banner */
+
+.o_action_manager div[class*="hero"],
+.o_action_manager div[class*="Hero"],
+.o_action_manager div[class*="banner"],
+.o_action_manager div[class*="Banner"],
+.o_action_manager div[class*="welcome"],
+.o_action_manager div[class*="Welcome"] {
+    display: none !important;
+}
+
+/* Keep dashboard body close to top after banner removal */
+.o_action_manager .o_content,
+.o_action_manager .o_action {
+    padding-top: 0 !important;
+}

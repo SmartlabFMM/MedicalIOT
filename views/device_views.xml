@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- LIST VIEW -->
+
+<!-- FORM VIEW -->
+<record id="view_med_device_form" model="ir.ui.view">
+    <field name="name">med.device.form</field>
+    <field name="model">med.device</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet style="padding:0 !important; background:#eef0fb;">
+
+                <!-- HEADER BANNER — full width, exact dashboard gradient -->
+                <div style="background:linear-gradient(135deg,#5c6bc0 0%,#7986cb 50%,#9575cd 100%);padding:16px 36px;display:flex;align-items:center;justify-content:space-between;margin:-16px -32px 24px -32px;">
+                    <div style="display:flex;align-items:center;gap:16px;">
+                        <div style="width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;"><img src="/med_iot_command_center/static/description/l.png" style="width:40px;height:40px;object-fit:contain;"/></div>
+                        <div>
+                            <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px;letter-spacing:.08em;">IoT Wearable · ESP32 DOIT DevKit</div>
+                            <field name="name" nolabel="1" style="font-size:1.25rem;font-weight:700;color:#fff;background:transparent;border:none;padding:0;" placeholder="Device Name"/>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:8px;">
+                        <field name="status" widget="badge" nolabel="1" decoration-success="status=='online'" decoration-danger="status=='offline'"/>
+                        <div style="font-size:.65rem;color:rgba(255,255,255,.5);">Last ping: <field name="last_seen" nolabel="1" readonly="1" style="display:inline;background:transparent;border:none;padding:0;color:rgba(255,255,255,.6);"/></div>
+                    </div>
+                </div>
+
+                <!-- STATUS + CONFIG ROW -->
+                <div style="display:grid;grid-template-columns:210px 1fr;gap:16px;margin:0 28px 16px;">
+
+                    <!-- Status Card -->
+                    <div style="background:#fff;border:1px solid #dde0f5;border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                        <div style="width:72px;height:72px;border-radius:50%;border:4px solid #dde0f5;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                            <img src="/med_iot_command_center/static/description/s.png" style="width:56px;height:56px;object-fit:contain;"/>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:1rem;font-weight:700;color:#5c6bc0;">Device</div>
+                            <div style="font-size:.68rem;color:#94a3b8;">Connection status</div>
+                        </div>
+                        <div style="width:100%;border-top:1px solid #f1f5f9;padding-top:12px;">
+                            <div style="font-size:.58rem;text-transform:uppercase;color:#94a3b8;margin-bottom:4px;font-weight:600;">Status</div>
+                            <field name="status" nolabel="1" style="width:100%;"/>
+                        </div>
+                    </div>
+
+                    <!-- Config Card -->
+                    <div style="background:#fff;border:1px solid #dde0f5;border-radius:14px;padding:20px 24px;">
+                        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:#5c6bc0;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #eef0fb;letter-spacing:.07em;">Device Configuration</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">MQTT Topic</div>
+                                <field name="device_uid" nolabel="1" placeholder="esp32/vitals" style="font-size:.88rem;background:#f5f6fd;border:1.5px solid #dde0f5;border-radius:7px;padding:9px 11px;width:100%;font-family:monospace;"/>
+                            </div>
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Room / Bed</div>
+                                <field name="room" nolabel="1" placeholder="e.g. Room-01" style="font-size:.88rem;background:#f5f6fd;border:1.5px solid #dde0f5;border-radius:7px;padding:9px 11px;width:100%;"/>
+                            </div>
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Monitoring Patient</div>
+                                <field name="patient_id" nolabel="1" options="{'no_create':True}" style="width:100%;"/>
+                            </div>
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Last Seen</div>
+                                <field name="last_seen" nolabel="1" style="font-size:.88rem;background:#f5f6fd;border:1.5px solid #dde0f5;border-radius:7px;padding:9px 11px;width:100%;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SENSORS ROW -->
+                <div style="background:#fff;border:1px solid #dde0f5;border-radius:14px;padding:20px 24px;margin:0 28px 28px;">
+                    <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:#5c6bc0;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #eef0fb;letter-spacing:.07em;">Onboard Sensors</div>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+
+                        <!-- AD8232 -->
+                        <div style="border:1px solid #bfdbfe;border-radius:12px;padding:20px 12px;text-align:center;background:linear-gradient(135deg,#f0f7ff,#dbeafe);">
+                            <div style="width:56px;height:56px;border-radius:14px;background:#dbeafe;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_ecg.png" style="width:38px;height:38px;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"/>
+                                <span style="display:none;font-size:1.4rem;">&#10084;</span>
+                            </div>
+                            <div style="font-size:.85rem;font-weight:700;color:#1e40af;">AD8232</div>
+                            <div style="font-size:.67rem;color:#3b82f6;margin-top:3px;">ECG Monitor</div>
+                            <div style="margin-top:12px;display:inline-block;background:#1e40af;color:#fff;font-size:.6rem;font-weight:700;padding:4px 12px;border-radius:20px;">ACTIVE</div>
+                        </div>
+
+                        <!-- MAX30102 -->
+                        <div style="border:1px solid #a7f3d0;border-radius:12px;padding:20px 12px;text-align:center;background:linear-gradient(135deg,#f0fff8,#dcfce7);">
+                            <div style="width:56px;height:56px;border-radius:14px;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_spo2.png" style="width:38px;height:38px;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"/>
+                                <span style="display:none;font-size:1.4rem;">&#9829;</span>
+                            </div>
+                            <div style="font-size:.85rem;font-weight:700;color:#166534;">MAX30102</div>
+                            <div style="font-size:.67rem;color:#16a34a;margin-top:3px;">SpO2 + Heart Rate</div>
+                            <div style="margin-top:12px;display:inline-block;background:#166534;color:#fff;font-size:.6rem;font-weight:700;padding:4px 12px;border-radius:20px;">ACTIVE</div>
+                        </div>
+
+                        <!-- DS18B20 -->
+                        <div style="border:1px solid #fed7aa;border-radius:12px;padding:20px 12px;text-align:center;background:linear-gradient(135deg,#fffaf0,#ffedd5);">
+                            <div style="width:56px;height:56px;border-radius:14px;background:#ffedd5;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_temp.png" style="width:38px;height:38px;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"/>
+                                <span style="display:none;font-size:1.4rem;">&#127777;</span>
+                            </div>
+                            <div style="font-size:.85rem;font-weight:700;color:#9a3412;">DS18B20</div>
+                            <div style="font-size:.67rem;color:#ea580c;margin-top:3px;">Body Temperature</div>
+                            <div style="margin-top:12px;display:inline-block;background:#9a3412;color:#fff;font-size:.6rem;font-weight:700;padding:4px 12px;border-radius:20px;">ACTIVE</div>
+                        </div>
+
+                        <!-- LCD 1602 -->
+                        <div style="border:1px solid #c5cae9;border-radius:12px;padding:20px 12px;text-align:center;background:linear-gradient(135deg,#f5f6fd,#eef0fb);">
+                            <div style="width:56px;height:56px;border-radius:14px;background:#dde0f5;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_lcd.png" style="width:38px;height:38px;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"/>
+                                <span style="display:none;font-size:1.4rem;">&#128251;</span>
+                            </div>
+                            <div style="font-size:.85rem;font-weight:700;color:#5c6bc0;">LCD 1602</div>
+                            <div style="font-size:.67rem;color:#7986cb;margin-top:3px;">Local Display</div>
+                            <div style="margin-top:12px;display:inline-block;background:#5c6bc0;color:#fff;font-size:.6rem;font-weight:700;padding:4px 12px;border-radius:20px;">ACTIVE</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<!-- ACTION -->
+<record id="action_med_devices" model="ir.actions.act_window">
+    <field name="name">Devices</field>
+    <field name="res_model">med.device</field>
+    <field name="view_mode">form</field>
+    <field name="res_id">1</field>
+</record>
+
+</odoo>

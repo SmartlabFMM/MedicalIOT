@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo patient records removed to prevent no-picture patients from being recreated on module update. -->
+</odoo>

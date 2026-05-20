@@ -1,0 +1,14 @@
+﻿# -*- coding: utf-8 -*-
+from odoo import http
+from odoo.http import request
+
+
+class MedIoTLogoutRedirectController(http.Controller):
+
+    @http.route("/web/session/logout", type="http", auth="none", website=True, sitemap=False)
+    def med_iot_logout_redirect(self, **kw):
+        try:
+            request.session.logout(keep_db=True)
+        except TypeError:
+            request.session.logout()
+        return request.redirect("/")

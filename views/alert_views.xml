@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_med_alert_search" model="ir.ui.view">
+        <field name="name">med.alert.search</field>
+        <field name="model">med.alert</field>
+        <field name="arch" type="xml">
+            <search string="Search Alerts">
+                <field name="patient_id"/>
+                <field name="severity"/>
+                <field name="alert_type"/>
+                <field name="message"/>
+                <field name="state"/>
+
+                <separator/>
+
+                <filter string="New" name="filter_new" domain="[('state','=','new')]"/>
+                <filter string="Acknowledged" name="filter_ack" domain="[('state','=','ack')]"/>
+                <filter string="Resolved" name="filter_resolved" domain="[('state','=','resolved')]"/>
+
+                <separator/>
+
+                <filter string="Warning" name="filter_warning" domain="[('severity','=','warning')]"/>
+                <filter string="Critical" name="filter_critical" domain="[('severity','=','critical')]"/>
+
+                <separator/>
+
+                <filter string="Group by Patient" name="group_by_patient" context="{'group_by':'patient_id'}"/>
+                <filter string="Group by Severity" name="group_by_severity" context="{'group_by':'severity'}"/>
+                <filter string="Group by State" name="group_by_state" context="{'group_by':'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_med_alert_list" model="ir.ui.view">
+        <field name="name">med.alert.list</field>
+        <field name="model">med.alert</field>
+        <field name="arch" type="xml">
+            <list string="Real-time Alerts" create="1">
+                <field name="create_date" string="Created on"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="severity" string="Severity"/>
+                <field name="alert_type" string="Alert Type"/>
+                <field name="message" string="Message"/>
+                <field name="state" string="State"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_med_alert_form" model="ir.ui.view">
+        <field name="name">med.alert.form</field>
+        <field name="model">med.alert</field>
+        <field name="arch" type="xml">
+            <form string="Real-time Alert">
+                <header>
+                    <button name="action_acknowledge"
+                            type="object"
+                            string="Acknowledge"
+                            class="btn-primary"
+                            invisible="state != 'new'"/>
+
+                    <button name="action_resolve"
+                            type="object"
+                            string="Resolve"
+                            class="btn-secondary"
+                            invisible="state == 'resolved'"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="new,ack,resolved"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="reading_id"/>
+                            <field name="alert_type"/>
+                            <field name="severity"/>
+                        </group>
+
+                        <group>
+                            <field name="state"/>
+                            <field name="acknowledged_by" readonly="1"/>
+                            <field name="acknowledged_on" readonly="1"/>
+                            <field name="resolved_by" readonly="1"/>
+                            <field name="resolved_on" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_med_alert_kanban" model="ir.ui.view">
+        <field name="name">med.alert.kanban</field>
+        <field name="model">med.alert</field>
+        <field name="arch" type="xml">
+            <kanban class="o_med_alert_kanban" default_group_by="patient_id" create="1" quick_create="0" records_draggable="false">
+
+                <field name="patient_id"/>
+                <field name="severity"/>
+                <field name="alert_type"/>
+                <field name="message"/>
+                <field name="state"/>
+                <field name="create_date"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="o_med_alert_card severity_#{record.severity.raw_value or 'warning'}">
+
+                            <div class="o_med_alert_top">
+                                <div t-attf-class="o_med_alert_badge #{record.severity.raw_value or 'warning'}">
+                                    <i class="fa fa-warning"/>
+                                    <t t-if="record.severity.raw_value == 'critical'">CRITICAL</t>
+                                    <t t-else="">WARNING</t>
+                                </div>
+
+                                <div class="o_med_alert_date">
+                                    <field name="create_date"/>
+                                </div>
+                            </div>
+
+                            <div class="o_med_alert_patient_row">
+                                <div class="o_med_alert_avatar">
+                                    <t t-if="record.patient_id.value">
+                                        <t t-esc="record.patient_id.value[0]"/>
+                                    </t>
+                                    <t t-else="">?</t>
+                                </div>
+
+                                <div class="o_med_alert_patient_name">
+                                    <field name="patient_id"/>
+                                </div>
+                            </div>
+
+                            <div class="o_med_alert_message_box">
+                                <div class="o_med_alert_type">
+                                    <field name="alert_type"/>
+                                </div>
+
+                                <div class="o_med_alert_message">
+                                    <field name="message"/>
+                                </div>
+                            </div>
+
+                            <div class="o_med_alert_footer">
+                                <div t-attf-class="o_med_alert_state state_#{record.state.raw_value or 'new'}">
+                                    <span class="o_med_alert_state_dot"/>
+                                    <field name="state"/>
+                                </div>
+
+                                <div class="o_med_alert_actions">
+                                    <button name="action_acknowledge"
+                                            type="object"
+                                            class="btn btn-link o_med_alert_action_btn"
+                                            invisible="state != 'new'">
+                                        Acknowledge
+                                    </button>
+
+                                    <button name="action_resolve"
+                                            type="object"
+                                            class="btn btn-link o_med_alert_action_btn"
+                                            invisible="state == 'resolved'">
+                                        Resolve
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_med_alert" model="ir.actions.act_window">
+        <field name="name">Real-time Alerts</field>
+        <field name="res_model">med.alert</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" ref="view_med_alert_kanban"/>
+        <field name="search_view_id" ref="view_med_alert_search"/>
+        <field name="domain">[('state','!=','resolved'),('patient_id','!=',False)]</field>
+        <field name="context">{'search_default_group_by_patient': 1}</field>
+    </record>
+
+</odoo>
+

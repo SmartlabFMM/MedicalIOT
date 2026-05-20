@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_med_dashboard" model="ir.actions.client">
+        <field name="name">Command Center</field>
+        <field name="tag">med_iot_command_center.dashboard</field>
+    </record>
+
+    <menuitem id="menu_med_root" name="MedIoT" sequence="10"/>
+
+    <menuitem id="menu_med_dashboard"
+              name="Dashboard"
+              parent="menu_med_root"
+              action="action_med_dashboard"
+              sequence="10"
+              groups="med_iot_command_center.group_med_senior_doctor,med_iot_command_center.group_med_junior_staff"/>
+
+    <menuitem id="menu_med_admin_dashboard"
+              name="Admin Dashboard"
+              parent="menu_med_root"
+              action="action_med_admin_dashboard"
+              sequence="15"
+              groups="med_iot_command_center.group_med_admin"/>
+
+    
+    <!-- USER_ROLE_MENU_START -->
+    <menuitem id="menu_med_user_roles"
+              name="Users &amp; Roles"
+              parent="menu_med_root"
+              action="action_med_user_role_management"
+              sequence="16"
+              groups="med_iot_command_center.group_med_admin"/>
+    <!-- USER_ROLE_MENU_END -->
+<menuitem id="menu_med_alerts"
+              name="Real-time Alerts"
+              parent="menu_med_root"
+              action="action_med_alert"
+              sequence="20"
+              groups="med_iot_command_center.group_med_senior_doctor,med_iot_command_center.group_med_junior_staff"/>
+
+    <menuitem id="menu_med_patients"
+              name="Patient List"
+              parent="menu_med_root"
+              action="action_med_patient"
+              sequence="30"
+              groups="med_iot_command_center.group_med_admin"/>
+
+    <menuitem id="menu_med_history"
+              name="Data History"
+              parent="menu_med_root"
+              action="action_med_readings"
+              sequence="40"
+              groups="med_iot_command_center.group_med_senior_doctor,med_iot_command_center.group_med_junior_staff"/>
+
+    <menuitem id="menu_med_settings"
+              name="Settings"
+              parent="menu_med_root"
+              sequence="60"
+              action="action_med_settings"
+              groups="med_iot_command_center.group_med_senior_doctor,med_iot_command_center.group_med_junior_staff"/>
+    <!-- Device management is embedded inside Settings Control Center. Separate Device menu hidden. -->
+
+    <!-- FORCE_PATIENT_MENU_ADMIN_ONLY_START -->
+    <record id="menu_med_patients" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('group_med_admin')])]"/>
+    </record>
+    <!-- FORCE_PATIENT_MENU_ADMIN_ONLY_END -->
+</odoo>

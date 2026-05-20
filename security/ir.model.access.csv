@@ -1,0 +1,23 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_med_patient_admin,med.patient admin,model_med_patient,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_patient_senior,med.patient senior,model_med_patient,med_iot_command_center.group_med_senior_doctor,1,1,1,0
+access_med_patient_junior,med.patient junior,model_med_patient,med_iot_command_center.group_med_junior_staff,1,0,0,0
+
+access_med_reading_admin,med.vital.reading admin,model_med_vital_reading,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_reading_senior,med.vital.reading senior,model_med_vital_reading,med_iot_command_center.group_med_senior_doctor,1,0,0,0
+access_med_reading_junior,med.vital.reading junior,model_med_vital_reading,med_iot_command_center.group_med_junior_staff,1,0,0,0
+
+access_med_alert_admin,med.alert admin,model_med_alert,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_alert_senior,med.alert senior,model_med_alert,med_iot_command_center.group_med_senior_doctor,1,1,0,0
+access_med_alert_junior,med.alert junior,model_med_alert,med_iot_command_center.group_med_junior_staff,1,1,0,0
+
+access_med_device_admin,med.device admin,model_med_device,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_device_senior,med.device senior,model_med_device,med_iot_command_center.group_med_senior_doctor,1,0,0,0
+access_med_device_junior,med.device junior,model_med_device,med_iot_command_center.group_med_junior_staff,1,0,0,0
+
+access_med_settings_admin,med.settings admin,model_med_settings,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_settings_senior,med.settings senior,model_med_settings,med_iot_command_center.group_med_senior_doctor,1,1,1,0
+access_med_settings_junior,med.settings junior,model_med_settings,med_iot_command_center.group_med_junior_staff,1,0,0,0
+access_med_admin_dashboard_admin,med.admin.dashboard admin,model_med_admin_dashboard,med_iot_command_center.group_med_admin,1,1,1,1
+
+access_med_admin_quick_doctor_wizard,med.admin.quick.doctor.wizard,model_med_admin_quick_doctor_wizard,med_iot_command_center.group_med_admin,1,1,1,1

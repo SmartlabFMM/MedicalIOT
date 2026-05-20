@@ -1,0 +1,97 @@
+﻿/* Doctor dashboard inspo layout */
+
+.mediot-inspo-shell {
+    max-width: 1760px !important;
+    margin: 10px auto !important;
+    padding: 0 18px !important;
+}
+
+.mediot-inspo-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.55fr) minmax(390px, 0.85fr) !important;
+    gap: 18px !important;
+    align-items: start !important;
+}
+
+.mediot-inspo-trends,
+.mediot-inspo-directory {
+    background: #ffffff !important;
+    border: 1px solid #dfe7f2 !important;
+    border-radius: 22px !important;
+    box-shadow: 0 8px 24px rgba(16, 40, 80, 0.05) !important;
+}
+
+.mediot-inspo-trends {
+    padding: 16px 18px !important;
+}
+
+.mediot-inspo-directory {
+    padding: 16px !important;
+}
+
+.mediot-inspo-directory-title {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    color: #102a56 !important;
+    margin: 0 0 14px 0 !important;
+}
+
+/* make the trends card shorter */
+.mediot-inspo-trends h1,
+.mediot-inspo-trends h2,
+.mediot-inspo-trends h3 {
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 4px !important;
+}
+
+.mediot-inspo-trends p {
+    font-size: 13px !important;
+    margin-bottom: 6px !important;
+}
+
+/* vital cards stacked like inspo, but compact */
+.mediot-inspo-vital-card {
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 10px 14px !important;
+    margin: 10px 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+.mediot-inspo-vital-card canvas,
+.mediot-inspo-vital-card svg {
+    height: 62px !important;
+    max-height: 62px !important;
+    width: 100% !important;
+}
+
+/* directory compact patient rows */
+.mediot-inspo-directory .mediot-patient-row,
+.mediot-inspo-directory [class*="patient-card"],
+.mediot-inspo-directory [class*="patientCard"] {
+    border: 1px solid #e4ebf5 !important;
+    border-radius: 16px !important;
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    background: #ffffff !important;
+}
+
+/* top welcome smaller */
+.mediot_compact_source_header {
+    margin: 8px auto 10px auto !important;
+    padding: 10px 14px !important;
+    max-width: 1760px !important;
+}
+
+/* fit better vertically */
+body:has(.mediot-inspo-shell) .o_action_manager .o_content {
+    zoom: 0.88 !important;
+}
+
+/* keep curves proportional */
+body:has(.mediot-inspo-shell) canvas,
+body:has(.mediot-inspo-shell) svg {
+    max-width: 100% !important;
+}

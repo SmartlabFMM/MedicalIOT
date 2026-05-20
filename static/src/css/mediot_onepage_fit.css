@@ -1,0 +1,47 @@
+﻿/* FORCE MedIoT dashboard to fit in one visible page.
+   Curves stay safe because the whole dashboard is scaled uniformly. */
+
+body:has(.mediot_compact_source_header) .o_action_manager {
+    overflow: hidden !important;
+}
+
+body:has(.mediot_compact_source_header) .o_action_manager .o_content {
+    zoom: 0.76 !important;
+    transform-origin: top center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Compact top white header */
+.mediot_compact_source_header {
+    margin: 8px auto 10px auto !important;
+    padding: 10px 14px !important;
+    min-height: 58px !important;
+}
+
+.mediot_compact_source_title {
+    font-size: 16px !important;
+}
+
+.mediot_compact_source_subtitle {
+    font-size: 12px !important;
+    margin-top: 2px !important;
+}
+
+.mediot_compact_source_save {
+    padding: 8px 12px !important;
+    min-width: 145px !important;
+    font-size: 13px !important;
+}
+
+/* Reduce vertical spaces */
+body:has(.mediot_compact_source_header) .o_action_manager .o_content > * {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+/* Keep curves proportional */
+body:has(.mediot_compact_source_header) canvas,
+body:has(.mediot_compact_source_header) svg {
+    max-width: 100% !important;
+}

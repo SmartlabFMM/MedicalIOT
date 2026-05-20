@@ -1,0 +1,352 @@
+﻿/* =========================================================
+   EXACT DOCTOR DASHBOARD LAYOUT
+   left = vitals / right = patient directory
+   ========================================================= */
+
+.med_exact_dashboard .mediot-exact-shell,
+.o_action_manager .mediot-exact-shell{
+    max-width: 1780px !important;
+    margin: 14px auto !important;
+    padding: 0 10px 16px !important;
+}
+
+.med_exact_dashboard .mediot-exact-top,
+.o_action_manager .mediot-exact-top{
+    margin-bottom: 16px !important;
+}
+
+.med_exact_dashboard .mediot-exact-main,
+.o_action_manager .mediot-exact-main{
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.82fr) !important;
+    gap: 18px !important;
+    align-items: start !important;
+}
+
+.med_exact_dashboard .mediot-exact-panel,
+.o_action_manager .mediot-exact-panel{
+    background: #ffffff !important;
+    border: 1px solid #dfe7f2 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 14px rgba(18,46,87,.05) !important;
+    overflow: hidden !important;
+}
+
+.med_exact_dashboard .mediot-exact-welcome,
+.o_action_manager .mediot-exact-welcome{
+    padding: 18px 22px !important;
+}
+
+.med_exact_dashboard .mediot-exact-vitals,
+.o_action_manager .mediot-exact-vitals{
+    padding: 18px 20px 18px !important;
+}
+
+.med_exact_dashboard .mediot-exact-directory,
+.o_action_manager .mediot-exact-directory{
+    padding: 18px 18px 14px !important;
+    max-height: calc(100vh - 155px) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.med_exact_dashboard .mediot-section-head,
+.o_action_manager .mediot-section-head{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
+}
+
+.med_exact_dashboard .mediot-section-head-left,
+.o_action_manager .mediot-section-head-left{
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+}
+
+.med_exact_dashboard .mediot-head-icon,
+.o_action_manager .mediot-head-icon{
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #eef3ff !important;
+    color: #2a5bd7 !important;
+    font-size: 24px !important;
+    flex: 0 0 56px !important;
+}
+
+.med_exact_dashboard .mediot-section-title,
+.o_action_manager .mediot-section-title{
+    font-size: 22px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    color: #09224f !important;
+    margin: 0 0 4px !important;
+}
+
+.med_exact_dashboard .mediot-section-subtitle,
+.o_action_manager .mediot-section-subtitle{
+    font-size: 14px !important;
+    color: #637b9c !important;
+    margin: 0 !important;
+}
+
+.med_exact_dashboard .mediot-live-badge,
+.o_action_manager .mediot-live-badge{
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    background: #eaf9ef !important;
+    border: 1px solid #c8ecd4 !important;
+    color: #11a34d !important;
+    font-weight: 700 !important;
+    margin: 6px 0 14px !important;
+    width: fit-content !important;
+}
+
+.med_exact_dashboard .mediot-live-dot,
+.o_action_manager .mediot-live-dot{
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    background: #2dd06f !important;
+    box-shadow: 0 0 0 4px rgba(45,208,111,.15) !important;
+}
+
+.med_exact_dashboard .mediot-top-controls,
+.o_action_manager .mediot-top-controls{
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+}
+
+.med_exact_dashboard .mediot-top-controls > *,
+.o_action_manager .mediot-top-controls > *{
+    min-height: 48px !important;
+}
+
+.med_exact_dashboard .mediot-vitals-stack,
+.o_action_manager .mediot-vitals-stack{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+.med_exact_dashboard .mediot-vital-box,
+.o_action_manager .mediot-vital-box{
+    border: 1px solid #e4ebf4 !important;
+    border-radius: 18px !important;
+    padding: 14px 16px 12px !important;
+    background: #fff !important;
+}
+
+.med_exact_dashboard .mediot-vital-row,
+.o_action_manager .mediot-vital-row{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 8px !important;
+}
+
+.med_exact_dashboard .mediot-vital-title,
+.o_action_manager .mediot-vital-title{
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #0b2150 !important;
+    margin: 0 !important;
+}
+
+.med_exact_dashboard .mediot-vital-value,
+.o_action_manager .mediot-vital-value{
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+.med_exact_dashboard .mediot-vital-box canvas,
+.med_exact_dashboard .mediot-vital-box svg,
+.o_action_manager .mediot-vital-box canvas,
+.o_action_manager .mediot-vital-box svg{
+    width: 100% !important;
+    height: 112px !important;
+    max-height: 112px !important;
+    display: block !important;
+}
+
+.med_exact_dashboard .mediot-directory-title,
+.o_action_manager .mediot-directory-title{
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: #09224f !important;
+    margin: 0 0 14px !important;
+    line-height: 1.1 !important;
+}
+
+.med_exact_dashboard .mediot-directory-toolbar,
+.o_action_manager .mediot-directory-toolbar{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+}
+
+.med_exact_dashboard .mediot-directory-toolbar > *,
+.o_action_manager .mediot-directory-toolbar > *{
+    min-height: 42px !important;
+}
+
+.med_exact_dashboard .mediot-patient-list,
+.o_action_manager .mediot-patient-list{
+    overflow: auto !important;
+    padding-right: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+.med_exact_dashboard .mediot-patient-card,
+.o_action_manager .mediot-patient-card{
+    border: 1px solid #e6edf7 !important;
+    border-radius: 18px !important;
+    background: #fff !important;
+    padding: 14px !important;
+    display: grid !important;
+    grid-template-columns: 1.25fr 0.9fr 0.72fr !important;
+    gap: 14px !important;
+    align-items: center !important;
+}
+
+.med_exact_dashboard .mediot-patient-main,
+.o_action_manager .mediot-patient-main{
+    display: flex !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+}
+
+.med_exact_dashboard .mediot-patient-avatar,
+.o_action_manager .mediot-patient-avatar{
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    flex: 0 0 52px !important;
+    border: 2px solid #eef3fb !important;
+}
+
+.med_exact_dashboard .mediot-patient-name,
+.o_action_manager .mediot-patient-name{
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #0b2150 !important;
+    margin: 0 0 2px !important;
+}
+
+.med_exact_dashboard .mediot-patient-id,
+.o_action_manager .mediot-patient-id{
+    font-size: 13px !important;
+    color: #6a7f9d !important;
+    margin: 0 0 8px !important;
+}
+
+.med_exact_dashboard .mediot-patient-meta,
+.o_action_manager .mediot-patient-meta{
+    font-size: 13px !important;
+    color: #344b6a !important;
+    line-height: 1.45 !important;
+}
+
+.med_exact_dashboard .mediot-patient-ecg,
+.o_action_manager .mediot-patient-ecg{
+    font-size: 13px !important;
+    color: #3d5678 !important;
+    line-height: 1.45 !important;
+}
+
+.med_exact_dashboard .mediot-status-wrap,
+.o_action_manager .mediot-status-wrap{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.med_exact_dashboard .mediot-status-badge,
+.o_action_manager .mediot-status-badge{
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    border: 1px solid transparent !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.med_exact_dashboard .mediot-status-badge.warning,
+.o_action_manager .mediot-status-badge.warning{
+    background: #fff4e7 !important;
+    color: #eb9800 !important;
+}
+
+.med_exact_dashboard .mediot-status-badge.critical,
+.o_action_manager .mediot-status-badge.critical{
+    background: #ffeceb !important;
+    color: #ef4444 !important;
+}
+
+.med_exact_dashboard .mediot-status-badge.stable,
+.med_exact_dashboard .mediot-status-badge.normal,
+.o_action_manager .mediot-status-badge.stable,
+.o_action_manager .mediot-status-badge.normal{
+    background: #eaf8ef !important;
+    color: #169b47 !important;
+}
+
+.med_exact_dashboard .mediot-actions-wrap,
+.o_action_manager .mediot-actions-wrap{
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+}
+
+.med_exact_dashboard .mediot-actions-wrap a,
+.med_exact_dashboard .mediot-actions-wrap button,
+.med_exact_dashboard .mediot-actions-wrap .btn,
+.o_action_manager .mediot-actions-wrap a,
+.o_action_manager .mediot-actions-wrap button,
+.o_action_manager .mediot-actions-wrap .btn{
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.med_exact_dashboard .mediot-hide-original,
+.o_action_manager .mediot-hide-original{
+    display: none !important;
+}
+
+@media (max-width: 1400px){
+    .med_exact_dashboard .mediot-exact-main,
+    .o_action_manager .mediot-exact-main{
+        grid-template-columns: 1fr !important;
+    }
+
+    .med_exact_dashboard .mediot-exact-directory,
+    .o_action_manager .mediot-exact-directory{
+        max-height: none !important;
+    }
+}

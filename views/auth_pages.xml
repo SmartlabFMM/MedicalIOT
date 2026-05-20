@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<template id="med_landing_page" name="MedIoT Landing Page">
+        <t t-call="website.layout">
+            <div class="med_video_page">
+
+                <section class="med_video_hero">
+                <video class="mediot_hero_video_clean"
+       autoplay="autoplay"
+       muted="muted"
+       loop="loop"
+       playsinline="playsinline"
+       preload="auto">
+    <source src="/med_iot_command_center/static/description/hero.mp4?v=clean1" type="video/mp4"/>
+</video>
+                <div class="med_video_overlay"></div>
+
+                    <header class="med_video_nav">
+                        <div class="med_video_brand">
+                            <div class="med_video_brand_icon med_video_heart_logo"><span>♡</span></div>
+                            <div class="med_video_brand_text">MedIoT</div>
+                        </div>
+
+                        <nav class="med_video_menu">
+                            <a href="#why">Why?</a>
+                            <a href="#services">Services</a>
+                            <a href="#contact">Contact Us</a>
+                            <a href="/mediot/login" class="med_video_btn ghost">Login</a>
+                            <a href="/mediot/signup" class="med_video_btn solid">Sign Up</a>
+                        </nav>
+                    </header>
+
+                    <div class="med_video_content">
+                        <h1 class="med_fixed_title">
+                            <span class="med_line">Heart Monitor Case</span>
+                            <span class="med_line">Smart Wearable</span>
+                            <span class="med_line">Health Device</span>
+                        </h1>
+
+                        <p>
+                            A compact heart-shaped device for real-time SpO₂,
+                            temperature, and ECG monitoring inside hospitals.
+                        </p>
+
+                        <div class="med_video_actions">
+                            <a href="/mediot/login" class="med_video_cta primary">Get Started</a>
+                            <a href="#services" class="med_video_cta secondary">Learn More</a>
+                        </div>
+                    </div>
+
+                    <div class="med_video_stats">
+                        <div class="med_video_stat">
+                            <div class="med_video_stat_num">200+</div>
+                            <div class="med_video_stat_label">For hospital teamss Monitored</div>
+                        </div>
+                        <div class="med_video_stat">
+                            <div class="med_video_stat_num">15+</div>
+                            <div class="med_video_stat_label">Doctors Onboarded</div>
+                        </div>
+                        <div class="med_video_stat">
+                            <div class="med_video_stat_num">500+</div>
+                            <div class="med_video_stat_label">Active For hospital teamss</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="why" class="med_section med_section_light">
+                    <div class="med_section_intro mediot-why-polished-intro">
+                        <span class="med_tag mediot-why-badge">Why MedIoT</span>
+                        <h2 class="mediot-why-title">Smart monitoring built for rapid medical response</h2>
+                        <p class="mediot-why-subtitle">
+                            MedIoT combines AI, For hospital teams dashboards, and Connected Hospital Use to give doctors
+                            a clear and connected view of every For hospital teams.
+                        </p>
+                    </div>
+
+                    <div class="med_feature_grid">
+                        <div class="med_feature_card mediot-why-card">
+                            <div class="med_feature_icon mediot-why-icon-wrap">♡</div>
+                            <h3>Real-Time Vital Tracking</h3>
+                            <p>
+                                Track For hospital teams condition, therapy effectiveness, and vital changes with
+                                continuous monitoring and personalized insights.
+                            </p>
+                        </div>
+
+                        <div class="med_feature_card featured">
+                            <div class="med_feature_icon mediot-why-icon-wrap">🧠</div>
+                            <h3>Smart Alert Support</h3>
+                            <p>
+                                Our advanced AI algorithms analyze For hospital teams data to create tailored follow-up
+                                recommendations and smarter care decisions.
+                            </p>
+                        </div>
+
+                        <div class="med_feature_card mediot-why-card">
+                            <div class="med_feature_icon mediot-why-icon-wrap">⌚</div>
+                            <h3>Connected Hospital Use</h3>
+                            <p>
+                                Seamlessly connect wearable and bedside devices to monitor critical health
+                                metrics in one centralized platform.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="services" class="med_section med_section_alt">
+                    <div class="med_section_intro">
+                        <span class="med_tag">Services</span>
+                        <h2>How MedIoT supports hospital monitoring</h2>
+                        <p>
+                            From For hospital teams tracking to alert management, the platform is built to support daily
+                            medical workflows with a cleaner, modern interface.
+                        </p>
+                    </div>
+
+                    <div class="med_testimonial_grid">
+                        <div class="med_testimonial_card">
+                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/cordinateur.jpg" alt="Rapid Alerts"/></div>
+                            <div class="med_badge">Fast alert response</div>
+                            <p>
+                                "MedIoT helped us react to For hospital teams changes much faster. The centralized insights
+                                made a real difference in clinical follow-up."
+                            </p>
+                            <h4>Rapid Alerts</h4>
+                            <span>For medical response</span>
+                            <a href="#">See Detail</a>
+                        </div>
+
+                        <div class="med_testimonial_card">
+                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/michale.jpg" alt="Vital Monitoring"/></div>
+                            <div class="med_badge">Clear vital tracking</div>
+                            <p>
+                                The heart-shaped monitoring case keeps For hospital teams data organized and easier to follow during hospital care.
+                            </p>
+                            <h4>Vital Monitoring</h4>
+                            <span>SpO₂ · Temperature · ECG</span>
+                            <a href="#">See Detail</a>
+                        </div>
+
+                        <div class="med_testimonial_card">
+                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/pationua.jpg" alt="Connected Dashboard"/></div>
+                            <div class="med_badge">Connected care view</div>
+                            <p>
+                                "The Connected Hospital Use gave us continuous visibility into For hospital teams trends and helped
+                                identify risk patterns earlier."
+                            </p>
+                            <h4>Connected Dashboard</h4>
+                            <span>For hospital teams</span>
+                            <a href="#">See Detail</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="contact" class="med_section med_section_light">
+                    <div class="med_contact_wrap">
+                        <div class="med_contact_quote">
+                            <span class="med_tag">Contact Us</span>
+                            <h2>Smart care starts with connected support</h2>
+                            <p>
+                                Whether you are a doctor, administrator, or project supervisor, MedIoT helps
+                                you manage For hospital teams data and medical monitoring more effectively.
+                            </p>
+                            <blockquote>
+                                “Technology should simplify healthcare work, not complicate it.”
+                            </blockquote>
+                        </div>
+
+                        <div class="med_contact_form">
+                            <div class="med_form_row">
+                                <input type="text" placeholder="Your name"/>
+                            </div>
+                            <div class="med_form_row">
+                                <input type="email" placeholder="Your email"/>
+                            </div>
+                            <div class="med_form_row">
+                                <textarea rows="5" placeholder="Write your message..."></textarea>
+                            </div>
+                            <button type="button">Send Message</button>
+                        </div>
+                    </div>
+                </section>
+
+                
+<footer class="med_video_footer mediot_footer_v2">
+    <div class="container">
+        <div class="mediot_footer_grid_v2">
+            <div class="mediot_footer_col_v2 mediot_footer_brand_v2">
+                <div class="mediot_footer_logo_v2">
+                    <span>♡</span>
+                    <strong>MedIoT</strong>
+                </div>
+                <p>Smart care. Real-time monitoring. Connected clinical support.</p>
+            </div>
+
+            <div class="mediot_footer_col_v2">
+                <h4>Services</h4>
+                <ul>
+                    <li>Vital Monitoring</li>
+                    <li>Medical Dashboards</li>
+                    <li>Doctor Follow-up</li>
+                    <li>Case Management</li>
+                </ul>
+            </div>
+
+            <div class="mediot_footer_col_v2">
+                <h4>Contact</h4>
+                <ul class="mediot_footer_contact_v2">
+                    <li><i class="fa fa-phone" title="Phone"></i><span>+216 00 000 000</span></li>
+                    <li><i class="fa fa-envelope" title="Email"></i><span>contact@mediot.health</span></li>
+                    <li><i class="fa fa-map-marker" title="Location"></i><span>Tunis, Tunisia</span></li>
+                </ul>
+            </div>
+
+            <div class="mediot_footer_col_v2">
+                <h4>Follow Us</h4>
+                <div class="mediot_footer_socials_v2">
+                    <a href="#" aria-label="Instagram"><i class="fa fa-instagram" title="Instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa fa-facebook" title="Facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa fa-twitter" title="Twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa fa-linkedin" title="LinkedIn"></i></a>
+                </div>
+
+                <div class="mediot_footer_newsletter_v2">
+                    <p>Subscribe for platform updates and wellness insights.</p>
+                    <div class="mediot_footer_newsletter_box_v2">
+                        <input type="email" placeholder="Your email"/>
+                        <button type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mediot_footer_bottom_v2">
+            <p>© 2026 MedIoT. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+            </div>
+        </t>
+        <script type="text/javascript" src="/med_iot_command_center/static/src/js/landing_stats_counter.js"></script>
+        <script type="text/javascript" src="/med_iot_command_center/static/src/js/force_play_hero_video.js?v=play4"></script>
+</template>
+    </data>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+﻿/* Smaller Patient Monitoring Trends */
+
+.mediot-vitals-compact {
+    padding: 10px 14px !important;
+    margin-top: 6px !important;
+    margin-bottom: 8px !important;
+    border-radius: 14px !important;
+}
+
+.mediot-vitals-compact h1,
+.mediot-vitals-compact h2,
+.mediot-vitals-compact h3 {
+    font-size: 17px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
+}
+
+.mediot-vitals-compact p {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+}
+
+.mediot-vitals-compact .mediot-vital-card {
+    min-height: 115px !important;
+    height: 125px !important;
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+}
+
+.mediot-vitals-compact .mediot-vital-card canvas,
+.mediot-vitals-compact .mediot-vital-card svg {
+    height: 50px !important;
+    max-height: 50px !important;
+}
+
+.mediot-vitals-compact .mediot-vital-card [class*="chart"],
+.mediot-vitals-compact .mediot-vital-card [class*="graph"],
+.mediot-vitals-compact .mediot-vital-card [class*="curve"] {
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+}
+
+.mediot-vitals-compact .mediot-vital-card * {
+    box-sizing: border-box !important;
+}
+
+.mediot-vitals-compact [class*="Live"],
+.mediot-vitals-compact [class*="live"] {
+    transform: scale(0.85) !important;
+    transform-origin: left center !important;
+}
+
+.mediot-vitals-compact [class*="select"],
+.mediot-vitals-compact [class*="hours"],
+.mediot-vitals-compact button,
+.mediot-vitals-compact .btn {
+    min-height: 34px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}

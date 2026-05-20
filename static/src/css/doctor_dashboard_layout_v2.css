@@ -1,0 +1,205 @@
+﻿/* ===== Doctor Dashboard Layout V2 ===== */
+
+.med_exact_dashboard {
+    display: block !important;
+    max-width: 1840px !important;
+    margin: 0 auto !important;
+    padding: 10px 18px 14px !important;
+    background: #f5f8fe !important;
+}
+
+.mediot_layout_v2 {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.55fr) minmax(420px, 0.85fr) !important;
+    gap: 16px !important;
+    align-items: start !important;
+}
+
+.mediot_left_v2,
+.mediot_right_v2 {
+    min-width: 0 !important;
+}
+
+/* Welcome card */
+.mediot_layout_v2 .mediot_compact_source_header {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 12px 0 !important;
+    padding: 14px 18px !important;
+    min-height: 74px !important;
+    border-radius: 16px !important;
+}
+
+/* Trends left panel */
+.mediot_layout_v2 .mediot_trends_exact {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 16px 18px !important;
+    border-radius: 18px !important;
+}
+
+.mediot_layout_v2 .mediot_trends_header {
+    margin-bottom: 10px !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+
+.mediot_layout_v2 .mediot_trends_icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+}
+
+.mediot_layout_v2 .mediot_trends_title_side h2 {
+    font-size: 19px !important;
+    line-height: 1.15 !important;
+    margin: 0 !important;
+}
+
+.mediot_layout_v2 .mediot_trends_title_side p {
+    font-size: 12px !important;
+    margin: 3px 0 6px !important;
+}
+
+.mediot_layout_v2 .mediot_trends_controls {
+    gap: 8px !important;
+}
+
+.mediot_layout_v2 .mediot_patient_select {
+    min-width: 230px !important;
+    height: 38px !important;
+    padding: 7px 12px !important;
+    border-radius: 12px !important;
+}
+
+.mediot_layout_v2 .mediot_time_btn,
+.mediot_layout_v2 .mediot_refresh_btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 7px 12px !important;
+    border-radius: 12px !important;
+}
+
+/* Stack charts vertically like the inspo */
+.mediot_layout_v2 .mediot_trends_grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+}
+
+.mediot_layout_v2 .mediot_trend_card {
+    height: 126px !important;
+    min-height: 126px !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    display: block !important;
+    overflow: hidden !important;
+}
+
+.mediot_layout_v2 .mediot_trend_top {
+    display: grid !important;
+    grid-template-columns: 20px 1fr auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 6px !important;
+}
+
+.mediot_layout_v2 .mediot_trend_top strong {
+    font-size: 14px !important;
+    line-height: 1.1 !important;
+}
+
+.mediot_layout_v2 .mediot_trend_top span {
+    font-size: 16px !important;
+}
+
+.mediot_layout_v2 .mediot_chart_box {
+    height: 78px !important;
+    min-height: 78px !important;
+    max-height: 78px !important;
+    padding: 5px 8px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.mediot_layout_v2 .mediot_chart_box svg {
+    width: 100% !important;
+    height: 68px !important;
+    max-height: 68px !important;
+    display: block !important;
+}
+
+/* Right Patient Directory */
+.mediot_layout_v2 .mediot_toolbar_exact {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    border: 1px solid #dbe4f0 !important;
+    box-shadow: 0 8px 24px rgba(16, 40, 80, 0.05) !important;
+    max-height: calc(100vh - 92px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact::before {
+    content: "Patient Directory" !important;
+    display: block !important;
+    font-size: 20px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    color: #102a56 !important;
+    margin-bottom: 14px !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact input,
+.mediot_layout_v2 .mediot_toolbar_exact select,
+.mediot_layout_v2 .mediot_toolbar_exact button,
+.mediot_layout_v2 .mediot_toolbar_exact .btn {
+    min-height: 36px !important;
+    height: 36px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact table {
+    width: 100% !important;
+    font-size: 12px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact thead {
+    display: none !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact tbody tr {
+    background: #ffffff !important;
+    border-radius: 14px !important;
+    box-shadow: 0 0 0 1px #e5edf7 !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact tbody td {
+    padding: 8px 6px !important;
+    vertical-align: middle !important;
+    border: 0 !important;
+}
+
+.mediot_layout_v2 .mediot_toolbar_exact img {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+@media (max-width: 1300px) {
+    .mediot_layout_v2 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mediot_layout_v2 .mediot_toolbar_exact {
+        max-height: none !important;
+    }
+}

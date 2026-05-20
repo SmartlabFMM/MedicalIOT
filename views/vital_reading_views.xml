@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+    <!-- ── LIST VIEW ── -->
+    <record id="view_med_reading_tree" model="ir.ui.view">
+        <field name="name">med.vital.reading.tree</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <list string="Data History" decoration-danger="spo2 &lt; 90 or ecg_bpm &gt; 120" decoration-warning="(spo2 &gt;= 90 and spo2 &lt; 94) or temp_c &gt; 38.5" decoration-success="spo2 &gt;= 94 and ecg_bpm &lt;= 100 and temp_c &lt;= 37.5" class="o_med_history_list">
+                <field name="reading_at" string="Reading At"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="spo2" string="SpO2 (%)"/>
+                <field name="ecg_bpm" string="ECG (BPM)"/>
+                <field name="temp_c" string="Temp (°C)"/>
+                <field name="device_id" string="Device" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── FORM VIEW ── -->
+    <record id="view_med_reading_form" model="ir.ui.view">
+        <field name="name">med.vital.reading.form</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <!-- Banner -->
+                    <div style="background:linear-gradient(135deg,#5c6bc0 0%,#7986cb 50%,#9575cd 100%);padding:20px 36px;display:flex;align-items:center;justify-content:space-between;margin:-16px -16px 24px -16px;">
+                        <div style="display:flex;align-items:center;gap:16px;">
+                            <div style="width:52px;height:52px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📊</div>
+                            <div>
+                                <div style="font-size:.6rem;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px;letter-spacing:.08em;">Vital Signs Record</div>
+                                <field name="patient_id" nolabel="1" style="font-size:1.1rem;font-weight:700;color:#fff;background:transparent;border:none;padding:0;"/>
+                            </div>
+                        </div>
+                        <div style="font-size:.75rem;color:rgba(255,255,255,.7);">
+                            <field name="reading_at" nolabel="1" readonly="1" style="background:transparent;border:none;color:rgba(255,255,255,.8);"/>
+                        </div>
+                    </div>
+
+                    <!-- Vitals Cards -->
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:20px;">
+
+                        <!-- SpO2 -->
+                        <div style="background:#fff;border:1px solid #dbeafe;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(37,99,235,0.08);">
+                            <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_spo2.png" style="width:56px;height:56px;object-fit:contain;"/>
+                            </div>
+                            <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">MAX30102 · SpO2</div>
+                            <field name="spo2" nolabel="1" style="font-size:3rem;font-weight:800;color:#2563eb;background:transparent;border:none;text-align:center;width:100%;display:block;"/>
+                            <div style="font-size:.9rem;color:#94a3b8;margin-top:6px;font-weight:600;">%</div>
+                            <div style="margin-top:14px;height:6px;background:#dbeafe;border-radius:6px;">
+                                <div style="height:6px;background:linear-gradient(90deg,#2563eb,#60a5fa);border-radius:6px;width:90%;"/>
+                            </div>
+                            <div style="font-size:.68rem;color:#94a3b8;margin-top:8px;">Normal: 94–100%</div>
+                        </div>
+
+                        <!-- ECG -->
+                        <div style="background:#fff;border:1px solid #fee2e2;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(239,68,68,0.08);">
+                            <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#fee2e2,#fecaca);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_ecg.png" style="width:56px;height:56px;object-fit:contain;"/>
+                            </div>
+                            <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">AD8232 · ECG</div>
+                            <field name="ecg_bpm" nolabel="1" style="font-size:3rem;font-weight:800;color:#ef4444;background:transparent;border:none;text-align:center;width:100%;display:block;"/>
+                            <div style="font-size:.9rem;color:#94a3b8;margin-top:6px;font-weight:600;">bpm</div>
+                            <div style="margin-top:14px;height:6px;background:#fee2e2;border-radius:6px;">
+                                <div style="height:6px;background:linear-gradient(90deg,#ef4444,#f87171);border-radius:6px;width:75%;"/>
+                            </div>
+                            <div style="font-size:.68rem;color:#94a3b8;margin-top:8px;">Normal: 60–100 bpm</div>
+                        </div>
+
+                        <!-- Temperature -->
+                        <div style="background:#fff;border:1px solid #ffedd5;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(249,115,22,0.08);">
+                            <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#ffedd5,#fed7aa);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
+                                <img src="/med_iot_command_center/static/description/sensor_temp.png" style="width:56px;height:56px;object-fit:contain;"/>
+                            </div>
+                            <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">DS18B20 · Temperature</div>
+                            <field name="temp_c" nolabel="1" style="font-size:3rem;font-weight:800;color:#f97316;background:transparent;border:none;text-align:center;width:100%;display:block;"/>
+                            <div style="font-size:.9rem;color:#94a3b8;margin-top:6px;font-weight:600;">°C</div>
+                            <div style="margin-top:14px;height:6px;background:#ffedd5;border-radius:6px;">
+                                <div style="height:6px;background:linear-gradient(90deg,#f97316,#fb923c);border-radius:6px;width:80%;"/>
+                            </div>
+                            <div style="font-size:.68rem;color:#94a3b8;margin-top:8px;">Normal: 36.1–37.2°C</div>
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div style="background:#fff;border:1px solid #dde0f5;border-radius:14px;padding:20px 24px;">
+                        <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;color:#5c6bc0;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #eef0fb;letter-spacing:.07em;">Reading Details</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Patient</div>
+                                <field name="patient_id" nolabel="1" options="{'no_create':True}" style="width:100%;"/>
+                            </div>
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Device</div>
+                                <field name="device_id" nolabel="1" options="{'no_create':True}" style="width:100%;"/>
+                            </div>
+                            <div>
+                                <div style="font-size:.6rem;text-transform:uppercase;color:#94a3b8;margin-bottom:5px;font-weight:600;">Reading Time</div>
+                                <field name="reading_at" nolabel="1" style="width:100%;background:#f5f6fd;border:1.5px solid #dde0f5;border-radius:7px;padding:9px 11px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── GRAPH VIEW ── -->
+    <record id="view_med_reading_graph" model="ir.ui.view">
+        <field name="name">med.vital.reading.graph</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <graph string="Vitals Per Patient" type="bar">
+                <field name="patient_id" type="row"/>
+                <field name="spo2" type="measure"/>
+                <field name="ecg_bpm" type="measure"/>
+                <field name="temp_c" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ── PIVOT VIEW ── -->
+    <record id="view_med_reading_pivot" model="ir.ui.view">
+        <field name="name">med.vital.reading.pivot</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="patient_id" type="row"/>
+                <field name="reading_at" interval="day" type="col"/>
+                <field name="spo2" type="measure"/>
+                <field name="ecg_bpm" type="measure"/>
+                <field name="temp_c" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ── SEARCH VIEW ── -->
+    <record id="view_med_reading_search" model="ir.ui.view">
+        <field name="name">med.vital.reading.search</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <search string="Search Readings">
+                <field name="patient_id" string="Patient"/>
+                <filter string="Critical SpO2" name="critical_spo2" domain="[('spo2','&lt;',90)]"/>
+                <filter string="Tachycardia" name="tachycardia" domain="[('ecg_bpm','&gt;',120)]"/>
+                <filter string="Fever" name="fever" domain="[('temp_c','&gt;',38.5)]"/>
+                <separator/>
+                <filter string="By Patient" name="group_patient" context="{'group_by':'patient_id'}"/>
+                <filter string="By Date" name="group_date" context="{'group_by':'reading_at:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── ACTION ── -->
+    <record id="action_med_readings" model="ir.actions.act_window">
+        <field name="name">Data History</field>
+        <field name="res_model">med.vital.reading</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_med_reading_search"/>
+    </record>
+
+</odoo>

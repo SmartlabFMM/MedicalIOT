@@ -1,0 +1,185 @@
+﻿(function () {
+    "use strict";
+
+    window.MEDIOT_CHART_SAFE_RUNNING = true;
+    console.log("MEDIOT SAFE CHART JS LOADED");
+
+    function norm(txt) {
+        return String(txt || "").replace(/\s+/g, " ").trim().toUpperCase();
+    }
+
+    function valueFromText(text, kind) {
+        const t = String(text || "").replace(",", ".");
+        if (kind === "spo2") {
+            const m = t.match(/(\d+(?:\.\d+)?)\s*%/);
+            return m ? Number(m[1]) : 97;
+        }
+        if (kind === "hr") {
+            const m = t.match(/(\d+(?:\.\d+)?)\s*bpm/i);
+            return m ? Number(m[1]) : 72;
+        }
+        if (kind === "temp") {
+            const m = t.match(/(\d+(?:\.\d+)?)\s*°?\s*C/i);
+            return m ? Number(m[1]) : 36.8;
+        }
+        return 0;
+    }
+
+    function chartHTML(kind, value) {
+        const cfg = {
+            spo2: {
+                title: "SpO2",
+                value: Number(value).toFixed(2),
+                unit: "%",
+                color: "#2563eb",
+                bg: "#eaf2ff",
+                icon: "💧",
+                curr: Number(value).toFixed(1) + "%",
+                axis: ["100%", "95%", "90%"],
+                path: "M35 68 C65 66, 78 54, 98 64 C118 74, 135 57, 158 61 C185 64, 200 52, 224 57 C248 62, 260 76, 282 66 C300 58, 318 62, 330 60",
+                fill: "M35 68 C65 66, 78 54, 98 64 C118 74, 135 57, 158 61 C185 64, 200 52, 224 57 C248 62, 260 76, 282 66 C300 58, 318 62, 330 60 L330 104 L35 104 Z",
+                dotY: 60,
+            },
+            hr: {
+                title: "Heart Rate",
+                value: Math.round(Number(value)),
+                unit: "bpm",
+                color: "#22a047",
+                bg: "#eafbea",
+                icon: "💚",
+                curr: Math.round(Number(value)) + " bpm",
+                axis: ["100", "80", "60"],
+                path: "M35 80 C65 79, 75 78, 88 68 C103 55, 125 72, 138 64 C150 56, 151 35, 174 42 C195 50, 205 62, 225 58 C245 54, 250 72, 272 73 C295 74, 305 61, 330 65",
+                fill: "M35 80 C65 79, 75 78, 88 68 C103 55, 125 72, 138 64 C150 56, 151 35, 174 42 C195 50, 205 62, 225 58 C245 54, 250 72, 272 73 C295 74, 305 61, 330 65 L330 104 L35 104 Z",
+                dotY: 65,
+            },
+            temp: {
+                title: "Temperature",
+                value: Number(value).toFixed(2),
+                unit: "°C",
+                color: "#f97316",
+                bg: "#fff1e8",
+                icon: "🌡️",
+                curr: Number(value).toFixed(1) + "°C",
+                axis: ["38.0", "37.0", "36.0"],
+                path: "M35 62 C52 55, 62 68, 78 60 C94 51, 110 62, 132 64 C152 66, 164 64, 180 62 C196 60, 200 47, 220 50 C240 53, 250 70, 274 68 C294 66, 305 60, 330 64",
+                fill: "M35 62 C52 55, 62 68, 78 60 C94 51, 110 62, 132 64 C152 66, 164 64, 180 62 C196 60, 200 47, 220 50 C240 53, 250 70, 274 68 C294 66, 305 60, 330 64 L330 104 L35 104 Z",
+                dotY: 64,
+            },
+        }[kind];
+
+        return `
+            <div class="mediot-safe-chart-head">
+                <div class="mediot-safe-chart-icon" style="background:${cfg.bg};color:${cfg.color};">${cfg.icon}</div>
+                <div class="mediot-safe-chart-title">${cfg.title}</div>
+                <div class="mediot-safe-chart-current">curr. ${cfg.curr}</div>
+            </div>
+
+            <div class="mediot-safe-chart-value" style="color:${cfg.color};">
+                ${cfg.value}<span>${cfg.unit}</span>
+            </div>
+
+            <svg class="mediot-safe-chart-svg" viewBox="0 0 350 120" preserveAspectRatio="none">
+                <line x1="35" y1="22" x2="335" y2="22" class="mediot-safe-grid"/>
+                <line x1="35" y1="58" x2="335" y2="58" class="mediot-safe-grid"/>
+                <line x1="35" y1="94" x2="335" y2="94" class="mediot-safe-grid"/>
+
+                <text x="2" y="25" class="mediot-safe-axis">${cfg.axis[0]}</text>
+                <text x="2" y="61" class="mediot-safe-axis">${cfg.axis[1]}</text>
+                <text x="2" y="97" class="mediot-safe-axis">${cfg.axis[2]}</text>
+
+                <path d="${cfg.fill}" fill="${cfg.color}" opacity="0.08"/>
+                <path d="${cfg.path}" fill="none" stroke="${cfg.color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="330" cy="${cfg.dotY}" r="4" fill="${cfg.color}"/>
+
+                <text x="45" y="116" class="mediot-safe-axis">00h</text>
+                <text x="125" y="116" class="mediot-safe-axis">06h</text>
+                <text x="210" y="116" class="mediot-safe-axis">12h</text>
+                <text x="292" y="116" class="mediot-safe-axis">18h</text>
+            </svg>
+        `;
+    }
+
+    function findMetricCard(label, kind) {
+        const root = document.querySelector(".o_form_view");
+        if (!root) return null;
+
+        const labelNorm = norm(label);
+        const nodes = Array.from(root.querySelectorAll("span, div, label"));
+
+        for (const node of nodes) {
+            const nodeText = norm(node.textContent);
+            if (!nodeText.includes(labelNorm)) continue;
+
+            let cur = node;
+            for (let i = 0; i < 10 && cur && cur !== root; i++) {
+                const box = cur.getBoundingClientRect();
+                const text = cur.textContent || "";
+
+                const hasValue =
+                    kind === "spo2" ? /(\d+(?:[.,]\d+)?)\s*%/.test(text) :
+                    kind === "hr" ? /(\d+(?:[.,]\d+)?)\s*bpm/i.test(text) :
+                    /(\d+(?:[.,]\d+)?)\s*°?\s*C/i.test(text);
+
+                if (
+                    hasValue &&
+                    box.width >= 180 &&
+                    box.width <= 430 &&
+                    box.height >= 70 &&
+                    box.height <= 230
+                ) {
+                    return cur;
+                }
+
+                cur = cur.parentElement;
+            }
+        }
+
+        return null;
+    }
+
+    function applyCharts() {
+        const root = document.querySelector(".o_form_view");
+        if (!root) return;
+
+        const targets = [
+            ["SpO2", "spo2"],
+            ["Heart Rate", "hr"],
+            ["Temperature", "temp"],
+        ];
+
+        let changed = 0;
+
+        for (const [label, kind] of targets) {
+            const card = findMetricCard(label, kind);
+            if (!card) continue;
+            if (card.classList.contains("mediot-safe-chart-card")) continue;
+
+            const val = valueFromText(card.textContent, kind);
+
+            card.classList.add("mediot-safe-chart-card");
+            card.innerHTML = chartHTML(kind, val);
+
+            changed += 1;
+        }
+
+        if (changed) {
+            console.log("MEDIOT charts applied:", changed);
+        }
+    }
+
+    let tries = 0;
+    const timer = setInterval(function () {
+        tries += 1;
+        applyCharts();
+
+        if (tries > 30 || document.querySelectorAll(".mediot-safe-chart-card").length >= 3) {
+            clearInterval(timer);
+        }
+    }, 700);
+
+    window.addEventListener("hashchange", function () {
+        setTimeout(applyCharts, 700);
+        setTimeout(applyCharts, 1500);
+    });
+})();
