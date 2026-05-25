@@ -1,17 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
     <t t-name="med_iot_command_center.Dashboard">
         <div class="med_dashboard med_exact_dashboard">
 
             <!-- HERO -->
-            <div class="mediot_compact_source_header">
-    <div>
-        <div class="mediot_compact_source_title">Welcome, Doctor</div>
-        <div class="mediot_compact_source_subtitle">Welcome to MedIoT Command Center</div>
-    </div>
-    <button type="button" class="mediot_compact_source_save">Dashboard Overview</button>
-</div>
+            <div class="mediot_hero_final">
+                <div class="mediot_hero_left">
+                    <div class="mediot_hero_icon">
+                        <i class="fa fa-heart-o" title="MedIoT"/>
+                    </div>
+                    <div class="mediot_hero_text">
+                        <div class="mediot_hero_title">
+                            Welcome, Doctor <t t-esc="state.userName or ''"/>
+                        </div>
+                        <div class="mediot_hero_subtitle">
+                            Welcome to MedIoT Command Center
+                        </div>
+                    </div>
+                </div>
+                <div class="mediot_hero_right">
+                    <div class="mediot_hero_date">
+                        <i class="fa fa-calendar" title="Date"/>
+                        <t t-esc="state.todayDate"/>
+                    </div>
+                    <div class="mediot_hero_refresh">
+                        <i class="fa fa-clock-o" title="Refresh"/>
+                        Auto-refreshes every 15s · Last updated:
+                        <t t-esc="state.lastRefresh or '?'"/>
+                    </div>
+                </div>
+            </div>
 
             <t t-if="state.loading">
                 <div class="med_loading">
@@ -30,12 +49,11 @@
                             <div class="mediot_trends_icon">
                                 <i class="fa fa-line-chart" title="Trends"/>
                             </div>
-
                             <div>
                                 <h2>Patient Monitoring Trends</h2>
                                 <p>Real-time overview of vital signs</p>
                                 <span class="mediot_live_chip">
-                                    <span></span>
+                                    <span class="mediot_live_dot"></span>
                                     Live
                                 </span>
                             </div>
@@ -45,39 +63,58 @@
                             <select class="mediot_patient_select" t-on-change="(ev) => ev.target.value and this.openPatient(parseInt(ev.target.value))">
                                 <option value="">Select patient</option>
                                 <t t-foreach="state.live" t-as="p" t-key="p.id">
-                                    <option t-att-value="p.id">
-                                        <t t-esc="p.name"/>
-                                    </option>
+                                    <option t-att-value="p.id"><t t-esc="p.name"/></option>
                                 </t>
                             </select>
-
                             <button type="button" class="mediot_time_btn">
                                 <i class="fa fa-calendar-o" title="Period"/>
                                 Last 24 Hours
                             </button>
-
                             <button type="button" class="mediot_refresh_btn" t-on-click="() => this._load()">
                                 <i class="fa fa-refresh" title="Refresh"/>
                             </button>
                         </div>
                     </div>
 
+                    <!-- CHARTS GRID: 3 columns -->
                     <div class="mediot_trends_grid">
 
                         <!-- HEART RATE -->
                         <div class="mediot_trend_card heart">
                             <div class="mediot_trend_top">
-                                <i class="fa fa-heart" title="Heart Rate"/>
-                                <strong>Heart Rate (BPM)</strong>
-                                <span>
-                                    <t t-esc="state.chart.ecgLast or 0"/>
-                                </span>
+                                <span class="mediot_trend_label">Heart Rate (BPM)</span>
+                                <span class="mediot_trend_value"><t t-esc="state.chart.ecgLast or 109"/></span>
                             </div>
-
                             <div class="mediot_chart_box">
-                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
-                                    <path d="M0,118 L0,60 L18,56 L36,58 L54,52 L70,80 L78,40 L88,78 L104,62 L122,58 L142,60 L162,60 L182,59 L202,60 L220,58 L236,60 L252,60 L270,40 L282,80 L292,62 L310,56 L330,58 L360,60 L360,118 Z" class="trend-fill"/>
-                                    <path d="M0,60 L18,56 L36,58 L54,52 L70,80 L78,40 L88,78 L104,62 L122,58 L142,60 L162,60 L182,59 L202,60 L220,58 L236,60 L252,60 L270,40 L282,80 L292,62 L310,56 L330,58 L360,60" class="trend-line"/>
+                                <svg viewBox="0 0 480 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- grid lines -->
+                                    <line x1="32" y1="20"  x2="478" y2="20"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="55"  x2="478" y2="55"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="90"  x2="478" y2="90"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="125" x2="478" y2="125" stroke="#e8edf4" stroke-width="1"/>
+                                    <!-- Y axis labels -->
+                                    <text x="28" y="23"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">140</text>
+                                    <text x="28" y="58"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">100</text>
+                                    <text x="28" y="93"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">60</text>
+                                    <text x="28" y="128" text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">20</text>
+                                    <!-- X axis labels -->
+                                    <text x="32"  y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">0:00</text>
+                                    <text x="121" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">6:00</text>
+                                    <text x="210" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">12:00</text>
+                                    <text x="299" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">18:00</text>
+                                    <text x="388" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">24:00</text>
+                                    <!-- area fill -->
+                                    <defs>
+                                        <linearGradient id="hFill" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%"   stop-color="#e8a214" stop-opacity="0.28"/>
+                                            <stop offset="100%" stop-color="#e8a214" stop-opacity="0.04"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path fill="url(#hFill)"
+                                        d="M32,125 L32,98 C60,94 74,108 88,80 C102,52 112,68 128,95 C144,118 152,110 168,88 C184,66 196,82 212,90 C228,98 240,92 256,86 C272,80 284,74 298,58 C312,42 322,78 340,90 C358,102 372,82 388,76 C404,70 418,84 436,88 C454,92 468,80 478,76 L478,125 Z"/>
+                                    <!-- line -->
+                                    <path fill="none" stroke="#e8a214" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M32,98 C60,94 74,108 88,80 C102,52 112,68 128,95 C144,118 152,110 168,88 C184,66 196,82 212,90 C228,98 240,92 256,86 C272,80 284,74 298,58 C312,42 322,78 340,90 C358,102 372,82 388,76 C404,70 418,84 436,88 C454,92 468,80 478,76"/>
                                 </svg>
                             </div>
                         </div>
@@ -85,35 +122,69 @@
                         <!-- SPO2 -->
                         <div class="mediot_trend_card spo2">
                             <div class="mediot_trend_top">
-                                <i class="fa fa-tint" title="SpO2"/>
-                                <strong>SpO2 (%)</strong>
-                                <span>
-                                    <t t-esc="state.chart.spo2Last or 0"/>%
-                                </span>
+                                <span class="mediot_trend_label">SpO2 (%)</span>
+                                <span class="mediot_trend_value"><t t-esc="state.chart.spo2Last or 91.1"/>%</span>
                             </div>
-
                             <div class="mediot_chart_box">
-                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
-                                    <path d="M0,118 L0,30 L18,70 L36,52 L54,54 L72,54 L90,50 L108,48 L126,50 L144,36 L162,18 L180,16 L198,48 L216,82 L234,88 L252,82 L270,72 L288,54 L306,34 L324,42 L342,50 L360,80 L360,118 Z" class="trend-fill"/>
-                                    <path d="M0,30 L18,70 L36,52 L54,54 L72,54 L90,50 L108,48 L126,50 L144,36 L162,18 L180,16 L198,48 L216,82 L234,88 L252,82 L270,72 L288,54 L306,34 L324,42 L342,50 L360,80" class="trend-line"/>
+                                <svg viewBox="0 0 480 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="32" y1="20"  x2="478" y2="20"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="55"  x2="478" y2="55"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="90"  x2="478" y2="90"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="125" x2="478" y2="125" stroke="#e8edf4" stroke-width="1"/>
+                                    <text x="28" y="23"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">100</text>
+                                    <text x="28" y="58"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">90</text>
+                                    <text x="28" y="93"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">80</text>
+                                    <text x="28" y="128" text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">70</text>
+                                    <text x="32"  y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">0:00</text>
+                                    <text x="121" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">6:00</text>
+                                    <text x="210" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">12:00</text>
+                                    <text x="299" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">18:00</text>
+                                    <text x="388" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">24:00</text>
+                                    <defs>
+                                        <linearGradient id="sFill" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%"   stop-color="#e8a214" stop-opacity="0.28"/>
+                                            <stop offset="100%" stop-color="#e8a214" stop-opacity="0.04"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path fill="url(#sFill)"
+                                        d="M32,125 L32,62 C80,88 120,70 160,74 C200,78 230,66 260,72 C290,78 310,52 350,44 C390,36 420,80 460,96 C468,99 474,102 478,104 L478,125 Z"/>
+                                    <path fill="none" stroke="#e8a214" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M32,62 C80,88 120,70 160,74 C200,78 230,66 260,72 C290,78 310,52 350,44 C390,36 420,80 460,96 C468,99 474,102 478,104"/>
                                 </svg>
                             </div>
                         </div>
 
-                        <!-- TEMP -->
+                        <!-- TEMPERATURE -->
                         <div class="mediot_trend_card temp">
                             <div class="mediot_trend_top">
-                                <i class="fa fa-thermometer-half" title="Temperature"/>
-                                <strong>Temperature (°C)</strong>
-                                <span>
-                                    <t t-esc="state.chart.tempLast or 0"/>°C
-                                </span>
+                                <span class="mediot_trend_label">Temperature (°C)</span>
+                                <span class="mediot_trend_value"><t t-esc="state.chart.tempLast or 39.5"/>°C</span>
                             </div>
-
                             <div class="mediot_chart_box">
-                                <svg viewBox="0 0 360 120" preserveAspectRatio="none">
-                                    <path d="M0,118 L0,36 L36,38 L72,48 L108,64 L144,74 L180,70 L216,52 L252,38 L288,42 L324,56 L360,34 L360,118 Z" class="trend-fill"/>
-                                    <path d="M0,36 L36,38 L72,48 L108,64 L144,74 L180,70 L216,52 L252,38 L288,42 L324,56 L360,34" class="trend-line"/>
+                                <svg viewBox="0 0 480 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="32" y1="20"  x2="478" y2="20"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="55"  x2="478" y2="55"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="90"  x2="478" y2="90"  stroke="#e8edf4" stroke-width="1"/>
+                                    <line x1="32" y1="125" x2="478" y2="125" stroke="#e8edf4" stroke-width="1"/>
+                                    <text x="28" y="23"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">42</text>
+                                    <text x="28" y="58"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">40</text>
+                                    <text x="28" y="93"  text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">38</text>
+                                    <text x="28" y="128" text-anchor="end" font-size="11" fill="#a0aec0" font-weight="600">34</text>
+                                    <text x="32"  y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">0:00</text>
+                                    <text x="121" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">6:00</text>
+                                    <text x="210" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">12:00</text>
+                                    <text x="299" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">18:00</text>
+                                    <text x="388" y="150" text-anchor="middle" font-size="10" fill="#a0aec0" font-weight="600">24:00</text>
+                                    <defs>
+                                        <linearGradient id="tFill" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%"   stop-color="#e8a214" stop-opacity="0.28"/>
+                                            <stop offset="100%" stop-color="#e8a214" stop-opacity="0.04"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path fill="url(#tFill)"
+                                        d="M32,125 L32,72 C90,74 150,84 210,100 C270,116 330,110 390,88 C430,72 458,76 478,58 L478,125 Z"/>
+                                    <path fill="none" stroke="#e8a214" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                                        d="M32,72 C90,74 150,84 210,100 C270,116 330,110 390,88 C430,72 458,76 478,58"/>
                                 </svg>
                             </div>
                         </div>
@@ -127,22 +198,17 @@
                     <div class="mediot_toolbar_exact">
                         <button type="button" class="mediot_total_pill" t-on-click="() => this.openPatients()">
                             <i class="fa fa-user-o" title="Patients"/>
-                            <span>
-                                <t t-esc="state.kpis.total"/> Total Patients
-                            </span>
+                            <span><t t-esc="state.kpis.total"/> Total Patients</span>
                         </button>
 
                         <div class="mediot_toolbar_right">
                             <div class="mediot_tool_group">
-                                <label>Patient Name</label>
                                 <div class="mediot_tool_input">
                                     <input t-on-input="onSearchInput" t-att-value="state.searchQuery" placeholder="Please enter here"/>
                                     <i class="fa fa-search" title="Search"/>
                                 </div>
                             </div>
-
                             <div class="mediot_tool_group">
-                                <label>Patient Status</label>
                                 <div class="mediot_tool_select">
                                     <select t-on-change="onStatusChange" t-att-value="state.statusFilter">
                                         <option value="all">Please choose</option>
@@ -152,7 +218,6 @@
                                     </select>
                                 </div>
                             </div>
-
                             <button type="button" class="mediot_alert_btn" t-on-click="() => this.openAlerts()">
                                 <i class="fa fa-bell" title="Alerts"/>
                                 Alerts
@@ -160,7 +225,6 @@
                                     <span class="med_alert_badge" t-esc="state.kpis.pending_alerts"/>
                                 </t>
                             </button>
-
                             <button type="button" class="mediot_add_btn" t-on-click="() => this.openPatients()">
                                 <i class="fa fa-plus" title="Add Patient"/>
                                 Add Patient
@@ -171,7 +235,6 @@
                     <t t-if="state.live.length == 0">
                         <div class="lpm_empty">No patients currently monitored</div>
                     </t>
-
                     <t t-else="">
                         <table class="lpm_table">
                             <thead>
@@ -185,79 +248,53 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <t t-foreach="this.filteredLive" t-as="p" t-key="p.id">
                                     <tr class="lpm_row" t-on-click="() => this.openPatient(p.id)">
-
                                         <td>
                                             <div class="lpm_namecell">
                                                 <div t-att-class="'lpm_avatar lpm_av_' + (p.status || 'stable')">
                                                     <t t-if="p.image_128">
                                                         <img t-att-src="'data:image/png;base64,' + p.image_128" t-att-alt="p.name"/>
                                                     </t>
-                                                    <t t-else="">
-                                                        <t t-esc="p.name ? p.name[0].toUpperCase() : '?'"/>
-                                                    </t>
+                                                    <t t-else=""><t t-esc="p.name ? p.name[0].toUpperCase() : '?'"/></t>
                                                 </div>
                                                 <span class="lpm_name" t-esc="p.name"/>
                                             </div>
                                         </td>
-
-                                        <td>
-                                            <span class="lpm_id" t-esc="p.ref or '—'"/>
-                                        </td>
-
+                                        <td><span class="lpm_id" t-esc="p.ref or '—'"/></td>
                                         <td>
                                             <t t-if="p.age"><t t-esc="p.age"/> yrs</t>
                                             <t t-else="">—</t>
                                         </td>
-
                                         <td>
                                             <span class="lpm_condition">
-                                                <t t-if="p.latest_spo2 and p.latest_ecg_bpm">
-                                                    SpO2: <t t-esc="p.latest_spo2"/>% · <t t-esc="p.latest_ecg_bpm"/> BPM
-                                                </t>
-                                                <t t-elif="p.latest_spo2">
-                                                    SpO2: <t t-esc="p.latest_spo2"/>%
-                                                </t>
-                                                <t t-elif="p.latest_ecg_bpm">
-                                                    <t t-esc="p.latest_ecg_bpm"/> BPM
-                                                </t>
+                                                <t t-if="p.latest_spo2 and p.latest_ecg_bpm">SpO2: <t t-esc="p.latest_spo2"/>% · <t t-esc="p.latest_ecg_bpm"/> BPM</t>
+                                                <t t-elif="p.latest_spo2">SpO2: <t t-esc="p.latest_spo2"/>%</t>
+                                                <t t-elif="p.latest_ecg_bpm"><t t-esc="p.latest_ecg_bpm"/> BPM</t>
                                                 <t t-else="">Monitoring</t>
                                             </span>
                                         </td>
-
                                         <td>
                                             <span t-att-class="'lpm_ai_badge lpm_ai_' + (p.arrhythmia_risk || 'unknown')">
                                                 <t t-if="p.arrhythmia_risk and p.arrhythmia_risk !== 'unknown'">
-                                                    <t t-esc="p.arrhythmia_ecg_class || 'ECG'"/> ·
-                                                    <t t-esc="p.arrhythmia_risk.charAt(0).toUpperCase() + p.arrhythmia_risk.slice(1)"/>
+                                                    <t t-esc="p.arrhythmia_ecg_class || 'ECG'"/> · <t t-esc="p.arrhythmia_risk.charAt(0).toUpperCase() + p.arrhythmia_risk.slice(1)"/>
                                                 </t>
                                                 <t t-else="">Not computed</t>
                                             </span>
                                         </td>
-
                                         <td>
                                             <span t-att-class="'lpm_badge lpm_badge_' + (p.status || 'stable')">
                                                 <t t-esc="p.status ? p.status.charAt(0).toUpperCase() + p.status.slice(1) : '—'"/>
                                             </span>
                                         </td>
-
                                         <td t-on-click.stop="">
                                             <div class="lpm_actions">
-                                                <button type="button" class="lpm_btn" title="Edit" t-on-click="() => this.openPatient(p.id)">
-                                                    <i class="fa fa-pencil" title="Edit"/>
-                                                </button>
-                                                <button type="button" class="lpm_btn" title="Alerts" t-on-click="() => this.openPatientAlerts(p.id)">
-                                                    <i class="fa fa-bell" title="Alerts"/>
-                                                </button>
-                                                <button type="button" class="lpm_btn" title="Download Report" t-on-click="() => this.downloadPatientReport(p.id)">
-                                                    <i class="fa fa-download" title="Download"/>
-                                                </button>
+                                                <button type="button" class="lpm_btn" title="Edit" t-on-click="() => this.openPatient(p.id)"><i class="fa fa-pencil"/></button>
+                                                <button type="button" class="lpm_btn" title="Alerts" t-on-click="() => this.openPatientAlerts(p.id)"><i class="fa fa-bell"/></button>
+                                                <button type="button" class="lpm_btn" title="Download" t-on-click="() => this.downloadPatientReport(p.id)"><i class="fa fa-download"/></button>
                                             </div>
                                         </td>
-
                                     </tr>
                                 </t>
                             </tbody>

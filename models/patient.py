@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
@@ -52,6 +52,61 @@ class MedPatient(models.Model):
     cvd_message = fields.Char(string="CVD AI Message", readonly=True)
     cvd_last_checked = fields.Datetime(string="CVD Last Checked", readonly=True)
     # CVD_AI_FIELDS_END
+
+
+    # HEART_DISEASE_AI_FIELDS_START
+    heart_cp = fields.Selection(
+        [("0", "Typical Angina"), ("1", "Atypical Angina"), ("2", "Non-anginal Pain"), ("3", "Asymptomatic")],
+        string="Chest Pain Type",
+        default="0",
+    )
+    heart_trestbps = fields.Integer(string="Resting Blood Pressure", default=120)
+    heart_chol = fields.Integer(string="Cholesterol", default=200)
+    heart_fbs = fields.Selection(
+        [("0", "False"), ("1", "True")],
+        string="Fasting Blood Sugar > 120 mg/dl",
+        default="0",
+    )
+    heart_restecg = fields.Selection(
+        [("0", "Normal"), ("1", "ST-T Abnormality"), ("2", "LV Hypertrophy")],
+        string="Resting ECG",
+        default="0",
+    )
+    heart_thalach = fields.Integer(string="Max Heart Rate", default=150)
+    heart_exang = fields.Selection(
+        [("0", "No"), ("1", "Yes")],
+        string="Exercise Angina",
+        default="0",
+    )
+    heart_oldpeak = fields.Float(string="Oldpeak", default=1.0)
+    heart_slope = fields.Selection(
+        [("0", "Upsloping"), ("1", "Flat"), ("2", "Downsloping")],
+        string="Slope",
+        default="1",
+    )
+    heart_ca = fields.Selection(
+        [("0", "0"), ("1", "1"), ("2", "2"), ("3", "3"), ("4", "4")],
+        string="Major Vessels",
+        default="0",
+    )
+    heart_thal = fields.Selection(
+        [("0", "Unknown"), ("1", "Fixed Defect"), ("2", "Normal"), ("3", "Reversible Defect")],
+        string="Thalassemia",
+        default="2",
+    )
+
+    heart_prediction = fields.Integer(string="Heart Prediction", readonly=True)
+    heart_risk = fields.Selection(
+        [("unknown", "Unknown"), ("not_detected", "Not Detected"), ("detected", "Detected")],
+        string="Heart Disease Risk",
+        default="unknown",
+        readonly=True,
+    )
+    heart_probability = fields.Float(string="Heart Disease Probability (%)", readonly=True)
+    heart_alert = fields.Boolean(string="Heart Disease Alert", readonly=True)
+    heart_message = fields.Char(string="Heart Disease AI Message", readonly=True)
+    heart_last_checked = fields.Datetime(string="Heart Disease Last Checked", readonly=True)
+    # HEART_DISEASE_AI_FIELDS_END
 
     # ARRHYTHMIA_AI_FIELDS_START
     arrhythmia_ecg_input = fields.Selection(
@@ -214,17 +269,149 @@ class MedPatient(models.Model):
                         "state": "new",
                     })
 
+        view = self.env["ir.ui.view"].sudo().search([
+            ("name", "=", "med.patient.cvd.predict.popup.form"),
+            ("model", "=", "med.patient"),
+        ], limit=1)
+
         return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": _("CVD AI Risk Computed"),
-                "message": _("Cardiovascular risk was computed and saved."),
-                "type": "success",
-                "sticky": False,
-            },
+            "type": "ir.actions.act_window",
+            "name": _("CVD AI Prediction - %s") % self.display_name,
+            "res_model": "med.patient",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view.id if view else False, "form")],
+            "target": "new",
+            "context": dict(self.env.context or {}),
         }
     # CVD_AI_METHODS_END
+
+
+
+    # AI_CHOICE_POPUP_METHODS_START
+    def action_open_cvd_prediction_popup(self):
+        self.ensure_one()
+        self.sudo().write({
+            "cvd_risk": "unknown",
+            "cvd_probability": 0.0,
+            "cvd_alert": False,
+            "cvd_message": False,
+            "cvd_last_checked": False,
+        })
+        view = self.env["ir.ui.view"].sudo().search([
+            ("name", "=", "med.patient.cvd.predict.popup.form"),
+            ("model", "=", "med.patient"),
+        ], limit=1)
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("CVD AI Prediction - %s") % self.display_name,
+            "res_model": "med.patient",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view.id if view else False, "form")],
+            "target": "new",
+            "context": dict(self.env.context or {}),
+        }
+
+    def action_open_heart_prediction_popup(self):
+        self.ensure_one()
+        self.sudo().write({
+            "heart_risk": "unknown",
+            "heart_probability": 0.0,
+            "heart_alert": False,
+            "heart_message": False,
+            "heart_last_checked": False,
+        })
+        view = self.env["ir.ui.view"].sudo().search([
+            ("name", "=", "med.patient.heart.predict.popup.form"),
+            ("model", "=", "med.patient"),
+        ], limit=1)
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Heart Disease AI Prediction - %s") % self.display_name,
+            "res_model": "med.patient",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view.id if view else False, "form")],
+            "target": "new",
+            "context": dict(self.env.context or {}),
+        }
+    # AI_CHOICE_POPUP_METHODS_END
+
+    # HEART_DISEASE_AI_METHODS_START
+    def _get_heart_disease_payload(self):
+        self.ensure_one()
+        sex_value = 1 if self.gender == "male" else 0
+        return {
+            "age": int(self.age or 0),
+            "sex": int(sex_value),
+            "cp": int(self.heart_cp or 0),
+            "trestbps": int(self.heart_trestbps or 120),
+            "chol": int(self.heart_chol or 200),
+            "fbs": int(self.heart_fbs or 0),
+            "restecg": int(self.heart_restecg or 0),
+            "thalach": int(self.heart_thalach or 150),
+            "exang": int(self.heart_exang or 0),
+            "oldpeak": float(self.heart_oldpeak or 0.0),
+            "slope": int(self.heart_slope or 1),
+            "ca": int(self.heart_ca or 0),
+            "thal": int(self.heart_thal or 2),
+        }
+
+    def action_compute_heart_disease(self):
+        for rec in self:
+            payload = rec._get_heart_disease_payload()
+            url = "http://localhost:8000/predict/heart_disease"
+
+            try:
+                req = urllib.request.Request(
+                    url,
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    result = json.loads(response.read().decode("utf-8"))
+            except Exception as exc:
+                raise ValidationError(_("Heart Disease AI service is not reachable. Start FastAPI on port 8000 first. Error: %s") % exc)
+
+            probability = float(result.get("probability") or 0.0)
+            if probability <= 1:
+                probability = probability * 100
+
+            prediction = int(result.get("heart_prediction") or 0)
+            heart_risk = "detected" if prediction == 1 else "not_detected"
+            alert = bool(result.get("alert") or prediction == 1)
+
+            message = result.get("message")
+            if not message:
+                message = "Heart disease signs detected based on clinical parameters." if prediction == 1 else "No major heart disease signs detected based on clinical parameters."
+
+            rec.write({
+                "heart_prediction": prediction,
+                "heart_risk": heart_risk,
+                "heart_probability": probability,
+                "heart_alert": alert,
+                "heart_message": message,
+                "heart_last_checked": fields.Datetime.now(),
+            })
+
+        view = self.env["ir.ui.view"].sudo().search([
+            ("name", "=", "med.patient.heart.predict.popup.form"),
+            ("model", "=", "med.patient"),
+        ], limit=1)
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Heart Disease AI Prediction - %s") % self.display_name,
+            "res_model": "med.patient",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view.id if view else False, "form")],
+            "target": "new",
+            "context": dict(self.env.context or {}),
+        }
+    # HEART_DISEASE_AI_METHODS_END
 
     # ARRHYTHMIA_AI_METHODS_START
     def _get_arrhythmia_payload(self):
@@ -362,3 +549,350 @@ class MedPatient(models.Model):
 
 
 
+
+
+
+# PATIENT_PROFILE_VITAL_CURVES_SAFE_START
+class MedPatientVitalCurvesSafe(models.Model):
+    _inherit = "med.patient"
+
+    spo2_chart_html = fields.Html(
+        string="SpO2 Chart",
+        compute="_compute_mediot_vital_curves_html_safe",
+        sanitize=False,
+    )
+    hr_chart_html = fields.Html(
+        string="Heart Rate Chart",
+        compute="_compute_mediot_vital_curves_html_safe",
+        sanitize=False,
+    )
+    temp_chart_html = fields.Html(
+        string="Temperature Chart",
+        compute="_compute_mediot_vital_curves_html_safe",
+        sanitize=False,
+    )
+    vitals_curves_html = fields.Html(
+        string="Vital Curves",
+        compute="_compute_mediot_vital_curves_html_safe",
+        sanitize=False,
+    )
+
+    def _mediot_svg_curve_safe(self, readings, field_name, title, unit, color="#f2b544"):
+        points = []
+        values = []
+
+        for rec in readings:
+            value = getattr(rec, field_name, 0) or 0
+            if value:
+                values.append(float(value))
+
+        if not values:
+            return """
+            <div class="mediot_curve_card">
+                <div class="mediot_curve_title">%s</div>
+                <div class="mediot_curve_empty">No readings yet</div>
+            </div>
+            """ % title
+
+        vmin = min(values)
+        vmax = max(values)
+        if vmin == vmax:
+            vmin = vmin - 1
+            vmax = vmax + 1
+
+        width = 520
+        height = 145
+        pad_x = 28
+        pad_y = 22
+
+        used = []
+        for rec in readings:
+            value = getattr(rec, field_name, 0) or 0
+            if value:
+                used.append(rec)
+
+        total = max(len(used) - 1, 1)
+
+        for idx, rec in enumerate(used):
+            value = float(getattr(rec, field_name, 0) or 0)
+            x = pad_x + (idx / total) * (width - 2 * pad_x)
+            y = pad_y + (1 - ((value - vmin) / (vmax - vmin))) * (height - 2 * pad_y)
+            points.append("%.1f,%.1f" % (x, y))
+
+        label_min = "%.1f" % vmin
+        label_max = "%.1f" % vmax
+        label_last = "%.1f%s" % (values[-1], unit)
+
+        return """
+        <div class="mediot_curve_card">
+            <div class="mediot_curve_head">
+                <div class="mediot_curve_title">%s</div>
+                <div class="mediot_curve_last">%s</div>
+            </div>
+            <svg viewBox="0 0 %s %s" class="mediot_curve_svg" preserveAspectRatio="none">
+                <line x1="28" y1="22" x2="492" y2="22" class="mediot_curve_grid"/>
+                <line x1="28" y1="72" x2="492" y2="72" class="mediot_curve_grid"/>
+                <line x1="28" y1="123" x2="492" y2="123" class="mediot_curve_grid"/>
+                <polyline points="%s" fill="none" stroke="%s" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                %s
+            </svg>
+            <div class="mediot_curve_axis">
+                <span>%s</span>
+                <span>%s</span>
+            </div>
+        </div>
+        """ % (
+            title,
+            label_last,
+            width,
+            height,
+            " ".join(points),
+            color,
+            "".join(
+                '<circle cx="%s" cy="%s" r="3.8" fill="%s"></circle>' % (
+                    point.split(",")[0],
+                    point.split(",")[1],
+                    color,
+                )
+                for point in points
+            ),
+            label_min,
+            label_max,
+        )
+
+    def _compute_mediot_vital_curves_html_safe(self):
+        Reading = self.env["med.vital.reading"].sudo()
+
+        for patient in self:
+            readings = Reading.search(
+                [("patient_id", "=", patient.id)],
+                order="reading_at desc",
+                limit=18,
+            )
+            readings = readings.sorted(lambda r: r.reading_at or r.create_date)
+
+            hr = patient._mediot_svg_curve_safe(
+                readings, "ecg_bpm", "Heart Rate (bpm)", " bpm", "#f2b544"
+            )
+            spo2 = patient._mediot_svg_curve_safe(
+                readings, "spo2", "O₂ Saturation (%)", "%", "#f2b544"
+            )
+            temp = patient._mediot_svg_curve_safe(
+                readings, "temp_c", "Temperature (°C)", "°C", "#f2b544"
+            )
+
+            patient.hr_chart_html = hr
+            patient.spo2_chart_html = spo2
+            patient.temp_chart_html = temp
+            patient.vitals_curves_html = """
+            <div class="mediot_vital_curves_panel">
+                <div class="mediot_vital_curves_badge">MONITORING</div>
+                <div class="mediot_vital_curves_grid">
+                    %s
+                    %s
+                    %s
+                </div>
+            </div>
+            """ % (hr, spo2, temp)
+# PATIENT_PROFILE_VITAL_CURVES_SAFE_END
+
+
+
+# PATIENT_PROFILE_VITAL_CURVES_NUMBERED_SAFE_START
+class MedPatientVitalCurvesNumberedSafe(models.Model):
+    _inherit = "med.patient"
+
+    def _mediot_svg_curve_safe(self, readings, field_name, title, unit, color="#f2b544"):
+        values = []
+        used = []
+
+        for rec in readings:
+            value = getattr(rec, field_name, 0) or 0
+            if value:
+                values.append(float(value))
+                used.append(rec)
+
+        if not values:
+            return """
+            <div class="mediot_curve_card">
+                <div class="mediot_curve_title">%s</div>
+                <div class="mediot_curve_empty">No readings yet</div>
+            </div>
+            """ % title
+
+        vmin = min(values)
+        vmax = max(values)
+        if vmin == vmax:
+            vmin = vmin - 1
+            vmax = vmax + 1
+
+        vmid = (vmin + vmax) / 2.0
+
+        width = 560
+        height = 170
+        pad_left = 52
+        pad_right = 20
+        pad_top = 22
+        pad_bottom = 34
+
+        total = max(len(used) - 1, 1)
+        points = []
+
+        for idx, rec in enumerate(used):
+            value = float(getattr(rec, field_name, 0) or 0)
+            x = pad_left + (idx / total) * (width - pad_left - pad_right)
+            y = pad_top + (1 - ((value - vmin) / (vmax - vmin))) * (height - pad_top - pad_bottom)
+            points.append("%.1f,%.1f" % (x, y))
+
+        def fmt(v):
+            if field_name == "ecg_bpm":
+                return "%d" % round(v)
+            return "%.1f" % v
+
+        def time_label(rec):
+            dt = rec.reading_at or rec.create_date
+            return dt.strftime("%H:%M") if dt else "--:--"
+
+        first_time = time_label(used[0])
+        mid_time = time_label(used[len(used)//2])
+        last_time = time_label(used[-1])
+        label_last = fmt(values[-1]) + unit
+
+        dots = "".join(
+            '<circle cx="%s" cy="%s" r="3.6" fill="%s"></circle>' % (
+                p.split(",")[0], p.split(",")[1], color
+            )
+            for p in points
+        )
+
+        return """
+        <div class="mediot_curve_card mediot_curve_numbered_card">
+            <div class="mediot_curve_head">
+                <div class="mediot_curve_title">%s</div>
+                <div class="mediot_curve_last">%s</div>
+            </div>
+
+            <svg viewBox="0 0 %s %s" class="mediot_curve_svg mediot_curve_numbered_svg" preserveAspectRatio="none">
+                <text x="8" y="28" class="mediot_curve_y_label">%s</text>
+                <text x="8" y="82" class="mediot_curve_y_label">%s</text>
+                <text x="8" y="136" class="mediot_curve_y_label">%s</text>
+
+                <line x1="52" y1="24" x2="540" y2="24" class="mediot_curve_grid"/>
+                <line x1="52" y1="82" x2="540" y2="82" class="mediot_curve_grid"/>
+                <line x1="52" y1="136" x2="540" y2="136" class="mediot_curve_grid"/>
+
+                <polyline points="%s" fill="none" stroke="%s" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                %s
+
+                <text x="52" y="164" class="mediot_curve_x_label">%s</text>
+                <text x="280" y="164" class="mediot_curve_x_label" text-anchor="middle">%s</text>
+                <text x="540" y="164" class="mediot_curve_x_label" text-anchor="end">%s</text>
+            </svg>
+        </div>
+        """ % (
+            title,
+            label_last,
+            width,
+            height,
+            fmt(vmax),
+            fmt(vmid),
+            fmt(vmin),
+            " ".join(points),
+            color,
+            dots,
+            first_time,
+            mid_time,
+            last_time,
+        )
+# PATIENT_PROFILE_VITAL_CURVES_NUMBERED_SAFE_END
+
+
+
+# PATIENT_ALERTS_HTML_TABLE_SAFE_START
+class MedPatientAlertsHtmlTableSafe(models.Model):
+    _inherit = "med.patient"
+
+    patient_alerts_table_html = fields.Html(
+        string="Alerts Table",
+        compute="_compute_patient_alerts_table_html_safe",
+        sanitize=False,
+    )
+
+    def _compute_patient_alerts_table_html_safe(self):
+        from markupsafe import escape
+
+        type_labels = {
+            "spo2": "SpO2",
+            "temp": "Temperature",
+            "ecg": "ECG",
+            "cvd": "CVD",
+        }
+
+        for patient in self:
+            alerts = self.env["med.alert"].sudo().search(
+                [("patient_id", "=", patient.id)],
+                order="create_date desc",
+                limit=5,
+            )
+
+            rows = []
+            for alert in alerts:
+                date_txt = ""
+                if alert.create_date:
+                    try:
+                        date_txt = fields.Datetime.context_timestamp(patient, alert.create_date).strftime("%b %d, %I:%M %p")
+                    except Exception:
+                        date_txt = str(alert.create_date)
+
+                severity = alert.severity or ""
+                state = alert.state or ""
+                alert_type = type_labels.get(alert.alert_type or "", alert.alert_type or "")
+
+                sev_class = "critical" if severity == "critical" else "warning"
+                state_class = "resolved" if state == "resolved" else "new"
+
+                rows.append("""
+                    <tr class="mediot_alert_html_row %s">
+                        <td>%s</td>
+                        <td>%s</td>
+                        <td><span class="mediot_alert_badge %s">%s</span></td>
+                        <td class="mediot_alert_msg">%s</td>
+                        <td><span class="mediot_state_badge %s">%s</span></td>
+                    </tr>
+                """ % (
+                    sev_class,
+                    escape(date_txt),
+                    escape(alert_type),
+                    sev_class,
+                    escape(severity.title() if severity else ""),
+                    escape(alert.message or ""),
+                    state_class,
+                    escape(state.title() if state else ""),
+                ))
+
+            if not rows:
+                rows.append("""
+                    <tr>
+                        <td colspan="5" class="mediot_alert_empty">No alerts for this patient.</td>
+                    </tr>
+                """)
+
+            patient.patient_alerts_table_html = """
+                <div class="mediot_alert_html_table_wrap">
+                    <table class="mediot_alert_html_table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Severity</th>
+                                <th>Message</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            %s
+                        </tbody>
+                    </table>
+                </div>
+            """ % "".join(rows)
+# PATIENT_ALERTS_HTML_TABLE_SAFE_END

@@ -1,17 +1,79 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <odoo>
 
-    <!-- ── LIST VIEW ── -->
-    <record id="view_med_reading_tree" model="ir.ui.view">
-        <field name="name">med.vital.reading.tree</field>
+    <record id="view_med_reading_list" model="ir.ui.view">
+        <field name="name">med.vital.reading.list</field>
         <field name="model">med.vital.reading</field>
         <field name="arch" type="xml">
-            <list string="Data History" decoration-danger="spo2 &lt; 90 or ecg_bpm &gt; 120" decoration-warning="(spo2 &gt;= 90 and spo2 &lt; 94) or temp_c &gt; 38.5" decoration-success="spo2 &gt;= 94 and ecg_bpm &lt;= 100 and temp_c &lt;= 37.5" class="o_med_history_list">
+            <list string="Data History"
+                  decoration-danger="history_status == 'critical'"
+                  decoration-warning="history_status == 'warning'"
+                  decoration-success="history_status == 'normal'"
+                  class="o_med_history_list mediot_history_actions_safe">
                 <field name="reading_at" string="Reading At"/>
                 <field name="patient_id" string="Patient"/>
                 <field name="spo2" string="SpO2 (%)"/>
                 <field name="ecg_bpm" string="ECG (BPM)"/>
                 <field name="temp_c" string="Temp (°C)"/>
+                <field name="history_status"
+                       string="Status"
+                       widget="badge"
+                       decoration-success="history_status == 'normal'"
+                       decoration-warning="history_status == 'warning'"
+                       decoration-danger="history_status == 'critical'"/>
+                <field name="verification_state"
+                       string="Verification"
+                       widget="badge"
+                       decoration-success="verification_state == 'verified'"
+                       decoration-muted="verification_state == 'not_verified'"/>
+                <button name="action_verify_reading"
+                        type="object"
+                        string="Verify"
+                        class="btn btn-primary mediot_history_verify_btn_safe"/>
+                <button name="action_predict_reading"
+                        type="object"
+                        string="Predict"
+                        class="btn btn-secondary mediot_history_predict_btn_safe"/>
+                <field name="device_id" string="Device" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ── LIST VIEW ── -->
+    <record id="view_med_reading_tree" model="ir.ui.view">
+        <field name="name">med.vital.reading.tree</field>
+        <field name="model">med.vital.reading</field>
+        <field name="arch" type="xml">
+            <list string="Data History"
+                  decoration-danger="history_status == 'critical'"
+                  decoration-warning="history_status == 'warning'"
+                  decoration-success="history_status == 'normal'"
+                  class="o_med_history_list mediot_history_actions_safe">
+                <field name="reading_at" string="Reading At"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="spo2" string="SpO2 (%)"/>
+                <field name="ecg_bpm" string="ECG (BPM)"/>
+                <field name="temp_c" string="Temp (°C)"/>
+                <field name="history_status"
+                       string="Status"
+                       widget="badge"
+                       decoration-success="history_status == 'normal'"
+                       decoration-warning="history_status == 'warning'"
+                       decoration-danger="history_status == 'critical'"/>
+                <field name="verification_state"
+                       string="Verification"
+                       widget="badge"
+                       decoration-success="verification_state == 'verified'"
+                       decoration-muted="verification_state == 'not_verified'"/>
+                <button name="action_verify_reading"
+                        type="object"
+                        string="Verify"
+                        class="btn btn-primary mediot_history_verify_btn_safe"/>
+                <button name="action_predict_reading"
+                        type="object"
+                        string="Predict"
+                        class="btn btn-secondary mediot_history_predict_btn_safe"/>
                 <field name="device_id" string="Device" optional="hide"/>
             </list>
         </field>
@@ -137,7 +199,10 @@
     </record>
 
     <!-- ── SEARCH VIEW ── -->
-    <record id="view_med_reading_search" model="ir.ui.view">
+
+
+
+<record id="view_med_reading_search" model="ir.ui.view">
         <field name="name">med.vital.reading.search</field>
         <field name="model">med.vital.reading</field>
         <field name="arch" type="xml">

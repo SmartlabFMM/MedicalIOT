@@ -58,10 +58,4 @@
               action="action_med_settings"
               groups="med_iot_command_center.group_med_senior_doctor,med_iot_command_center.group_med_junior_staff"/>
     <!-- Device management is embedded inside Settings Control Center. Separate Device menu hidden. -->
-
-    <!-- FORCE_PATIENT_MENU_ADMIN_ONLY_START -->
-    <record id="menu_med_patients" model="ir.ui.menu">
-        <field name="group_ids" eval="[(6, 0, [ref('group_med_admin')])]"/>
-    </record>
-    <!-- FORCE_PATIENT_MENU_ADMIN_ONLY_END -->
 </odoo>

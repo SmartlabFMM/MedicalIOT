@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class MedVitalReading(models.Model):
@@ -105,3 +105,110 @@ class MedVitalReading(models.Model):
                 r.patient_id.sudo().write({"status": worst})
             elif r.patient_id.status != "critical":
                 r.patient_id.sudo().write({"status": "stable"})
+
+# HISTORY_STATUS_VERIFY_PREDICT_SAFE_START
+class MedVitalReadingHistoryStatusSafe(models.Model):
+    _inherit = "med.vital.reading"
+
+    history_status = fields.Selection(
+        [
+            ("normal", "Normal"),
+            ("warning", "Warning"),
+            ("critical", "Critical"),
+        ],
+        string="Status",
+        compute="_compute_history_status_safe",
+        store=True,
+    )
+
+    verification_state = fields.Selection(
+        [
+            ("not_verified", "Not Verified"),
+            ("verified", "Verified"),
+        ],
+        string="Verification",
+        default="not_verified",
+        required=True,
+        copy=False,
+    )
+
+    @api.depends("spo2", "ecg_bpm", "temp_c")
+    def _compute_history_status_safe(self):
+        for rec in self:
+            status = "normal"
+
+            if (
+                (rec.spo2 and rec.spo2 < 90)
+                or (rec.ecg_bpm and rec.ecg_bpm > 120)
+                or (rec.temp_c and rec.temp_c > 38.5)
+            ):
+                status = "critical"
+            elif (
+                (rec.spo2 and rec.spo2 < 94)
+                or (rec.ecg_bpm and rec.ecg_bpm > 100)
+                or (rec.temp_c and rec.temp_c > 37.5)
+            ):
+                status = "warning"
+
+            rec.history_status = status
+
+    def action_verify_reading(self):
+        self.write({"verification_state": "verified"})
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Verification"),
+                "message": _("Reading verified successfully."),
+                "type": "success",
+                "sticky": False,
+            },
+        }
+
+    def action_predict_reading(self):
+        self.ensure_one()
+
+        if not self.patient_id:
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": _("Predict"),
+                    "message": _("No patient linked to this reading."),
+                    "type": "warning",
+                    "sticky": False,
+                },
+            }
+
+        view = self.env["ir.ui.view"].sudo().search([
+            ("name", "=", "med.patient.ai.choice.popup.form"),
+            ("model", "=", "med.patient"),
+        ], limit=1)
+
+        # Clear previous CVD prediction when opening the popup
+        self.patient_id.sudo().write({
+            "cvd_risk": "unknown",
+            "cvd_probability": 0.0,
+            "cvd_alert": False,
+            "cvd_message": False,
+            "cvd_last_checked": False,
+            "heart_risk": "unknown",
+            "heart_probability": 0.0,
+            "heart_alert": False,
+            "heart_message": False,
+            "heart_last_checked": False,
+        })
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Predictive AI - %s") % self.patient_id.display_name,
+            "res_model": "med.patient",
+            "res_id": self.patient_id.id,
+            "view_mode": "form",
+            "views": [(view.id if view else False, "form")],
+            "target": "new",
+            "context": dict(self.env.context or {}),
+        }
+
+# HISTORY_STATUS_VERIFY_PREDICT_SAFE_END
+

@@ -43,6 +43,7 @@
                 <field name="alert_type" string="Alert Type"/>
                 <field name="message" string="Message"/>
                 <field name="state" string="State"/>
+                <field name="ai_email_sent" string="Email Sent"/>
             </list>
         </field>
     </record>
@@ -63,6 +64,13 @@
                             type="object"
                             string="Resolve"
                             class="btn-secondary"
+                            invisible="state == 'resolved'"/>
+
+                    <button name="action_send_predictive_email"
+                            type="object"
+                            string="Send Predictive Email"
+                            icon="fa-envelope"
+                            class="btn-primary"
                             invisible="state == 'resolved'"/>
 
                     <field name="state" widget="statusbar" statusbar_visible="new,ack,resolved"/>
@@ -88,6 +96,11 @@
 
                     <group>
                         <field name="message"/>
+                    </group>
+
+                    <group string="Predictive Email">
+                        <field name="ai_email_sent" readonly="1"/>
+                        <field name="ai_email_sent_on" readonly="1"/>
                     </group>
                 </sheet>
             </form>

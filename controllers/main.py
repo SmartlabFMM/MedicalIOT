@@ -50,34 +50,41 @@ class MedIoTAuthController(http.Controller):
 
     @http.route(['/mediot/login/submit'], type='http', auth='public', website=True, methods=['POST'], csrf=True, sitemap=False)
     def mediot_login_submit(self, **post):
-        login = post.get("login", "")
-        password = post.get("password", "")
-        role = post.get("role", "")
-        redirect = post.get("redirect") or "/mediot/post_login"
+        login = (post.get("login") or "").strip()
+        password = (post.get("password") or "").strip()
 
         try:
-            try:
-                uid = request.session.authenticate(request.db, login, password)
-            except TypeError:
-                uid = request.session.authenticate(request.db, {
-                    "login": login,
-                    "password": password,
-                    "type": "password",
-                })
+            credential = {
+                "login": login,
+                "password": password,
+                "type": "password",
+            }
 
-            if not uid:
-                raise Exception("Invalid credentials")
+            auth_info = request.session.authenticate(request.env, credential)
 
-            return request.redirect(redirect)
+            if not auth_info:
+                return request.redirect(
+                    "/mediot/login?login=%s&error=%s"
+                    % (
+                        quote_plus(login),
+                        quote_plus("Invalid email or password."),
+                    )
+                )
+
+            if not request.session.uid and hasattr(request.session, "finalize"):
+                try:
+                    request.session.finalize(request.env, auth_info)
+                except TypeError:
+                    request.session.finalize(auth_info)
+
+            return request.redirect("/mediot/post_login")
 
         except Exception:
             return request.redirect(
-                "/mediot/login?role=%s&redirect=%s&login=%s&error=%s"
+                "/mediot/login?login=%s&error=%s"
                 % (
-                    quote_plus(role),
-                    quote_plus(redirect),
                     quote_plus(login),
-                    quote_plus("Invalid email or password"),
+                    quote_plus("Invalid email or password."),
                 )
             )
 
@@ -110,7 +117,7 @@ class MedIoTAuthController(http.Controller):
     def mediot_signup_submit(self, **post):
         Users = request.env['res.users'].sudo()
 
-        email = (post.get('email') or '').strip().lower()
+        email = (post.get('email') or post.get('login') or '').strip().lower()
         password = (post.get('password') or '').strip()
         first_name = (post.get('first_name') or '').strip()
         last_name = (post.get('last_name') or '').strip()

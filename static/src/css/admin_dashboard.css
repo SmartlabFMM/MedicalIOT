@@ -4449,3 +4449,152 @@ and hides the far-right old icon columns.
 }
 
 /* MEDIOT_ADMIN_STATUS_GRID_LOCK_2026_05_07 END */
+/* =========================================================
+   SIMPLE WHITE MANAGE USER POPUP
+   ========================================================= */
+
+.o_dialog:has(.med_user_modal_shell) .modal-content,
+.o_dialog:has(.med_user_modal_hero) .modal-content {
+    background: #ffffff !important;
+    border-radius: 18px !important;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12) !important;
+}
+
+.o_dialog:has(.med_user_modal_shell) .modal-body,
+.o_dialog:has(.med_user_modal_hero) .modal-body,
+.o_dialog:has(.med_user_modal_shell) .o_form_sheet,
+.o_dialog:has(.med_user_modal_hero) .o_form_sheet,
+.o_dialog:has(.med_user_modal_shell) .o_form_sheet_bg,
+.o_dialog:has(.med_user_modal_hero) .o_form_sheet_bg {
+    background: #ffffff !important;
+}
+
+.o_dialog .med_user_modal_hero {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    padding: 22px 26px !important;
+}
+
+.o_dialog .med_user_modal_hero *,
+.o_dialog .med_user_modal_shell * {
+    color: #111827 !important;
+}
+
+.o_dialog .med_user_modal_hero h1,
+.o_dialog .med_user_modal_hero h2,
+.o_dialog .med_user_modal_hero .o_field_widget {
+    color: #111827 !important;
+}
+
+.o_dialog .med_user_modal_hero .badge,
+.o_dialog .med_user_modal_shell .badge {
+    background: #f3f4f6 !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 999px !important;
+}
+
+.o_dialog .med_user_modal_shell .card,
+.o_dialog .med_user_modal_shell .o_group,
+.o_dialog .med_user_modal_shell .o_inner_group {
+    background: #ffffff !important;
+    border-color: #e5e7eb !important;
+    box-shadow: none !important;
+}
+
+.o_dialog:has(.med_user_modal_shell) input,
+.o_dialog:has(.med_user_modal_hero) input {
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 10px !important;
+    color: #111827 !important;
+}
+
+.o_dialog:has(.med_user_modal_shell) .btn-primary,
+.o_dialog:has(.med_user_modal_hero) .btn-primary,
+.o_dialog:has(.med_user_modal_shell) .oe_highlight,
+.o_dialog:has(.med_user_modal_hero) .oe_highlight {
+    background: #6d4c68 !important;
+    border-color: #6d4c68 !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+/* ===== ADMIN DASHBOARD DOCTOR-STYLE WELCOME CARD ===== */
+
+.mediot_admin_page .med_admin_welcome_card_like_doctor {
+    background: #ffffff !important;
+    border: 1px solid #dbe4f0 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06) !important;
+    padding: 22px 28px !important;
+    margin: 0 0 22px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 24px !important;
+}
+
+.mediot_admin_page .med_admin_welcome_left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 18px !important;
+}
+
+.mediot_admin_page .med_admin_welcome_icon {
+    width: 62px !important;
+    height: 62px !important;
+    border-radius: 18px !important;
+    background: #f4f7ff !important;
+    border: 1px solid #d9e4ff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mediot_admin_page .med_admin_welcome_icon i {
+    font-size: 2rem !important;
+    color: #6b7ee8 !important;
+}
+
+.mediot_admin_page .med_admin_welcome_left h1 {
+    margin: 0 0 6px 0 !important;
+    color: #061848 !important;
+    font-size: 1.75rem !important;
+    font-weight: 950 !important;
+    letter-spacing: -.03em !important;
+}
+
+.mediot_admin_page .med_admin_welcome_left p {
+    margin: 0 !important;
+    color: #64748b !important;
+    font-size: .92rem !important;
+    font-weight: 700 !important;
+}
+
+.mediot_admin_page .med_admin_welcome_right {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 10px !important;
+}
+
+.mediot_admin_page .med_admin_date_pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    padding: 12px 22px !important;
+    border-radius: 999px !important;
+    background: #f4f0ff !important;
+    border: 1px solid #ded6ff !important;
+    color: #7c5de8 !important;
+    font-weight: 900 !important;
+}
+
+.mediot_admin_page .med_admin_refresh_text {
+    color: #64748b !important;
+    font-size: .78rem !important;
+    font-weight: 800 !important;
+}

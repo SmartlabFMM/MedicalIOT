@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="med_login_page" name="MedIoT Custom Login Page">
         <t t-call="website.layout">
@@ -12,7 +12,7 @@
                 <div class="med_login_role_shell">
 
                     <section class="med_login_role_left">
-                        <h1>WELCOME!</h1>
+                        <h1>Welcome Back!</h1>
                         <p>Sign in to access your dashboard</p>
                     </section>
 
@@ -22,13 +22,14 @@
                             <h2>Login</h2>
                             <p class="med_login_hint">Enter your credentials to continue</p>
 
-                            <t t-if="error">
-                                <div class="med_err">
-                                    <t t-esc="error"/>
+                            <t t-set="login_error" t-value="error or request.params.get('error')"/>
+                            <t t-if="login_error">
+                                <div class="med_login_error_box" style="background:#fee2e2;border:1px solid #ef4444;color:#991b1b;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-weight:700;text-align:center;">
+                                    <i class="fa fa-exclamation-triangle"/> <t t-esc="login_error"/>
                                 </div>
                             </t>
 
-                            <form action="/web/login" method="post">
+                            <form action="/mediot/login/submit" method="post">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <input type="hidden" name="redirect" t-att-value="redirect"/>
 

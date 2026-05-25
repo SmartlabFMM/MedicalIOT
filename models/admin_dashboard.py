@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+from html import escape
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
@@ -502,4 +503,467 @@ class ResUsersMedIoTRoleManagementPage(models.Model):
         return {"type": "ir.actions.client", "tag": "reload"}
 
 
+
+
+
+
+# USERS_ROLES_ASSIGN_PATIENT_SAFE_START
+class ResUsersMedIoTAssignPatientColumn(models.Model):
+    _inherit = "res.users"
+
+    med_assigned_patient_count = fields.Integer(
+        string="Assigned Patients",
+        compute="_compute_med_assigned_patient_stats",
+    )
+    med_total_patient_count = fields.Integer(
+        string="Total Patients",
+        compute="_compute_med_assigned_patient_stats",
+    )
+    med_assigned_patient_badge = fields.Char(
+        string="",
+        compute="_compute_med_assigned_patient_stats",
+    )
+
+    def _compute_med_assigned_patient_stats(self):
+        Patient = self.env["med.patient"].sudo()
+        total = Patient.search_count([])
+
+        grouped = Patient.read_group(
+            [("assigned_doctor_id", "in", self.ids)],
+            ["assigned_doctor_id"],
+            ["assigned_doctor_id"],
+        )
+        count_by_user = {}
+        for row in grouped:
+            val = row.get("assigned_doctor_id")
+            if val:
+                count_by_user[val[0]] = row.get("assigned_doctor_id_count", 0)
+
+        for user in self:
+            count = count_by_user.get(user.id, 0)
+            user.med_assigned_patient_count = count
+            user.med_total_patient_count = total
+            user.med_assigned_patient_badge = "%s/%s" % (count, total)
+
+    def action_mediot_open_assigned_patients(self):
+        self.ensure_one()
+        action = self.env.ref("med_iot_command_center.action_med_patient").sudo().read()[0]
+        action.update({
+            "name": "Assign Patients - %s" % (self.name or self.login),
+            "domain": ["|", ("assigned_doctor_id", "=", self.id), ("assigned_doctor_id", "=", False)],
+            "context": {
+                "default_assigned_doctor_id": self.id,
+                "create": True,
+                "edit": True,
+            },
+            "target": "current",
+        })
+        return action
+# USERS_ROLES_ASSIGN_PATIENT_SAFE_END
+
+
+
+# USERS_ROLES_ASSIGN_PATIENT_POPUP_SAFE_START
+class MedAssignPatientWizard(models.TransientModel):
+    _name = "med.assign.patient.wizard"
+    _description = "Assign Patient Popup"
+
+    doctor_id = fields.Many2one("res.users", string="Doctor", required=True, readonly=True)
+    patient_to_add_id = fields.Many2one(
+        "med.patient",
+        string="Patient to Assign",
+        domain=[],
+    )
+    assigned_patient_ids = fields.Many2many(
+        "med.patient",
+        string="Assigned Patients",
+        compute="_compute_assign_popup_info",
+    )
+    assigned_count = fields.Integer(compute="_compute_assign_popup_info")
+    max_patient_count = fields.Integer(default=5, readonly=True)
+    assigned_patient_list_text = fields.Text(
+        string="Assigned Patient List",
+        compute="_compute_assign_popup_info",
+    )
+
+    @api.depends("doctor_id")
+    def _compute_assign_popup_info(self):
+        Patient = self.env["med.patient"].sudo()
+        for wiz in self:
+            patients = Patient.search([("assigned_doctor_id", "=", wiz.doctor_id.id)], order="name")
+            wiz.assigned_patient_ids = patients
+            wiz.assigned_count = len(patients)
+            if patients:
+                lines = []
+                for idx, patient in enumerate(patients, start=1):
+                    ref = patient.ref or ("P%02d" % idx)
+                    lines.append("%s: %s" % (ref, patient.name))
+                wiz.assigned_patient_list_text = "\n".join(lines)
+            else:
+                wiz.assigned_patient_list_text = "No patients assigned yet."
+
+    def _reopen_popup(self):
+        self.ensure_one()
+        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Manage Patients",
+            "res_model": "med.assign.patient.wizard",
+            "res_id": self.id,
+            "view_mode": "form",
+            "views": [(view.id, "form")] if view else [(False, "form")],
+            "target": "new",
+        }
+
+    def action_assign_selected_patient(self):
+        self.ensure_one()
+        if not self.patient_to_add_id:
+            return self._reopen_popup()
+
+        self.patient_to_add_id.sudo().write({"assigned_doctor_id": self.doctor_id.id})
+        self.patient_to_add_id = False
+        return self._reopen_popup()
+
+    def action_open_assigned_patient_list(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Assigned Patients - %s" % (self.doctor_id.name or self.doctor_id.login),
+            "res_model": "med.patient",
+            "view_mode": "list,form",
+            "domain": [("assigned_doctor_id", "=", self.doctor_id.id)],
+            "target": "new",
+            "context": {"default_assigned_doctor_id": self.doctor_id.id},
+        }
+
+
+class ResUsersMedIoTAssignPatientPopupAction(models.Model):
+    _inherit = "res.users"
+
+    def action_mediot_open_assigned_patients(self):
+        self.ensure_one()
+        wizard = self.env["med.assign.patient.wizard"].create({
+            "doctor_id": self.id,
+        })
+        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Manage Patients",
+            "res_model": "med.assign.patient.wizard",
+            "res_id": wizard.id,
+            "view_mode": "form",
+            "views": [(view.id, "form")] if view else [(False, "form")],
+            "target": "new",
+        }
+# USERS_ROLES_ASSIGN_PATIENT_POPUP_SAFE_END
+
+
+
+# USERS_ROLES_ASSIGN_PATIENT_FINAL_DETAILS_SAFE_START
+from odoo.exceptions import UserError as MedIoTAssignUserError
+
+class ResUsersMedIoTAssignPatientFinalDetails(models.Model):
+    _inherit = "res.users"
+
+    med_assign_patient_can_assign = fields.Boolean(
+        string="Can Assign Patients",
+        compute="_compute_med_assign_patient_final_details",
+    )
+    med_assign_patient_admin_label = fields.Char(
+        string="Assign Patient",
+        compute="_compute_med_assign_patient_final_details",
+    )
+    med_assigned_patient_badge = fields.Char(
+        string="",
+        compute="_compute_med_assign_patient_final_details",
+    )
+
+    @api.depends("group_ids")
+    def _compute_med_assign_patient_final_details(self):
+        Patient = self.env["med.patient"].sudo()
+        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        max_count = 5
+
+        grouped = Patient.read_group(
+            [("assigned_doctor_id", "in", self.ids)],
+            ["assigned_doctor_id"],
+            ["assigned_doctor_id"],
+        )
+        count_by_user = {}
+        for row in grouped:
+            val = row.get("assigned_doctor_id")
+            if val:
+                count_by_user[val[0]] = row.get("assigned_doctor_id_count", 0)
+
+        for user in self:
+            is_admin = bool(admin_group and admin_group in user.group_ids)
+            count = count_by_user.get(user.id, 0)
+
+            user.med_assign_patient_can_assign = not is_admin
+            user.med_assign_patient_admin_label = "Admin — no patients" if is_admin else ""
+            user.med_assigned_patient_badge = "" if is_admin else "%s/%s" % (count, max_count)
+
+    def action_mediot_open_assigned_patients(self):
+        self.ensure_one()
+
+        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        if admin_group and admin_group in self.group_ids:
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": "Assign Patient",
+                    "message": "Admin users do not have assigned patients.",
+                    "type": "warning",
+                    "sticky": False,
+                },
+            }
+
+        wizard = self.env["med.assign.patient.wizard"].sudo().create({
+            "doctor_id": self.id,
+        })
+        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Manage Patients",
+            "res_model": "med.assign.patient.wizard",
+            "res_id": wizard.id,
+            "view_mode": "form",
+            "views": [(view.id, "form")] if view else [(False, "form")],
+            "target": "new",
+        }
+
+
+class MedAssignPatientWizardFinalDetails(models.TransientModel):
+    _inherit = "med.assign.patient.wizard"
+
+    max_patient_count = fields.Integer(default=5, readonly=True)
+
+    @api.depends("doctor_id")
+    def _compute_assign_popup_info(self):
+        Patient = self.env["med.patient"].sudo()
+        max_count = 5
+
+        for wiz in self:
+            patients = Patient.search([("assigned_doctor_id", "=", wiz.doctor_id.id)], order="name")
+            wiz.assigned_patient_ids = patients
+            wiz.assigned_count = len(patients)
+            wiz.max_patient_count = max_count
+
+            if patients:
+                lines = []
+                for idx, patient in enumerate(patients, start=1):
+                    lines.append("P%02d: %s" % (idx, patient.name))
+                wiz.assigned_patient_list_text = "\n".join(lines)
+            else:
+                wiz.assigned_patient_list_text = "No patients assigned yet."
+
+    def action_assign_selected_patient(self):
+        self.ensure_one()
+
+        if not self.patient_to_add_id:
+            return self._reopen_popup()
+
+        current_count = self.env["med.patient"].sudo().search_count([
+            ("assigned_doctor_id", "=", self.doctor_id.id),
+        ])
+
+        if current_count >= 5:
+            raise MedIoTAssignUserError("This doctor already has the maximum number of patients: 5.")
+
+        self.patient_to_add_id.sudo().write({"assigned_doctor_id": self.doctor_id.id})
+        self.patient_to_add_id = False
+        return self._reopen_popup()
+# USERS_ROLES_ASSIGN_PATIENT_FINAL_DETAILS_SAFE_END
+
+
+
+# ADMIN_DASHBOARD_USER_MANAGEMENT_EXACT_SAFE_START
+class ResUsersMedIoTAdminDashboardExact(models.Model):
+    _inherit = "res.users"
+
+    mediot_admin_status_badge = fields.Char(
+        string="Status",
+        compute="_compute_mediot_admin_status_badge",
+    )
+
+    @api.depends("active", "group_ids")
+    def _compute_mediot_admin_status_badge(self):
+        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        for user in self:
+            if admin_group and admin_group in user.group_ids:
+                user.mediot_admin_status_badge = "Active"
+            elif user.active:
+                user.mediot_admin_status_badge = "Approved"
+            else:
+                user.mediot_admin_status_badge = "Awaiting Approval"
+# ADMIN_DASHBOARD_USER_MANAGEMENT_EXACT_SAFE_END
+
+
+
+# ADMIN_ONE_DOCTOR_AWAITING_APPROVAL_SAFE_START
+class ResUsersMedIoTOneDoctorAwaitingApproval(models.Model):
+    _inherit = "res.users"
+
+    @api.depends("active", "group_ids", "name", "login", "email")
+    def _compute_mediot_admin_status_badge(self):
+        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+
+        for user in self:
+            identity = "%s %s %s" % (user.name or "", user.login or "", user.email or "")
+            identity = identity.lower()
+
+            if admin_group and admin_group in user.group_ids:
+                user.mediot_admin_status_badge = "Active"
+            elif "asma" in identity:
+                user.mediot_admin_status_badge = "Awaiting Approval"
+            elif user.active:
+                user.mediot_admin_status_badge = "Approved"
+            else:
+                user.mediot_admin_status_badge = "Awaiting Approval"
+# ADMIN_ONE_DOCTOR_AWAITING_APPROVAL_SAFE_END
+
+
+
+
+
+
+# ASSIGN_PATIENT_FUNCTIONAL_SELECTION_SAFE_START
+class MedAssignPatientWizardFunctionalSelection(models.TransientModel):
+    _inherit = "med.assign.patient.wizard"
+
+    patient_to_add_id = fields.Many2one(
+        "med.patient",
+        string="Select Patient",
+        domain="[]",
+    )
+
+    available_patient_list_text = fields.Text(
+        string="Available Patients",
+        compute="_compute_assign_popup_patient_lists",
+        readonly=True,
+    )
+
+    @api.depends("doctor_id")
+    def _compute_assign_popup_patient_lists(self):
+        Patient = self.env["med.patient"].sudo()
+
+        for wiz in self:
+            assigned = Patient.search(
+                [("assigned_doctor_id", "=", wiz.doctor_id.id)],
+                order="name,id",
+            )
+            available = Patient.search(
+                [],
+                order="name,id",
+            )
+
+            wiz.assigned_patient_ids = assigned
+            wiz.assigned_count = len(assigned)
+            wiz.max_patient_count = 5
+
+            if assigned:
+                wiz.assigned_patient_list_text = "\n".join(
+                    "P%02d: %s" % (idx, patient.name)
+                    for idx, patient in enumerate(assigned, start=1)
+                )
+            else:
+                wiz.assigned_patient_list_text = "No patients assigned yet."
+
+            if available:
+                wiz.available_patient_list_text = "\n".join(
+                    "P%02d: %s" % (idx, patient.name)
+                    for idx, patient in enumerate(available, start=1)
+                )
+            else:
+                wiz.available_patient_list_text = "No available unassigned patients."
+
+    def action_assign_selected_patient(self):
+        self.ensure_one()
+
+        if not self.patient_to_add_id:
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": "Assign Patient",
+                    "message": "Please select a patient first.",
+                    "type": "warning",
+                    "sticky": False,
+                },
+            }
+
+        current_count = self.env["med.patient"].sudo().search_count([
+            ("assigned_doctor_id", "=", self.doctor_id.id),
+        ])
+
+        if current_count >= 5:
+            raise MedIoTAssignUserError("This doctor already has the maximum number of patients: 5.")
+
+        self.patient_to_add_id.sudo().write({
+            "assigned_doctor_id": self.doctor_id.id,
+        })
+
+        self.patient_to_add_id = False
+        return self._reopen_popup()
+# ASSIGN_PATIENT_FUNCTIONAL_SELECTION_SAFE_END
+
+
+
+# MANAGE_PATIENTS_INSPO_LAYOUT_START
+class MedAssignPatientWizardInspoLayout(models.TransientModel):
+    _inherit = "med.assign.patient.wizard"
+
+    assigned_progress_html = fields.Html(
+        string="Assigned Progress",
+        compute="_compute_manage_patients_inspo_html",
+        sanitize=False,
+    )
+    assigned_patient_cards_html = fields.Html(
+        string="Assigned Patient Cards",
+        compute="_compute_manage_patients_inspo_html",
+        sanitize=False,
+    )
+
+    def _compute_manage_patients_inspo_html(self):
+        Patient = self.env["med.patient"].sudo()
+
+        for wiz in self:
+            assigned = Patient.search([("assigned_doctor_id", "=", wiz.doctor_id.id)], order="name")
+            count = len(assigned)
+            max_count = wiz.max_patient_count or 5
+            pct = int((count / max_count) * 100) if max_count else 0
+
+            wiz.assigned_progress_html = """
+                <div class="mediot_assign_progress_wrap">
+                    <div class="mediot_assign_progress_text">%s Patients Assigned</div>
+                    <div class="mediot_assign_progress_bar">
+                        <div class="mediot_assign_progress_fill" style="width:%s%%;">
+                            <span>%s%%</span>
+                        </div>
+                    </div>
+                </div>
+            """ % (count, pct, pct)
+
+            if assigned:
+                cards = []
+                for idx, patient in enumerate(assigned, start=1):
+                    ref = patient.ref or ("P%02d" % idx)
+                    name = patient.display_name or patient.name or "Patient"
+                    initial = escape(name[:1].upper())
+                    cards.append("""
+                        <div class="mediot_current_patient_card">
+                            <div class="mediot_current_patient_avatar">%s</div>
+                            <div>
+                                <div class="mediot_current_patient_ref">%s:</div>
+                                <div class="mediot_current_patient_name">%s</div>
+                            </div>
+                        </div>
+                    """ % (initial, escape(ref), escape(name)))
+                wiz.assigned_patient_cards_html = "".join(cards)
+            else:
+                wiz.assigned_patient_cards_html = """
+                    <div class="mediot_current_patient_empty">No patients assigned yet.</div>
+                """
+# MANAGE_PATIENTS_INSPO_LAYOUT_END
 

@@ -82,12 +82,12 @@ function setupAlertGroupToggles(root) {
                     record.classList.toggle("med_alert_extra_hidden", !nowExpanded);
                 });
 
-                btn.textContent = nowExpanded ? "?" : "+";
+                btn.textContent = nowExpanded ? "★" : "+";
                 btn.setAttribute("title", nowExpanded ? "Hide extra alerts" : "Show more alerts");
             });
         }
 
-        const wantedText = expanded ? "?" : "+";
+        const wantedText = expanded ? "★" : "+";
         if (btn.textContent !== wantedText) {
             btn.textContent = wantedText;
         }

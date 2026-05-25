@@ -34,6 +34,7 @@
           'security/record_rules.xml',
           'security/ir.model.access.csv',
           'data/sequence.xml',
+          'data/alert_email_cron.xml',
           'data/patient_demo.xml',
           'views/patient_views.xml',
           'views/vital_reading_views.xml',

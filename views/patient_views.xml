@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
 <!-- KANBAN VIEW -->
@@ -203,112 +203,29 @@
                     <!-- RIGHT CONTENT -->
                     <div>
 
-                        <!-- VITALS ROW -->
-                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;">
-                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
-                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                                    <div style="width:32px;height:32px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">💧</div>
-                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">SpO2</span>
-                                </div>
-                                <div style="display:flex;align-items:baseline;gap:4px;">
-                                    <field name="latest_spo2" nolabel="1" readonly="1"
-                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
-                                    <span style="font-size:.9rem;color:#94a3b8;">%</span>
-                                </div>
-                                <field name="spo2_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
-                            </div>
-                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
-                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                                    <div style="width:32px;height:32px;background:#fef2f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">❤️</div>
-                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">Heart Rate</span>
-                                </div>
-                                <div style="display:flex;align-items:baseline;gap:4px;">
-                                    <field name="latest_ecg_bpm" nolabel="1" readonly="1"
-                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
-                                    <span style="font-size:.9rem;color:#94a3b8;">bpm</span>
-                                </div>
-                                <field name="hr_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
-                            </div>
-                            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px 20px;">
-                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                                    <div style="width:32px;height:32px;background:#fffbeb;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;">🌡️</div>
-                                    <span style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:#64748b;">Temperature</span>
-                                </div>
-                                <div style="display:flex;align-items:baseline;gap:4px;">
-                                    <field name="latest_temp" nolabel="1" readonly="1"
-                                           style="font-size:1.9rem;font-weight:700;color:#1e293b;background:transparent;border:none;padding:0;line-height:1;"/>
-                                    <span style="font-size:.9rem;color:#94a3b8;">°C</span>
-                                </div>
-                                <field name="temp_chart_html" widget="html" nolabel="1" readonly="1" class="mediot_chart_field"/>
-                            </div>
+                        
+                        <!-- OLD_TOP_VITAL_CARDS_REMOVED_SAFE -->
+                        
+<!-- PATIENT_PROFILE_VITAL_CURVES_SAFE_START -->
+                        <div class="mediot_vital_curves_wrapper">
+                            <field name="vitals_curves_html" widget="html" nolabel="1" readonly="1"/>
                         </div>
+                        <!-- PATIENT_PROFILE_VITAL_CURVES_SAFE_END -->
 
-                        <!-- CVD AI RESULT -->
-                        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;padding:24px;margin-top:18px;box-shadow:0 8px 24px rgba(15,23,42,.04);">
-                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
-                                <div>
-                                    <div style="font-size:1.08rem;font-weight:900;color:#0f172a;">CVD AI Prediction</div>
-                                    <div style="font-size:.82rem;color:#64748b;margin-top:4px;">FastAPI XGBoost cardiovascular risk analysis</div>
-                                </div>
-                                <button name="action_compute_cvd_risk" type="object" string="Compute Risk" icon="fa-heartbeat" class="btn-primary"/>
-                            </div>
+                        <!-- CVD AI RESULT moved to Data History Predict popup -->
 
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
-                                <div style="border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#f8fafc;">
-                                    <div style="background:#f1f5f9;color:#0f172a;font-weight:800;font-size:.82rem;padding:12px 16px;border-bottom:1px solid #e5e7eb;">
-                                        Clinical Input Data
-                                    </div>
-                                    <group style="padding:12px 16px;margin:0;">
-                                        <field name="cvd_height"/>
-                                        <field name="cvd_weight"/>
-                                        <field name="cvd_ap_hi"/>
-                                        <field name="cvd_ap_lo"/>
-                                        <field name="cvd_cholesterol"/>
-                                        <field name="cvd_gluc"/>
-                                        <field name="cvd_alco"/>
-                                        <field name="cvd_active"/>
-                                    </group>
-                                </div>
 
-                                <div style="border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;background:#f8fafc;">
-                                    <div style="background:#f1f5f9;color:#0f172a;font-weight:800;font-size:.82rem;padding:12px 16px;border-bottom:1px solid #e5e7eb;">
-                                        Prediction Result
-                                    </div>
-                                    <group style="padding:12px 16px;margin:0;">
-                                        <field name="cvd_risk" readonly="1" widget="badge"
-                                               decoration-success="cvd_risk == 'low'"
-                                               decoration-warning="cvd_risk == 'medium'"
-                                               decoration-danger="cvd_risk in ('high', 'critical')"/>
-                                        <field name="cvd_probability" readonly="1"/>
-                                        <field name="cvd_alert" readonly="1" widget="boolean_toggle"/>
-                                        <field name="cvd_message" readonly="1"/>
-                                        <field name="cvd_last_checked" readonly="1"/>
-                                    </group>
-                                </div>
-                            </div>
-                        </div>
-
+                        
                         <!-- ALERTS -->
-                        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:22px 24px;">
-                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                                <div style="font-size:.95rem;font-weight:700;color:#1e293b;">Alerts</div>
+                        <div class="mediot_alerts_html_card">
+                            <div class="mediot_alerts_html_header">
+                                <div class="mediot_alerts_html_title">Alerts</div>
                                 <field name="pending_alert_count" nolabel="1" readonly="1"
-                                       style="display:inline;background:#fef2f2;color:#ef4444;font-size:.82rem;font-weight:700;border:1.5px solid #fecaca;padding:3px 14px;border-radius:20px;min-width:32px;text-align:center;"/>
+                                       class="mediot_alerts_pending_count"/>
                             </div>
-                        <field name="alert_ids" nolabel="1">
-                                <list decoration-danger="severity=='critical'" decoration-warning="severity=='warning'" limit="5" editable="bottom">
-                                    <field name="create_date" string="Date" readonly="1"/>
-                                    <field name="alert_type" string="Type"/>
-                                    <field name="severity" widget="badge"
-                                           decoration-danger="severity=='critical'"
-                                           decoration-warning="severity=='warning'"/>
-                                    <field name="message" string="Message"/>
-                                    <field name="state" widget="badge"
-                                           decoration-success="state=='resolved'"
-                                           decoration-danger="state=='active'"/>
-                                </list>
-                            </field>
+                            <field name="patient_alerts_table_html" widget="html" nolabel="1" readonly="1"/>
                         </div>
+
 
                     </div><!-- /right -->
                 </div><!-- /grid -->
@@ -347,6 +264,268 @@
     <field name="view_mode">kanban,list,form</field>
     <field name="search_view_id" ref="view_med_patient_search"/>
 </record>
+    <!-- CVD_PREDICT_POPUP_FROM_HISTORY_START -->
+    <record id="view_med_patient_cvd_predict_popup" model="ir.ui.view">
+        <field name="priority">1000</field>
+        <field name="name">med.patient.cvd.predict.popup.form</field>
+        <field name="model">med.patient</field>
+        <field name="arch" type="xml">
+<form string="CVD AI Prediction">
+    <sheet>
+        <div style="background:#f8fafc;border:1px solid #d7dee8;border-radius:18px;padding:22px 26px;box-shadow:0 12px 28px rgba(15,23,42,.06);">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;">
+                <div>
+                    <div style="font-size:1.25rem;font-weight:950;color:#0f172a;">CVD AI Prediction</div>
+                    <div style="font-size:.9rem;color:#64748b;margin-top:5px;">FastAPI Random Forest cardiovascular risk analysis</div>
+                </div>
+                <button name="action_compute_cvd_risk"
+                        type="object"
+                        string="Compute Risk"
+                        icon="fa-heartbeat"
+                        class="btn-primary"
+                        style="background:#155e63;border-color:#155e63;border-radius:999px;padding:9px 18px;font-weight:900;"/>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;">
+                <div style="background:#ffffff;border:1px solid #dbe3ec;border-radius:14px;overflow:hidden;">
+                    <div style="background:#e5e7eb;color:#111827;font-weight:950;padding:13px 18px;border-bottom:1px solid #d1d5db;">
+                        Clinical Input Data
+                    </div>
+
+                    <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;row-gap:15px;column-gap:20px;">
+                        <div style="font-weight:850;color:#111827;">Height (cm)</div>
+                        <div><field name="cvd_height" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Weight (kg)</div>
+                        <div><field name="cvd_weight" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Systolic BP</div>
+                        <div><field name="cvd_ap_hi" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Diastolic BP</div>
+                        <div><field name="cvd_ap_lo" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Cholesterol</div>
+                        <div><field name="cvd_cholesterol" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Glucose</div>
+                        <div><field name="cvd_gluc" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Alcohol Intake</div>
+                        <div><field name="cvd_alco" nolabel="1"/></div>
+
+                        <div style="font-weight:850;color:#111827;">Physically Active</div>
+                        <div><field name="cvd_active" nolabel="1"/></div>
+                    </div>
+                </div>
+
+                <div style="background:#ffffff;border:1px solid #dbe3ec;border-radius:14px;overflow:hidden;">
+                    <div style="background:#e5e7eb;color:#111827;font-weight:950;padding:13px 18px;border-bottom:1px solid #d1d5db;">
+                        Prediction Result
+                    </div>
+
+                    <div style="padding:16px 20px;">
+                        <div style="display:grid;grid-template-columns:145px 1fr 110px 90px;gap:12px;align-items:center;margin-bottom:12px;">
+                            <div style="font-weight:900;color:#7f1d1d;">CVD Risk</div>
+                            <div>
+                                <field name="cvd_risk" nolabel="1" readonly="1" widget="badge"
+                                       decoration-success="cvd_risk == 'low'"
+                                       decoration-warning="cvd_risk == 'medium'"
+                                       decoration-danger="cvd_risk in ('high', 'critical')"/>
+                            </div>
+                            <div style="font-weight:900;color:#7f1d1d;">CVD Alert</div>
+                            <div><field name="cvd_alert" nolabel="1" readonly="1" widget="boolean_toggle"/></div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:145px 1fr;gap:12px;margin-bottom:10px;">
+                            <div style="font-weight:900;color:#7f1d1d;">Probability</div>
+                            <div><field name="cvd_probability" nolabel="1" readonly="1"/></div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:145px 1fr;gap:12px;margin-bottom:10px;">
+                            <div style="font-weight:900;color:#7f1d1d;">CVD AI Message</div>
+                            <div style="line-height:1.3;"><field name="cvd_message" nolabel="1" readonly="1"/></div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:145px 1fr;gap:12px;margin-bottom:14px;">
+                            <div style="font-weight:900;color:#7f1d1d;">Last checked</div>
+                            <div><field name="cvd_last_checked" nolabel="1" readonly="1"/></div>
+                        </div>
+
+                        <div invisible="not cvd_last_checked" style="border-top:1px solid #cbd5e1;padding-top:12px;">
+                            <div style="font-weight:950;color:#111827;margin-bottom:10px;">
+                                INFLUENCE DES PARAMÈTRES <span style="font-weight:700;color:#475569;">(Feature Importance)</span>
+                            </div>
+
+                            <div style="display:grid;grid-template-columns:120px 1fr;gap:8px 12px;align-items:center;font-size:.86rem;">
+                                <div style="text-align:right;color:#334155;font-weight:800;">Systolic BP</div>
+                                <div style="background:#e5e7eb;border-radius:7px;height:25px;overflow:hidden;">
+                                    <div style="width:88%;height:100%;background:#a3423f;color:white;text-align:right;padding-right:8px;font-weight:900;line-height:25px;">+12.1</div>
+                                </div>
+
+                                <div style="text-align:right;color:#334155;font-weight:800;">Diastolic BP</div>
+                                <div style="background:#e5e7eb;border-radius:7px;height:25px;overflow:hidden;">
+                                    <div style="width:72%;height:100%;background:#166548;color:white;text-align:right;padding-right:8px;font-weight:900;line-height:25px;">+8.5</div>
+                                </div>
+
+                                <div style="text-align:right;color:#334155;font-weight:800;">Cholesterol</div>
+                                <div style="background:#e5e7eb;border-radius:7px;height:25px;overflow:hidden;">
+                                    <div style="width:38%;height:100%;background:#eab948;color:#111827;text-align:right;padding-right:8px;font-weight:900;line-height:25px;">-4.2</div>
+                                </div>
+
+                                <div style="text-align:right;color:#334155;font-weight:800;">Glucose</div>
+                                <div style="background:#e5e7eb;border-radius:7px;height:25px;overflow:hidden;">
+                                    <div style="width:32%;height:100%;background:#a7d8b7;color:#111827;text-align:right;padding-right:8px;font-weight:900;line-height:25px;">-3.1</div>
+                                </div>
+
+                                <div style="text-align:right;color:#334155;font-weight:800;">Physically Active</div>
+                                <div style="background:#e5e7eb;border-radius:7px;height:25px;overflow:hidden;">
+                                    <div style="width:22%;height:100%;background:#f4c4c4;color:#111827;text-align:right;padding-right:8px;font-weight:900;line-height:25px;">+1.8</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </sheet>
+    <footer>
+        <button string="Close" special="cancel" class="btn-secondary"/>
+    </footer>
+</form>
+        </field>
+    </record>
+    <!-- CVD_PREDICT_POPUP_FROM_HISTORY_END -->
+
+
+
+    <!-- AI_CHOICE_POPUP_START -->
+    <record id="view_med_patient_ai_choice_popup" model="ir.ui.view">
+        <field name="priority">1100</field>
+        <field name="name">med.patient.ai.choice.popup.form</field>
+        <field name="model">med.patient</field>
+        <field name="arch" type="xml">
+            <form string="Predictive AI">
+                <sheet>
+                    <div style="background:#f8fafc;border:1px solid #d7dee8;border-radius:18px;padding:24px;box-shadow:0 12px 28px rgba(15,23,42,.06);">
+                        <div style="margin-bottom:20px;">
+                            <div style="font-size:1.35rem;font-weight:950;color:#0f172a;">Predictive AI Center</div>
+                            <div style="font-size:.92rem;color:#64748b;margin-top:5px;">Choose the AI model to apply to this patient history.</div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+                            <div style="background:white;border:1px solid #d7dee8;border-radius:16px;padding:20px;">
+                                <div style="font-size:1.05rem;font-weight:950;color:#111827;margin-bottom:8px;">CVD Risk Prediction</div>
+                                <div style="color:#64748b;line-height:1.35;margin-bottom:18px;">
+                                    Estimates cardiovascular risk using clinical and lifestyle parameters.
+                                </div>
+                                <button name="action_open_cvd_prediction_popup"
+                                        type="object"
+                                        string="Open CVD Prediction"
+                                        icon="fa-heartbeat"
+                                        class="btn-primary"
+                                        style="background:#6b5aa6;border-color:#6b5aa6;border-radius:8px;font-weight:850;"/>
+                            </div>
+
+                            <div style="background:white;border:1px solid #d7dee8;border-radius:16px;padding:20px;">
+                                <div style="font-size:1.05rem;font-weight:950;color:#111827;margin-bottom:8px;">Heart Disease Prediction</div>
+                                <div style="color:#64748b;line-height:1.35;margin-bottom:18px;">
+                                    Detects heart disease signs using heart-specific clinical parameters.
+                                </div>
+                                <button name="action_open_heart_prediction_popup"
+                                        type="object"
+                                        string="Open Heart Disease Prediction"
+                                        icon="fa-heart"
+                                        class="btn-primary"
+                                        style="background:#7c3aed;border-color:#7c3aed;border-radius:8px;font-weight:850;"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- AI_CHOICE_POPUP_END -->
+
+    <!-- HEART_DISEASE_POPUP_ONLY_START -->
+    <record id="view_med_patient_heart_predict_popup" model="ir.ui.view">
+        <field name="priority">1200</field>
+        <field name="name">med.patient.heart.predict.popup.form</field>
+        <field name="model">med.patient</field>
+        <field name="arch" type="xml">
+            <form string="Heart Disease AI Prediction">
+                <sheet>
+                    <div style="background:#f8fafc;border:1px solid #d7dee8;border-radius:18px;padding:22px 26px;box-shadow:0 12px 28px rgba(15,23,42,.06);">
+                        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;">
+                            <div>
+                                <div style="font-size:1.25rem;font-weight:950;color:#0f172a;">Heart Disease AI Prediction</div>
+                                <div style="font-size:.9rem;color:#64748b;margin-top:5px;">Random Forest heart disease clinical analysis</div>
+                            </div>
+                            <button name="action_compute_heart_disease"
+                                    type="object"
+                                    string="Compute Heart Disease"
+                                    icon="fa-heart"
+                                    class="btn-primary"
+                                    style="background:#7c3aed;border-color:#7c3aed;border-radius:6px;font-weight:800;"/>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;">
+                            <div style="background:white;border:1px solid #d7dee8;border-radius:14px;overflow:hidden;">
+                                <div style="background:#e5e7eb;padding:14px 20px;font-weight:950;color:#111827;">Clinical Heart Input Data</div>
+                                <div style="display:grid;grid-template-columns:190px 1fr;gap:13px;padding:22px;align-items:center;">
+                                    <div style="font-weight:850;">Chest Pain Type</div><div><field name="heart_cp" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Resting BP</div><div><field name="heart_trestbps" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Cholesterol</div><div><field name="heart_chol" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Fasting Blood Sugar</div><div><field name="heart_fbs" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Resting ECG</div><div><field name="heart_restecg" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Max Heart Rate</div><div><field name="heart_thalach" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Exercise Angina</div><div><field name="heart_exang" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Oldpeak</div><div><field name="heart_oldpeak" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Slope</div><div><field name="heart_slope" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Major Vessels</div><div><field name="heart_ca" nolabel="1"/></div>
+                                    <div style="font-weight:850;">Thalassemia</div><div><field name="heart_thal" nolabel="1"/></div>
+                                </div>
+                            </div>
+
+                            <div style="background:white;border:1px solid #d7dee8;border-radius:14px;overflow:hidden;">
+                                <div style="background:#e5e7eb;padding:14px 20px;font-weight:950;color:#111827;">Prediction Result</div>
+                                <div style="padding:24px;">
+                                    <div style="display:grid;grid-template-columns:170px 1fr;gap:13px;">
+                                        <div style="font-weight:900;color:#7f1d1d;">Heart Disease Risk</div>
+                                        <div>
+                                            <field name="heart_risk" nolabel="1" readonly="1" widget="badge"
+                                                   decoration-success="heart_risk == 'not_detected'"
+                                                   decoration-danger="heart_risk == 'detected'"/>
+                                        </div>
+
+                                        <div style="font-weight:900;color:#7f1d1d;">Heart Alert</div>
+                                        <div><field name="heart_alert" nolabel="1" readonly="1" widget="boolean_toggle"/></div>
+
+                                        <div style="font-weight:900;color:#7f1d1d;">Probability</div>
+                                        <div><field name="heart_probability" nolabel="1" readonly="1"/></div>
+
+                                        <div style="font-weight:900;color:#7f1d1d;">AI Message</div>
+                                        <div><field name="heart_message" nolabel="1" readonly="1"/></div>
+
+                                        <div style="font-weight:900;color:#7f1d1d;">Last checked</div>
+                                        <div><field name="heart_last_checked" nolabel="1" readonly="1"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- HEART_DISEASE_POPUP_ONLY_END -->
 
 </odoo>
 

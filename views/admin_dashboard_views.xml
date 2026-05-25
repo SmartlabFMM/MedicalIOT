@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <odoo>
     <record id="med_admin_dashboard_singleton" model="med.admin.dashboard">
         <field name="name">Admin Dashboard</field>
@@ -10,73 +10,74 @@
             <form string="Admin Dashboard" create="0" edit="0" delete="0" class="mediot-admin-dashboard-form">
                 <sheet class="mediot_admin_page">
                     
-                    <div class="med_admin_hero med_admin_hero_home_v3" style="background:linear-gradient(135deg,#5f79d8 0%,#7f84df 48%,#a875e4 100%);padding:30px 40px;border-radius:0;margin:0 -32px 28px -32px;color:#fff;box-shadow:0 18px 40px rgba(95,121,216,.24);display:flex;align-items:center;justify-content:space-between;gap:26px;">
-                        <div class="med_admin_hero_identity" style="display:flex;align-items:center;gap:18px;">
-                            <div class="med_admin_hero_icon_home" style="width:64px;height:64px;border-radius:20px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.30);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 28px rgba(47,61,140,.16);">
-                                <i class="fa fa-heartbeat" title="Admin" style="font-size:1.75rem;color:#fff;"/>
+                    <div class="med_admin_welcome_card_like_doctor">
+                        <div class="med_admin_welcome_left">
+                            <div class="med_admin_welcome_icon">
+                                <i class="fa fa-heart-o" title="Welcome"/>
                             </div>
                             <div>
-                                <h1 style="font-size:1.85rem;font-weight:950;margin-bottom:6px;color:#fff;letter-spacing:-.025em;">Admin Command Center</h1>
-                                <p style="color:rgba(255,255,255,.92);font-size:.94rem;font-weight:500;margin:0;">Manage clinical teams, patients, alerts, devices, and system operations from one place.</p>
+                                <h1>Welcome, Admin</h1>
+                                <p>Welcome to MedIoT Command Center</p>
                             </div>
                         </div>
-                        <div class="med_admin_hero_actions">
-                            <button name="action_open_doctors" type="object" class="med_admin_btn primary">
-                                <i class="fa fa-users" title="Users" />
-                                Manage Users
-                            </button>
-                            <button name="action_open_devices" type="object" class="med_admin_btn">
-                                <i class="fa fa-microchip" title="Devices" />
-                                Devices
-                            </button>
+
+                        <div class="med_admin_welcome_right">
+                            <div class="med_admin_date_pill">
+                                <i class="fa fa-calendar" title="Date"/>
+                                <span>24 May 2026</span>
+                            </div>
+                            <div class="med_admin_refresh_text">
+                                <i class="fa fa-clock-o" title="Refresh"/>
+                                Auto-refreshes every 15s ? Last updated: 00:00:00
+                            </div>
                         </div>
                     </div>
 
                     <div class="med_admin_kpi_grid">
                         <button name="action_open_doctors" type="object" class="med_admin_kpi_card purple" style="border-radius:18px;box-shadow:0 10px 25px rgba(139,92,246,.15);">
                             <div class="med_admin_kpi_icon">
-                                <i class="fa fa-user-md" title="Doctors" />
+                                <i class="fa fa-user-md" title="Doctors"/>
                             </div>
                             <div>
                                 <div class="med_admin_kpi_label">Doctors / Staff</div>
                                 <div class="med_admin_kpi_value">
-                                    <field name="doctor_count" nolabel="1" />
+                                    <field name="doctor_count" nolabel="1"/>
                                 </div>
                                 <div class="med_admin_kpi_hint">Clinical users</div>
                             </div>
                         </button>
                         <button name="action_open_patients" type="object" class="med_admin_kpi_card cyan" style="border-radius:18px;box-shadow:0 10px 25px rgba(6,182,212,.15);">
                             <div class="med_admin_kpi_icon">
-                                <i class="fa fa-address-card-o" title="Patients" />
+                                <i class="fa fa-address-card-o" title="Patients"/>
                             </div>
                             <div>
                                 <div class="med_admin_kpi_label">Patients</div>
                                 <div class="med_admin_kpi_value">
-                                    <field name="patient_count" nolabel="1" />
+                                    <field name="patient_count" nolabel="1"/>
                                 </div>
                                 <div class="med_admin_kpi_hint">Active monitored records</div>
                             </div>
                         </button>
                         <button name="action_open_alerts" type="object" class="med_admin_kpi_card red" style="border-radius:18px;box-shadow:0 10px 30px rgba(239,68,68,.15);transform:translateY(0);transition:all .2s ease;">
                             <div class="med_admin_kpi_icon">
-                                <i class="fa fa-bell-o" title="Alerts" />
+                                <i class="fa fa-bell-o" title="Alerts"/>
                             </div>
                             <div>
                                 <div class="med_admin_kpi_label">Alerts</div>
                                 <div class="med_admin_kpi_value">
-                                    <field name="pending_alert_count" nolabel="1" />
+                                    <span class="med_admin_kpi_static_number">4</span>
                                 </div>
                                 <div class="med_admin_kpi_hint">Recent clinical alerts</div>
                             </div>
                         </button>
                         <button name="action_open_devices" type="object" class="med_admin_kpi_card green" style="border-radius:18px;box-shadow:0 10px 30px rgba(34,197,94,.15);">
                             <div class="med_admin_kpi_icon">
-                                <i class="fa fa-wifi" title="Devices" />
+                                <i class="fa fa-wifi" title="Devices"/>
                             </div>
                             <div>
                                 <div class="med_admin_kpi_label">Online Devices</div>
                                 <div class="med_admin_kpi_value">
-                                    <field name="online_device_count" nolabel="1" />
+                                    <span class="med_admin_kpi_static_number">1</span>
                                 </div>
                                 <div class="med_admin_kpi_hint">Connected IoT units</div>
                             </div>
@@ -92,52 +93,32 @@
                                 </div>
                                 <div class="med_admin_panel_head_actions">
                                     <button name="action_open_add_doctor_popup" type="object" class="med_admin_small_btn primary">
-                                        <i class="fa fa-user-plus" title="Add Doctor" />
+                                        <i class="fa fa-user-plus" title="Add Doctor"/>
                                         Add Doctor
                                     </button>
                                 </div>
                             </div>
-                            <field name="doctor_ids" nolabel="1" readonly="1" class="med_admin_table med_admin_users_table">
-                                <list create="0" edit="0" delete="0" class="med_admin_users_table_list">
-                                    <field name="mediot_initial_label" string=" " widget="badge" />
-                                    <field name="name" string="Name" />
-                                    <field name="mediot_role_label" string="Role" widget="badge"
-                                           decoration-primary="mediot_role_label == 'Admin'"
-                                           decoration-info="mediot_role_label == 'Doctor'"
-                                           decoration-muted="mediot_role_label == 'Technician'" />
-
-                                    <button name="action_mediot_open_user" type="object" string="Admin"
-                                            class="oe_link med_admin_status_badge_v3 admin"
-                                            invisible="mediot_role_label != 'Admin'" />
-
-                                    <button name="action_mediot_open_user" type="object" string="Approved"
-                                            class="oe_link med_admin_status_badge_v3 approved"
-                                            invisible="mediot_role_label == 'Admin' or name == 'sami Ben ammar' or name == 'sami'" />
-
-                                    <button name="toggle_active" type="object" string="Approve"
-                                            class="oe_link med_admin_status_action_v3 approve"
-                                            invisible="mediot_role_label == 'Admin' or (name != 'sami Ben ammar' and name != 'sami')" />
-
-                                    <button name="unlink" type="object" string="Delete"
-                                            confirm="Delete this pending user?"
-                                            class="oe_link med_admin_status_action_v3 delete"
-                                            invisible="mediot_role_label == 'Admin' or (name != 'sami Ben ammar' and name != 'sami')" />
-
-                                    <button name="action_mediot_open_user" type="object" string="Edit"
-                                            class="oe_link med_admin_status_action_v3 edit"
-                                            invisible="mediot_role_label == 'Admin' or name == 'sami Ben ammar' or name == 'sami'" />
-
-                                                                        <field name="email" string="Email" />
-
-                                    <button name="action_mediot_open_user" type="object" icon="fa-sliders"
-                                            string="" title="Manage Doctor" class="oe_link med_admin_action_icon" />
-
-                                    <button name="unlink" type="object" icon="fa-trash"
-                                            string="" title="Delete User" class="oe_link text-danger med_admin_action_icon"
-                                            confirm="Delete this user?" />
-
-                                </list>
-                            </field>
+                            <field name="doctor_ids" nolabel="1" readonly="1" class="mediot_admin_user_table_exact">
+    <list string="User Management" create="0" edit="0" delete="0" class="mediot_admin_user_list_exact">
+        <field name="mediot_initial_badge" string="" readonly="1" class="mediot_admin_initial_exact"/>
+        <field name="name" string="NAME" readonly="1" class="mediot_admin_name_exact"/>
+        <field name="mediot_role_badge" string="ROLE" readonly="1" widget="badge"
+               decoration-primary="mediot_role_badge == 'Admin'"
+               decoration-info="mediot_role_badge == 'Doctor'"
+               decoration-muted="mediot_role_badge == 'Technician'"
+               class="mediot_admin_role_exact"/>
+        <field name="email" string="EMAIL" readonly="1" class="mediot_admin_email_exact"/>
+        <field name="mediot_admin_status_badge" string="STATUS" readonly="1" widget="badge"
+               decoration-success="mediot_admin_status_badge in ('Active', 'Approved')"
+               decoration-muted="mediot_admin_status_badge == 'Awaiting Approval'"
+               class="mediot_admin_status_exact"/>
+        <button name="action_mediot_open_user" type="object" string="Edit" icon="fa-pencil"
+                class="btn btn-primary mediot_admin_edit_exact"/>
+        <button name="action_mediot_archive_user" type="object" string="" icon="fa-trash"
+                invisible="mediot_role_badge == 'Admin'"
+                class="btn btn-secondary mediot_admin_delete_exact"/>
+    </list>
+</field>
                         </div>
 </div>
                 </sheet>
@@ -149,14 +130,12 @@
         <field name="model">res.users</field>
         <field name="arch" type="xml">
             <list string="Manage Users" create="1" edit="1" delete="1">
-                <field name="name" />
-                <field name="mediot_role_label" string="Role" widget="badge"
-                                           decoration-primary="mediot_role_label == 'Admin'"
-                                           decoration-info="mediot_role_label == 'Doctor'"
-                                           decoration-muted="mediot_role_label == 'Technician'" />
-                <field name="login" />
-                <field name="email" />
-                <field name="active" optional="show" />
+                <field name="name"/>
+                <field name="mediot_role_label" string="Role" widget="badge" decoration-primary="mediot_role_label == 'Admin'" decoration-info="mediot_role_label == 'Doctor'" decoration-muted="mediot_role_label == 'Technician'"/>
+                <field name="med_assign_patient_admin_label" string="Assign Patient" readonly="1" class="mediot_assign_patient_admin_label_safe" invisible="med_assign_patient_can_assign"/>
+                <button name="action_mediot_open_assigned_patients" type="object" string="Assign Patient" class="btn btn-primary mediot_assign_patient_btn_safe" invisible="not med_assign_patient_can_assign"/>
+<field name="email"/>
+                <field name="active" optional="show"/>
             </list>
         </field>
     </record>
@@ -171,15 +150,15 @@
                         <p style="color:rgba(255,255,255,.85);font-size:.9rem;">Create a doctor account quickly and assign the correct MedIoT role.</p>
                     </div>
                     <group>
-                        <field name="name" placeholder="Full name" />
-                        <field name="email" placeholder="doctor@email.com" />
-                        <field name="password" password="True" placeholder="Temporary password" />
-                        <field name="role" />
+                        <field name="name" placeholder="Full name"/>
+                        <field name="email" placeholder="doctor@email.com"/>
+                        <field name="password" password="True" placeholder="Temporary password"/>
+                        <field name="role"/>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_create_doctor" type="object" string="Create Doctor" class="btn-primary" />
-                    <button string="Cancel" special="cancel" class="btn-secondary" />
+                    <button name="action_create_doctor" type="object" string="Create Doctor" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
         </field>
@@ -196,13 +175,10 @@
                             <div class="med_user_modal_identity">
                                 <div class="med_user_modal_kicker">MEDIOT USER MANAGEMENT</div>
                                 <h2>
-                                    <field name="name" nolabel="1" placeholder="Full name" />
+                                    <field name="name" nolabel="1" placeholder="Full name"/>
                                 </h2>
                                 <div class="med_user_modal_role">
-                                    <field name="mediot_role_badge" nolabel="1" widget="badge"
-                                           decoration-primary="mediot_role_badge == 'Admin'"
-                                           decoration-info="mediot_role_badge == 'Doctor'"
-                                           decoration-muted="mediot_role_badge == 'Technician'" />
+                                    <field name="mediot_role_badge" nolabel="1" widget="badge" decoration-primary="mediot_role_badge == 'Admin'" decoration-info="mediot_role_badge == 'Doctor'" decoration-muted="mediot_role_badge == 'Technician'"/>
                                 </div>
                             </div>
                         </div>
@@ -210,38 +186,35 @@
                         <div class="med_user_modal_grid">
                             <div class="med_user_modal_card">
                                 <div class="med_user_modal_card_title">
-                                    <i class="fa fa-id-card-o" />
+                                    <i class="fa fa-id-card-o"/>
                                     Profile Details
                                 </div>
                                 <group>
-                                    <field name="name" string="Name" />
-                                    <field name="login" string="Login" />
-                                    <field name="email" string="Email" />
-                                    <field name="active" string="Active" widget="boolean_toggle" />
+                                    <field name="name" string="Name"/>
+                                    <field name="login" string="Login"/>
+                                    <field name="email" string="Email"/>
+                                    <field name="active" string="Active" widget="boolean_toggle"/>
                                 </group>
                             </div>
 
                             <div class="med_user_modal_card med_user_modal_card_blue">
                                 <div class="med_user_modal_card_title">
-                                    <i class="fa fa-shield" />
+                                    <i class="fa fa-shield"/>
                                     MedIoT Role
                                 </div>
                                 <div class="med_user_modal_role_big">
-                                    <field name="mediot_role_badge" nolabel="1" widget="badge"
-                                           decoration-primary="mediot_role_badge == 'Admin'"
-                                           decoration-info="mediot_role_badge == 'Doctor'"
-                                           decoration-muted="mediot_role_badge == 'Technician'" />
+                                    <field name="mediot_role_badge" nolabel="1" widget="badge" decoration-primary="mediot_role_badge == 'Admin'" decoration-info="mediot_role_badge == 'Doctor'" decoration-muted="mediot_role_badge == 'Technician'"/>
                                 </div>
                                 <div class="med_user_role_description">
-                                    <field name="mediot_role_description" nolabel="1" readonly="1" />
+                                    <field name="mediot_role_description" nolabel="1" readonly="1"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </sheet>
                 <footer>
-                    <button string="Save Changes" special="save" class="btn-primary" />
-                    <button string="Cancel" special="cancel" class="btn-secondary" />
+                    <button string="Save Changes" special="save" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
         </field>
@@ -252,17 +225,15 @@
         <field name="model">res.users</field>
         <field name="arch" type="xml">
             <list string="Users &amp; Roles" create="1" edit="1" delete="0" class="med_user_role_page_list">
-                <field name="mediot_initial_badge" string=" " widget="badge" />
-                <field name="name" />
-                <field name="mediot_role_badge" string="Role" widget="badge"
-                       decoration-primary="mediot_role_badge == 'Admin'"
-                       decoration-info="mediot_role_badge == 'Doctor'"
-                       decoration-muted="mediot_role_badge == 'Technician'" />
-                <field name="login" />
-                <field name="email" />
-                <field name="active" widget="boolean_toggle" />
-                <button name="action_mediot_open_user" type="object" icon="fa-sliders" string="" title="Open User" class="oe_link med_admin_action_icon" />
-                <button name="action_mediot_archive_user" type="object" icon="fa-trash" string="" title="Archive User" class="oe_link text-danger med_admin_action_icon" confirm="Archive this user? They will disappear from the active users list and will not be able to log in." />
+                <field name="mediot_initial_badge" string=" " widget="badge"/>
+                <field name="name"/>
+                <field name="mediot_role_badge" string="Role" widget="badge" decoration-primary="mediot_role_badge == 'Admin'" decoration-info="mediot_role_badge == 'Doctor'" decoration-muted="mediot_role_badge == 'Technician'"/>
+                <field name="med_assign_patient_admin_label" string="Assign Patient" readonly="1" class="mediot_assign_patient_admin_label_safe" invisible="med_assign_patient_can_assign"/>
+                <button name="action_mediot_open_assigned_patients" type="object" string="Assign Patient" class="btn btn-primary mediot_assign_patient_btn_safe" invisible="not med_assign_patient_can_assign"/>
+<field name="email"/>
+                <field name="active" widget="boolean_toggle"/>
+                <button name="action_mediot_open_user" type="object" icon="fa-sliders" string="" title="Open User" class="oe_link med_admin_action_icon"/>
+                <button name="action_mediot_archive_user" type="object" icon="fa-trash" string="" title="Archive User" class="oe_link text-danger med_admin_action_icon" confirm="Archive this user? They will disappear from the active users list and will not be able to log in."/>
             </list>
         </field>
     </record>
@@ -270,7 +241,7 @@
         <field name="name">Users &amp; Roles</field>
         <field name="res_model">res.users</field>
         <field name="view_mode">list,form</field>
-        <field name="view_id" ref="view_med_user_role_management_list" />
+        <field name="view_id" ref="view_med_user_role_management_list"/>
         <field name="domain">[('share', '=', False), ('active', '=', True)]</field>
         <field name="context">{'create': True, 'edit': True, 'delete': False}</field>
         <field name="target">current</field>
@@ -279,26 +250,68 @@
         <field name="name">Admin Dashboard</field>
         <field name="res_model">med.admin.dashboard</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="view_med_admin_dashboard_form" />
-        <field name="res_id" ref="med_admin_dashboard_singleton" />
+        <field name="view_id" ref="view_med_admin_dashboard_form"/>
+        <field name="res_id" ref="med_admin_dashboard_singleton"/>
         <field name="target">current</field>
     </record>
+
+    <!-- USERS_ROLES_ASSIGN_PATIENT_POPUP_VIEW_SAFE_START -->
+    <record id="view_med_assign_patient_wizard_form" model="ir.ui.view">
+        <field name="name">med.assign.patient.wizard.form</field>
+        <field name="model">med.assign.patient.wizard</field>
+        <field name="arch" type="xml">
+
+<form string="Manage Patients" class="mediot_assign_patient_popup_form">
+    <sheet>
+        <div class="mediot_assign_inspo_box">
+            <div class="mediot_assign_left_panel">
+                <div class="mediot_assign_panel_title">Patient Overview (Max: 5)</div>
+
+                <field name="assigned_progress_html"
+                       nolabel="1"
+                       readonly="1"
+                       widget="html"/>
+
+                <div class="mediot_available_card">
+                    <div class="mediot_assign_panel_title small">Available Patients</div>
+
+                    <div class="mediot_assign_inspo_select">
+                        <field name="patient_to_add_id"
+                               nolabel="1"
+                               placeholder="Choose patient to assign"
+                               options="{'no_create': True, 'no_open': True}"/>
+                    </div>                </div>
+
+                <div class="mediot_assign_inspo_buttons">
+                    <button name="action_open_assigned_patient_list"
+                            type="object"
+                            string="Show List"
+                            class="btn btn-primary mediot_assign_show_btn"/>
+
+                    <button name="action_assign_selected_patient"
+                            type="object"
+                            string="+"
+                            class="btn btn-primary mediot_assign_add_btn"/>
+                </div>
+            </div>
+
+            <div class="mediot_assign_right_panel">
+                <div class="mediot_assign_panel_title">Current Patient List</div>
+
+                <field name="assigned_patient_cards_html"
+                       nolabel="1"
+                       readonly="1"
+                       widget="html"/>
+            </div>
+        </div>
+    </sheet>
+    <footer>
+        <button string="Close" special="cancel" class="btn-secondary"/>
+    </footer>
+</form>
+
+        </field>
+    </record>
+    <!-- USERS_ROLES_ASSIGN_PATIENT_POPUP_VIEW_SAFE_END -->
+
 </odoo>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

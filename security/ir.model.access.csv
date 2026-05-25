@@ -21,3 +21,4 @@ access_med_settings_junior,med.settings junior,model_med_settings,med_iot_comman
 access_med_admin_dashboard_admin,med.admin.dashboard admin,model_med_admin_dashboard,med_iot_command_center.group_med_admin,1,1,1,1
 
 access_med_admin_quick_doctor_wizard,med.admin.quick.doctor.wizard,model_med_admin_quick_doctor_wizard,med_iot_command_center.group_med_admin,1,1,1,1
+access_med_assign_patient_wizard_admin,access.med.assign.patient.wizard.admin,model_med_assign_patient_wizard,med_iot_command_center.group_med_admin,1,1,1,1

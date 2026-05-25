@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
+from urllib.parse import quote_plus
 from odoo import http
 from odoo.http import request
 
@@ -29,6 +30,12 @@ class MedIoTAuthController(http.Controller):
 
                 auth_info = request.session.authenticate(request.env, credential)
 
+                if not auth_info:
+                    return request.redirect(
+                        "/mediot/login?login=%s&error=%s"
+                        % (quote_plus(login), quote_plus("Invalid email or password."))
+                    )
+
                 if not request.session.uid and hasattr(request.session, "finalize"):
                     import inspect
                     params_count = len(inspect.signature(request.session.finalize).parameters)
@@ -41,7 +48,7 @@ class MedIoTAuthController(http.Controller):
 
             except Exception as e:
                 values = {
-                    "error": "Login failed: %s: %s" % (type(e).__name__, str(e)),
+                    "error": "Invalid email or password.",
                     "login": login,
                     "redirect": "/mediot/post_login",
                     "role_title": role_title,
@@ -49,7 +56,10 @@ class MedIoTAuthController(http.Controller):
                     "role_icon": role_icon,
                     "role_class": role_class,
                 }
-                return request.render('med_iot_command_center.med_login_page', values)
+                return request.redirect(
+                    "/mediot/login?login=%s&error=%s"
+                    % (quote_plus(login), quote_plus("Invalid email or password."))
+                )
 
         values = {
             "error": kwargs.get("error"),
@@ -105,7 +115,7 @@ class MedIoTAuthController(http.Controller):
     @http.route(['/mediot/signup/submit'], type='http', auth='public', website=True, methods=['POST'], csrf=True, sitemap=False)
     def mediot_signup_submit(self, **post):
         Users = request.env['res.users'].sudo()
-        email = (post.get('email') or '').strip().lower()
+        email = (post.get('email') or post.get('login') or '').strip().lower()
         password = (post.get('password') or '').strip()
         first_name = (post.get('first_name') or '').strip()
         last_name = (post.get('last_name') or '').strip()

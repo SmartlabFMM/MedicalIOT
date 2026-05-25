@@ -1,4 +1,4 @@
-/* PATIENT_DIRECTORY_PHOTO_FIX_ONLY_START */
+﻿/* PATIENT_DIRECTORY_PHOTO_FIX_ONLY_START */
 (function () {
     function txt(el) {
         return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
@@ -28,6 +28,18 @@ import { registry }   from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, onMounted, onWillUnmount } from "@odoo/owl";
 import { session } from "@web/session";
+
+// DASHBOARD_RENDER_ONLY_GUARD_SAFE_FINAL_START
+window.mediotIsDoctorDashboardPageSafeFinal = function () {
+    const href = String(window.location.href || "");
+    return href.includes("action-273") || href.includes("action=273");
+};
+// DASHBOARD_RENDER_ONLY_GUARD_SAFE_FINAL_END
+
+
+
+
+
 
 const CIRC = 282.74;
 function donutSegments(stable, warning, critical) {
@@ -563,506 +575,28 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
 })();
 
 /* PATIENT_DIRECTORY_FORCE_V3_START */
-(function () {
-    function txt(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    function ready(fn) {
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", fn);
-        } else {
-            fn();
-        }
-    }
-
-    const fallback = [
-        {
-            name: "Salma Ben Mansour",
-            id: "P-00012",
-            vitals: ['SpO2: 89.9%', '69 BPM'],
-            ai: "Normal rhythm · Low",
-            status: "Warning",
-            bullet: "red"
-        },
-        {
-            name: "Mariem Abed",
-            id: "P-00006",
-            vitals: ['SpO2: 91.3%', '86 BPM'],
-            ai: "Normal sinus rhythm · Low",
-            status: "Critical",
-            bullet: "blue"
-        },
-        {
-            name: "Samia Jeliti",
-            id: "P-00001",
-            vitals: ['SpO2: 92.3%', '84 BPM'],
-            ai: "Normal sinus rhythm · Low",
-            status: "Critical",
-            bullet: "red"
-        }
-    ];
-
-    function findPanel() {
-        return document.querySelector(".mediot_patient_directory_exact")
-            || Array.from(document.querySelectorAll("div,section")).find(el => txt(el).includes("Patient Directory"));
-    }
-
-    function collectImages(root) {
-        const map = {};
-        root.querySelectorAll("img").forEach(img => {
-            const card = img.closest("tr, li, .mpd-card, .o_data_row, .card, div");
-            const scopeText = txt(card || img.parentElement || root);
-            fallback.forEach(p => {
-                if (scopeText.includes(p.name) && img.src) {
-                    map[p.name] = img.src;
-                }
-            });
-        });
-        return map;
-    }
-
-    function statusClass(s) {
-        return String(s).toLowerCase().includes("warn") ? "warning" : "critical";
-    }
-
-    function vitalsHtml(lines, bullet) {
-        const cls = bullet === "blue" ? "mpd-bullet-blue" : "mpd-bullet-red";
-        return `
-            <div>${lines[0] || ""}</div>
-            <div class="${cls}">${lines[1] || ""}</div>
-        `;
-    }
-
-    function cardHtml(p) {
-        return `
-            <div class="mpd-card">
-                <div class="mpd-card-top">
-                    <div class="mpd-person">
-                        <img class="mpd-avatar" src="${p.img || ""}" alt="${p.name}">
-                        <div class="mpd-namebox">
-                            <div class="mpd-name">${p.name}</div>
-                            <div class="mpd-id">${p.id}</div>
-                        </div>
-                    </div>
-                    <div class="mpd-actions">
-                        <span class="mpd-icon">🖊</span>
-                        <span class="mpd-icon">🔔</span>
-                        <span class="mpd-icon">📥</span>
-                    </div>
-                </div>
-                <div class="mpd-card-bottom">
-                    <div>
-                        <div class="mpd-vitals">${vitalsHtml(p.vitals, p.bullet)}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-block-label">ECG AI</div>
-                        <div class="mpd-ai">${p.ai}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-block-label">Status</div>
-                        <div class="mpd-status ${statusClass(p.status)}">${p.status}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function render() {
-        const panel = findPanel();
-        if (!panel) return;
-
-        const imgMap = collectImages(panel);
-        const patients = fallback.map(p => ({...p, img: imgMap[p.name] || p.img || ""}));
-
-        panel.classList.add("mediot_patient_directory_exact");
-        panel.innerHTML = `
-            <div class="mpd-final">
-                <div class="mpd-head">
-                    <div class="mpd-title">Patient Directory</div>
-
-                    <div class="mpd-topbar">
-                        <div class="mpd-chip">👤&nbsp;&nbsp;3 Total Patients</div>
-                        <div style="font-size:16px;font-weight:700;color:#0c2555;display:flex;align-items:center;">Patient Name</div>
-                        <div class="mpd-input"><span>Please enter here</span><span>🔍</span></div>
-                    </div>
-
-                    <div class="mpd-toolbar2">
-                        <div class="mpd-select">Patient Status&nbsp;&nbsp;&nbsp;⌄</div>
-                        <div class="mpd-alerts">🔔 <span style="margin-left:8px;">Alerts</span> <span class="mpd-alert-count">1</span></div>
-                        <button class="mpd-add">＋ Add Patient</button>
-                    </div>
-                </div>
-
-                <div class="mpd-list">
-                    ${patients.map(cardHtml).join("")}
-                </div>
-            </div>
-        `;
-    }
-
-    ready(function () {
-        render();
-        setTimeout(render, 500);
-        setTimeout(render, 1500);
-        setTimeout(render, 2500);
-    });
-})();
- /* PATIENT_DIRECTORY_FORCE_V3_END */
+/* DISABLED_DUPLICATE_RENDER_SAFE: old duplicate Patient Directory render block disabled to stop dashboard flicker. */
+/* PATIENT_DIRECTORY_FORCE_V3_END */
 
 
 /* PATIENT_DIRECTORY_FORCE_V4_START */
-(function () {
-    function text(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    function findPanel() {
-        return document.querySelector(".mediot_patient_directory_exact") ||
-            Array.from(document.querySelectorAll("div, section")).find(function (el) {
-                return text(el).includes("Patient Directory") && text(el).includes("Salma");
-            });
-    }
-
-    function getImgs(panel) {
-        const imgs = Array.from(panel.querySelectorAll("img")).map(img => img.src).filter(Boolean);
-        return imgs;
-    }
-
-    function statusClass(status) {
-        return String(status).toLowerCase().includes("warn") ? "warning" : "critical";
-    }
-
-    function renderCard(p) {
-        return `
-            <div class="mpd-v4-card">
-                <div class="mpd-v4-card-top">
-                    <div class="mpd-v4-person">
-                        <img class="mpd-v4-avatar" src="${p.img}" alt="">
-                        <div>
-                            <div class="mpd-v4-name">${p.name}</div>
-                            <div class="mpd-v4-id">${p.id}</div>
-                        </div>
-                    </div>
-                    <div class="mpd-v4-actions">
-                        <span class="mpd-v4-icon">✎</span>
-                        <span class="mpd-v4-icon">🔔</span>
-                        <span class="mpd-v4-icon">⭳</span>
-                    </div>
-                </div>
-
-                <div class="mpd-v4-bottom">
-                    <div class="mpd-v4-vitals">
-                        <div>${p.spo2}</div>
-                        <div><span style="color:${p.dot};font-size:17px;">•</span> ${p.bpm}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-v4-label">ECG AI</div>
-                        <div class="mpd-v4-ai">${p.ecg}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-v4-label">Status</div>
-                        <div class="mpd-v4-status ${statusClass(p.status)}">${p.status}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function render() {
-        const panel = findPanel();
-        if (!panel) return;
-
-        const imgs = getImgs(panel);
-        panel.classList.add("mediot_patient_directory_exact");
-
-        const patients = [
-            {name: "Salma Ben Mansour", id: "P-00012", spo2: "SpO2: 89.9%", bpm: "69 BPM", ecg: "Normal rhythm · Low", status: "Warning", dot: "#ff4040", img: (window.__mediotGetPatientImgByName && window.__mediotGetPatientImgByName("Salma Ben Mansour")) || imgs[0] || ""},
-            {name: "Mariem Abed", id: "P-00006", spo2: "SpO2: 91.3%", bpm: "86 BPM", ecg: "Normal sinus rhythm · Low", status: "Critical", dot: "#2b66f0", img: (window.__mediotGetPatientImgByName && window.__mediotGetPatientImgByName("Mariem Abed")) || imgs[1] || ""},
-            {name: "Samia Jeliti", id: "P-00001", spo2: "SpO2: 92.3%", bpm: "84 BPM", ecg: "Normal sinus rhythm · Low", status: "Critical", dot: "#ff4040", img: imgs[2] || "https://i.pravatar.cc/100?img=5"}
-        ];
-
-        const html = `
-            <div class="mpd-v4">
-                <h2 class="mpd-v4-title">Patient Directory</h2>
-
-                <div class="mpd-v4-controls">
-                    <div class="mpd-v4-box">♙&nbsp; 3 Total Patients</div>
-                    <div class="mpd-v4-box" style="border:none;justify-content:flex-start;">Patient Name</div>
-                    <div class="mpd-v4-search"><span>Please enter here</span><span>🔍</span></div>
-
-                    <div class="mpd-v4-box">Patient Status⌄</div>
-                    <div class="mpd-v4-box mpd-v4-alerts">🔔 Alerts <span class="mpd-v4-alert-pill">1</span></div>
-                    <div class="mpd-v4-add">＋ Add Patient</div>
-                </div>
-
-                <div class="mpd-v4-list">
-                    ${patients.map(renderCard).join("")}
-                </div>
-            </div>
-        `;
-
-        if (!panel.querySelector(".mpd-v4")) {
-            panel.innerHTML = html;
-        }
-    }
-
-    function start() {
-        render();
-        setTimeout(render, 300);
-        setTimeout(render, 800);
-        setTimeout(render, 1500);
-        setTimeout(render, 3000);
-
-        const obs = new MutationObserver(function () {
-            const panel = findPanel();
-            if (panel && !panel.querySelector(".mpd-v4")) {
-                setTimeout(render, 50);
-            }
-        });
-        obs.observe(document.body, {childList: true, subtree: true});
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start);
-    } else {
-        start();
-    }
-})();
+/* DISABLED_DUPLICATE_RENDER_SAFE: old duplicate Patient Directory render block disabled to stop dashboard flicker. */
 /* PATIENT_DIRECTORY_FORCE_V4_END */
 
 /* PATIENT_DIRECTORY_FORCE_V5_SELECTOR_FIX_START */
-(function () {
-    function text(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    function findPanel() {
-        /* 1) real right panel class */
-        const toolbar = document.querySelector(".med_exact_dashboard .mediot_toolbar_exact") ||
-                        document.querySelector(".mediot_toolbar_exact");
-        if (toolbar) return toolbar;
-
-        /* 2) find patient table by names, then climb to big container */
-        const table = Array.from(document.querySelectorAll("table")).find(t => {
-            const s = text(t);
-            return s.includes("Salma Ben Mansour") || s.includes("Mariem Abed") || s.includes("Samia Jeliti");
-        });
-
-        if (table) {
-            return table.closest(".card, .o_form_sheet, .o_content, section, div") || table.parentElement;
-        }
-
-        return null;
-    }
-
-    function getImgs(panel) {
-        return Array.from(panel.querySelectorAll("img")).map(img => img.src).filter(Boolean);
-    }
-
-    function statusClass(status) {
-        return String(status).toLowerCase().includes("warn") ? "warning" : "critical";
-    }
-
-    function renderCard(p) {
-        return `
-            <div class="mpd-v4-card">
-                <div class="mpd-v4-card-top">
-                    <div class="mpd-v4-person">
-                        <img class="mpd-v4-avatar" src="${p.img}" alt="">
-                        <div>
-                            <div class="mpd-v4-name">${p.name}</div>
-                            <div class="mpd-v4-id">${p.id}</div>
-                        </div>
-                    </div>
-                    <div class="mpd-v4-actions">
-                        <span class="mpd-v4-icon">✎</span>
-                        <span class="mpd-v4-icon">🔔</span>
-                        <span class="mpd-v4-icon">⭳</span>
-                    </div>
-                </div>
-
-                <div class="mpd-v4-bottom">
-                    <div class="mpd-v4-vitals">
-                        <div>${p.spo2}</div>
-                        <div><span style="color:${p.dot};font-size:17px;">•</span> ${p.bpm}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-v4-label">ECG AI</div>
-                        <div class="mpd-v4-ai">${p.ecg}</div>
-                    </div>
-                    <div>
-                        <div class="mpd-v4-label">Status</div>
-                        <div class="mpd-v4-status ${statusClass(p.status)}">${p.status}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function render() {
-        const panel = findPanel();
-        if (!panel) return;
-
-        const imgs = getImgs(panel);
-
-        panel.classList.add("mediot_patient_directory_exact");
-
-        const patients = [
-            {name: "Salma Ben Mansour", id: "P-00012", spo2: "SpO2: 89.9%", bpm: "69 BPM", ecg: "Normal rhythm · Low", status: "Warning", dot: "#ff4040", img: (window.__mediotGetPatientImgByName && window.__mediotGetPatientImgByName("Salma Ben Mansour")) || imgs[0] || ""},
-            {name: "Mariem Abed", id: "P-00006", spo2: "SpO2: 91.3%", bpm: "86 BPM", ecg: "Normal sinus rhythm · Low", status: "Critical", dot: "#2b66f0", img: (window.__mediotGetPatientImgByName && window.__mediotGetPatientImgByName("Mariem Abed")) || imgs[1] || ""},
-            {name: "Samia Jeliti", id: "P-00001", spo2: "SpO2: 92.3%", bpm: "84 BPM", ecg: "Normal sinus rhythm · Low", status: "Critical", dot: "#ff4040", img: imgs[2] || "https://i.pravatar.cc/100?img=5"}
-        ];
-
-        panel.innerHTML = `
-            <div class="mpd-v4">
-                <h2 class="mpd-v4-title">Patient Directory</h2>
-
-                <div class="mpd-v4-controls">
-                    <div class="mpd-v4-box">♙&nbsp; 3 Total Patients</div>
-                    <div class="mpd-v4-box" style="border:none;justify-content:flex-start;">Patient Name</div>
-                    <div class="mpd-v4-search"><span>Please enter here</span><span>🔍</span></div>
-
-                    <div class="mpd-v4-box">Patient Status⌄</div>
-                    <div class="mpd-v4-box mpd-v4-alerts">🔔 Alerts <span class="mpd-v4-alert-pill">1</span></div>
-                    <div class="mpd-v4-add">＋ Add Patient</div>
-                </div>
-
-                <div class="mpd-v4-list">
-                    ${patients.map(renderCard).join("")}
-                </div>
-            </div>
-        `;
-    }
-
-    function start() {
-        render();
-        setTimeout(render, 300);
-        setTimeout(render, 800);
-        setTimeout(render, 1500);
-        setTimeout(render, 3000);
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start);
-    } else {
-        start();
-    }
-})();
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
 /* PATIENT_DIRECTORY_FORCE_V5_SELECTOR_FIX_END */
 
 
 /* PATIENT_DIRECTORY_FINAL_TINY_FIX_START */
-(function () {
-    function txt(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    function realImageFor(name) {
-        const imgs = Array.from(document.querySelectorAll("img"));
-        for (const img of imgs) {
-            if (img.closest(".mpd-v4-card")) continue;
-            const host = img.closest("tr, .o_data_row, .card, div");
-            if (host && txt(host).includes(name)) {
-                return img.getAttribute("src") || img.src || "";
-            }
-        }
-        return "";
-    }
-
-    function fixPatientDirectory() {
-        const root = document.querySelector(".mediot_patient_directory_exact");
-        if (!root) return;
-
-        /* keep only placeholder text, remove search icon */
-        root.querySelectorAll(".mpd-v4-search").forEach(el => {
-            el.innerHTML = "<span>Please enter here</span>";
-        });
-
-        /* blue alerts icon, not yellow emoji */
-        root.querySelectorAll(".mpd-v4-alerts").forEach(el => {
-            el.innerHTML = '<i class="fa fa-bell"></i><span style="margin-left:8px;">Alerts</span><span class="mpd-v4-alert-pill">1</span>';
-        });
-
-        /* blue bell inside patient action buttons */
-        root.querySelectorAll(".mpd-v4-actions .mpd-v4-icon").forEach(icon => {
-            if (txt(icon).includes("🔔")) {
-                icon.innerHTML = '<i class="fa fa-bell"></i>';
-            }
-        });
-
-        /* use your existing patient images if found */
-        const names = ["Salma Ben Mansour", "Mariem Abed", "Samia Jeliti"];
-        root.querySelectorAll(".mpd-v4-card").forEach(card => {
-            const name = txt(card.querySelector(".mpd-v4-name"));
-            if (!names.includes(name)) return;
-
-            const real = realImageFor(name);
-            const avatar = card.querySelector(".mpd-v4-avatar");
-            if (real && avatar) avatar.src = real;
-        });
-    }
-
-    function start() {
-        fixPatientDirectory();
-        setTimeout(fixPatientDirectory, 300);
-        setTimeout(fixPatientDirectory, 900);
-        setTimeout(fixPatientDirectory, 1800);
-        setTimeout(fixPatientDirectory, 3000);
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start);
-    } else {
-        start();
-    }
-})();
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
 /* PATIENT_DIRECTORY_FINAL_TINY_FIX_END */
 
 
 
 
 /* PATIENT_DIRECTORY_SAFE_HIDE_OLD_TABLE_ONLY_START */
-(function () {
-    function txt(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    function hideOnlyOldTable() {
-        const pretty = document.querySelector(".mediot_patient_directory_exact .mpd-v4");
-        if (!pretty) return;
-
-        document.querySelectorAll("table").forEach(function (table) {
-            if (table.closest(".mpd-v4")) return;
-
-            const s = txt(table);
-            const isOldPatientTable =
-                s.includes("Patient Name") &&
-                s.includes("Status") &&
-                s.includes("Actions") &&
-                (s.includes("Salma") || s.includes("Mariem") || s.includes("Samia"));
-
-            if (isOldPatientTable) {
-                table.style.display = "none";
-                table.setAttribute("data-mediot-old-patient-table-hidden", "1");
-            }
-        });
-    }
-
-    function start() {
-        hideOnlyOldTable();
-        setTimeout(hideOnlyOldTable, 300);
-        setTimeout(hideOnlyOldTable, 900);
-        setTimeout(hideOnlyOldTable, 1800);
-        setTimeout(hideOnlyOldTable, 3000);
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start);
-    } else {
-        start();
-    }
-})();
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
 /* PATIENT_DIRECTORY_SAFE_HIDE_OLD_TABLE_ONLY_END */
 
 
@@ -1071,88 +605,7 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
 
 
 /* PATIENT_DIRECTORY_USE_ODOO_IMAGES_ONLY_START */
-(function () {
-    const PATIENT_NAMES = ["Salma Ben Mansour", "Mariem Abed", "Samia Jeliti"];
-
-    function txt(el) {
-        return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
-    }
-
-    async function callKw(model, method, args, kwargs) {
-        const res = await fetch(`/web/dataset/call_kw/${model}/${method}`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            credentials: "same-origin",
-            body: JSON.stringify({
-                jsonrpc: "2.0",
-                method: "call",
-                params: {
-                    model: model,
-                    method: method,
-                    args: args || [],
-                    kwargs: kwargs || {}
-                },
-                id: Date.now()
-            })
-        });
-        const data = await res.json();
-        if (data.error) throw data.error;
-        return data.result || [];
-    }
-
-    async function getPatientIds() {
-        const records = await callKw(
-            "med.patient",
-            "search_read",
-            [[["name", "in", PATIENT_NAMES]], ["id", "name"]],
-            {}
-        );
-
-        const map = {};
-        records.forEach(r => { map[r.name] = r.id; });
-        return map;
-    }
-
-    async function applyOdooImages() {
-        const root = document.querySelector(".mediot_patient_directory_exact");
-        if (!root || !root.querySelector(".mpd-v4-card")) return;
-
-        let ids = {};
-        try {
-            ids = await getPatientIds();
-        } catch (e) {
-            console.warn("MedIoT patient image lookup failed", e);
-            return;
-        }
-
-        root.querySelectorAll(".mpd-v4-card").forEach(card => {
-            const name = txt(card.querySelector(".mpd-v4-name"));
-            const avatar = card.querySelector(".mpd-v4-avatar");
-            const id = ids[name];
-
-            if (!avatar || !id) return;
-
-            avatar.style.visibility = "visible";
-            avatar.onerror = function () {
-                this.style.visibility = "hidden";
-            };
-            avatar.src = `/web/image/med.patient/${id}/image_1920?unique=${Date.now()}`;
-        });
-    }
-
-    function start() {
-        applyOdooImages();
-        setTimeout(applyOdooImages, 400);
-        setTimeout(applyOdooImages, 1200);
-        setTimeout(applyOdooImages, 2500);
-    }
-
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", start);
-    } else {
-        start();
-    }
-})();
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
 /* PATIENT_DIRECTORY_USE_ODOO_IMAGES_ONLY_END */
 
 
@@ -1242,6 +695,8 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function render() {
+        if (window.mediotIsDoctorDashboardPageSafeFinal && !window.mediotIsDoctorDashboardPageSafeFinal()) return; // DASHBOARD_RENDER_ONLY_GUARD_SAFE_APPLIED
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         const panel = findTrendsPanel();
         if (!panel) return;
 
@@ -1295,11 +750,27 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function start() {
+        if (window.mediotIsDoctorDashboardPageSafeFinal && !window.mediotIsDoctorDashboardPageSafeFinal()) return;
+
         render();
-        setTimeout(render, 400);
-        setTimeout(render, 1200);
-        setTimeout(render, 2500);
+
+        [50, 120, 220, 400, 700, 1100, 1800, 2500].forEach(function (ms) {
+            setTimeout(render, ms);
+        });
+
+        // Safe bounded observer: only while Dashboard DOM is still settling, then it disconnects.
+        if (document.body && window.MutationObserver) {
+            const obs = new MutationObserver(function () {
+                render();
+                if (document.querySelector(".mediot_trends_exact .mtv6-card")) {
+                    obs.disconnect();
+                }
+            });
+            obs.observe(document.body, { childList: true, subtree: true });
+            setTimeout(function () { obs.disconnect(); }, 2800);
+        }
     }
+    // SAFE_TRENDS_FAST_RENDER_FINAL
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", start);
@@ -1316,6 +787,7 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function fixGridPlacement() {
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         const root = document.querySelector(".med_exact_dashboard");
         if (!root) return;
 
@@ -1392,6 +864,7 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function replaceOnlyDashboardOverviewText() {
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         if (document.querySelector(".welcome-overview-info-safe")) return;
 
         const candidates = Array.from(document.querySelectorAll("button, a, span, div"))
@@ -1454,6 +927,7 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function pullTrendsUp() {
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         const welcome = findWelcome();
         const trends = findTrends();
         if (!welcome || !trends) return;
@@ -1469,12 +943,14 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function start() {
-        pullTrendsUp();
-        setTimeout(pullTrendsUp, 300);
-        setTimeout(pullTrendsUp, 900);
-        setTimeout(pullTrendsUp, 1800);
+        // Final safe fix: only adjust immediately during first paint.
+        // No late 900/1800ms movement, so Dashboard stops jumping after it appears.
+        [0, 40, 100, 180].forEach(function (ms) {
+            setTimeout(pullTrendsUp, ms);
+        });
         window.addEventListener("resize", pullTrendsUp);
     }
+    // FINAL_SAFE_NO_LATE_TRENDS_JUMP
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", start);
@@ -1552,6 +1028,7 @@ registry.category("actions").add("med_iot_command_center.dashboard", MedDashboar
     }
 
     function ensureSearchInput() {
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         const searchBox = document.querySelector(".mpd-v4-search");
         if (searchBox && !searchBox.querySelector("input")) {
             searchBox.innerHTML = '<input class="mpd-v4-search-input" placeholder="Please enter here">';
@@ -1770,7 +1247,6 @@ Generated: ${new Date().toLocaleString()}`;
             else if (idx === 2) downloadReport(card);
             return;
         }
-
         closeMenus();
     }, true);
 
@@ -1801,30 +1277,9 @@ Generated: ${new Date().toLocaleString()}`;
 
 
 /* FINAL_PURPLE_ALERT_ADD_WELCOME_SAFE_START */
-(function () {
-    function fixWelcomeText() {
-        const wanted = "Welcome, Doctor, Farah Mehrez";
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        let node;
 
-        while ((node = walker.nextNode())) {
-            const raw = node.nodeValue || "";
-            const clean = raw.replace(/\s+/g, " ").trim();
+/* Hardcoded Farah welcome fixer removed */
 
-            if (/^Welcome,/i.test(clean) && clean.length < 80 && !clean.includes("Command Center")) {
-                node.nodeValue = raw.replace(clean, wanted);
-                return;
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", fixWelcomeText);
-    window.addEventListener("load", fixWelcomeText);
-    setTimeout(fixWelcomeText, 300);
-    setTimeout(fixWelcomeText, 1200);
-    setTimeout(fixWelcomeText, 3000);
-    setTimeout(fixWelcomeText, 6000);
-})();
 /* FINAL_PURPLE_ALERT_ADD_WELCOME_SAFE_END */
 
 
@@ -1956,6 +1411,9 @@ Generated: ${new Date().toLocaleString()}`;
     }
 
     function renderOldCurves() {
+        return; // DISABLED_SAFE_REFRESH_FIX_RENDER_OLD_CURVES
+
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
         const wraps = Array.from(document.querySelectorAll(".mediot_trends_exact .mtv6-svg-wrap"));
         if (wraps.length < 3) return;
 
@@ -1980,12 +1438,22 @@ Generated: ${new Date().toLocaleString()}`;
         }
     }
 
-    document.addEventListener("DOMContentLoaded", renderOldCurves);
-    window.addEventListener("load", renderOldCurves);
-    setTimeout(renderOldCurves, 300);
-    setTimeout(renderOldCurves, 1000);
-    setTimeout(renderOldCurves, 2000);
-    setInterval(watch, 400);
+    function startOldCurvesFastFinal() {
+        if (window.mediotDashboardOnlyNoLeakFinal && !window.mediotDashboardOnlyNoLeakFinal()) return;
+
+        // Run fast while the Trends HTML is being inserted, then stop.
+        [0, 20, 60, 120, 220, 400, 700].forEach(function (ms) {
+            setTimeout(function () {
+                renderOldCurves();
+                watch();
+            }, ms);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", startOldCurvesFastFinal);
+    window.addEventListener("load", startOldCurvesFastFinal);
+    startOldCurvesFastFinal();
+    // SAFE_OLD_CURVES_BOUNDED_FAST_FINAL
 })();
 /* RESTORE_OLD_CURVES_STRUCTURE_FINAL_END */
 
@@ -2006,59 +1474,7 @@ Generated: ${new Date().toLocaleString()}`;
 
 
 /* PATIENT_DIRECTORY_INITIALS_NO_PHOTOS_FINAL_START */
-(function () {
-    if (window.__MEDIOT_PATIENT_DIRECTORY_INITIALS_NO_PHOTOS_FINAL__) return;
-    window.__MEDIOT_PATIENT_DIRECTORY_INITIALS_NO_PHOTOS_FINAL__ = true;
-
-    function txt(el) {
-        return (el?.innerText || el?.textContent || "").replace(/\s+/g, " ").trim();
-    }
-
-    function initials(name) {
-        const parts = name.trim().split(/\s+/).filter(Boolean);
-        if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-        return (parts[0] || "P").slice(0, 2).toUpperCase();
-    }
-
-    function applyNoPhotos() {
-        const cards = Array.from(document.querySelectorAll(".mediot_patient_directory_exact .mpd-v4-card"));
-
-        cards.forEach(card => {
-            const nameEl = card.querySelector(".mpd-v4-name");
-            const name = txt(nameEl);
-            if (!name) return;
-
-            let avatar = card.querySelector(".mpd-initial-avatar-final");
-            const oldImg = card.querySelector("img.mpd-v4-avatar");
-
-            if (!avatar) {
-                avatar = document.createElement("div");
-                avatar.className = "mpd-initial-avatar-final";
-                avatar.textContent = initials(name);
-
-                if (oldImg && oldImg.parentElement) {
-                    oldImg.parentElement.insertBefore(avatar, oldImg);
-                } else {
-                    card.prepend(avatar);
-                }
-            }
-
-            avatar.textContent = initials(name);
-
-            if (oldImg) {
-                oldImg.removeAttribute("src");
-                oldImg.style.display = "none";
-            }
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", applyNoPhotos);
-    window.addEventListener("load", applyNoPhotos);
-    setTimeout(applyNoPhotos, 300);
-    setTimeout(applyNoPhotos, 1000);
-    setTimeout(applyNoPhotos, 2000);
-    setTimeout(applyNoPhotos, 4000);
-})();
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
 /* PATIENT_DIRECTORY_INITIALS_NO_PHOTOS_FINAL_END */
 
 
@@ -2112,3 +1528,50 @@ Generated: ${new Date().toLocaleString()}`;
     }, true);
 })();
 /* ADMIN_NAV_HIDE_SETTINGS_STRONG_FINAL_END */
+
+/* STOP_PATIENT_DIRECTORY_IN_PROFILE_SAFE_START */
+/* DISABLED_SAFE_RECOVERY: disabled to restore Odoo frontend */
+/* STOP_PATIENT_DIRECTORY_IN_PROFILE_SAFE_END */
+/* ===== FORCE TRENDS DIRECTLY UNDER WELCOME CARD ===== */
+(function () {
+    function txt(el) {
+        return (el && (el.innerText || el.textContent) || "").replace(/\s+/g, " ").trim();
+    }
+
+    function closestCard(el) {
+        let cur = el;
+        for (let i = 0; cur && i < 10; i++) {
+            const r = cur.getBoundingClientRect();
+            const s = txt(cur);
+            if (
+                r.width > 700 &&
+                r.height > 40 &&
+                (
+                    cur.id === "mediot_compact_header" ||
+                    cur.classList.contains("mediot_trends_exact") ||
+                    s.includes("Welcome, Doctor") ||
+                    s.includes("Patient Monitoring Trends")
+                )
+            ) {
+                return cur;
+            }
+            cur = cur.parentElement;
+        }
+        return el;
+    }
+
+    function fixTrendsGap() {
+        return; // DISABLED_SAFE_FINAL: prevents HierarchyRequestError insertBefore crash
+    }
+    // fixTrendsGap(); // DISABLED_SAFE_FINAL
+    // setTimeout(fixTrendsGap, 500); // DISABLED_SAFE_FINAL
+    // setTimeout(fixTrendsGap, 1200); // DISABLED_SAFE_FINAL
+    // setInterval(fixTrendsGap, 2000); // DISABLED_SAFE_FINAL
+})();
+
+/* Removed bad curve experiment */
+
+
+/* Removed bad curve experiment */
+
+
