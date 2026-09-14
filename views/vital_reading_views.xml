@@ -106,7 +106,7 @@
                         <!-- SpO2 -->
                         <div style="background:#fff;border:1px solid #dbeafe;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(37,99,235,0.08);">
                             <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
-                                <img src="/med_iot_command_center/static/description/sensor_spo2.png" style="width:56px;height:56px;object-fit:contain;"/>
+                                <img src="/MedicalIOT/static/description/sensor_spo2.png" style="width:56px;height:56px;object-fit:contain;"/>
                             </div>
                             <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">MAX30102 · SpO2</div>
                             <field name="spo2" nolabel="1" style="font-size:3rem;font-weight:800;color:#2563eb;background:transparent;border:none;text-align:center;width:100%;display:block;"/>
@@ -120,7 +120,7 @@
                         <!-- ECG -->
                         <div style="background:#fff;border:1px solid #fee2e2;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(239,68,68,0.08);">
                             <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#fee2e2,#fecaca);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
-                                <img src="/med_iot_command_center/static/description/sensor_ecg.png" style="width:56px;height:56px;object-fit:contain;"/>
+                                <img src="/MedicalIOT/static/description/sensor_ecg.png" style="width:56px;height:56px;object-fit:contain;"/>
                             </div>
                             <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">AD8232 · ECG</div>
                             <field name="ecg_bpm" nolabel="1" style="font-size:3rem;font-weight:800;color:#ef4444;background:transparent;border:none;text-align:center;width:100%;display:block;"/>
@@ -134,7 +134,7 @@
                         <!-- Temperature -->
                         <div style="background:#fff;border:1px solid #ffedd5;border-radius:16px;padding:28px 24px;text-align:center;box-shadow:0 4px 12px rgba(249,115,22,0.08);">
                             <div style="width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#ffedd5,#fed7aa);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;overflow:hidden;">
-                                <img src="/med_iot_command_center/static/description/sensor_temp.png" style="width:56px;height:56px;object-fit:contain;"/>
+                                <img src="/MedicalIOT/static/description/sensor_temp.png" style="width:56px;height:56px;object-fit:contain;"/>
                             </div>
                             <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;color:#94a3b8;margin-bottom:10px;letter-spacing:.08em;">DS18B20 · Temperature</div>
                             <field name="temp_c" nolabel="1" style="font-size:3rem;font-weight:800;color:#f97316;background:transparent;border:none;text-align:center;width:100%;display:block;"/>

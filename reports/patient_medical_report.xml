@@ -3,8 +3,8 @@
         <field name="name">Patient Medical Report</field>
         <field name="model">med.patient</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">med_iot_command_center.report_patient_medical_document</field>
-        <field name="report_file">med_iot_command_center.report_patient_medical_document</field>
+        <field name="report_name">MedicalIOT.report_patient_medical_document</field>
+        <field name="report_file">MedicalIOT.report_patient_medical_document</field>
         <field name="binding_model_id" ref="model_med_patient"/>
         <field name="binding_type">report</field>
     </record>

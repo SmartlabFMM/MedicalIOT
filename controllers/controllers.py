@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from urllib.parse import quote_plus
 from odoo import http
 from odoo.http import request
@@ -70,7 +70,7 @@ class MedIoTAuthController(http.Controller):
             "role_icon": role_icon,
             "role_class": role_class,
         }
-        return request.render('med_iot_command_center.med_login_page', values)
+        return request.render('MedicalIOT.med_login_page', values)
 
     @http.route(['/mediot/post_login'], type='http', auth='user', website=False, sitemap=False)
     def mediot_post_login(self, **kwargs):
@@ -87,17 +87,17 @@ class MedIoTAuthController(http.Controller):
             return request.redirect("/web")
 
         # Admin login -> Admin interface
-        if user.login == "admin" or user.has_group("med_iot_command_center.group_med_admin"):
+        if user.login == "admin" or user.has_group("MedicalIOT.group_med_admin"):
             return redirect_to(
-                "med_iot_command_center.action_med_admin_dashboard",
-                "med_iot_command_center.menu_med_admin_dashboard",
+                "MedicalIOT.action_med_admin_dashboard",
+                "MedicalIOT.menu_med_admin_dashboard",
             )
 
         # Doctor login -> Doctor interface
-        if user.login == "mhfarah242@gmail.com" or user.has_group("med_iot_command_center.group_med_senior_doctor"):
+        if user.login == "mhfarah242@gmail.com" or user.has_group("MedicalIOT.group_med_senior_doctor"):
             return redirect_to(
-                "med_iot_command_center.action_med_dashboard",
-                "med_iot_command_center.menu_med_dashboard",
+                "MedicalIOT.action_med_dashboard",
+                "MedicalIOT.menu_med_dashboard",
             )
 
         return request.redirect("/web")
@@ -110,7 +110,7 @@ class MedIoTAuthController(http.Controller):
             "form_data": kwargs,
             "website": getattr(request, "website", False),
         }
-        return request.render("med_iot_command_center.med_signup_page", values)
+        return request.render("MedicalIOT.med_signup_page", values)
 
     @http.route(['/mediot/signup/submit'], type='http', auth='public', website=True, methods=['POST'], csrf=True, sitemap=False)
     def mediot_signup_submit(self, **post):
@@ -121,27 +121,27 @@ class MedIoTAuthController(http.Controller):
         last_name = (post.get('last_name') or '').strip()
 
         if not email:
-            return request.render('med_iot_command_center.med_signup_page', {
+            return request.render('MedicalIOT.med_signup_page', {
                 "error": "Email is required.",
                 "form_data": post,
                 "website": getattr(request, "website", False),
             })
 
         if not password:
-            return request.render('med_iot_command_center.med_signup_page', {
+            return request.render('MedicalIOT.med_signup_page', {
                 "error": "Password is required.",
                 "form_data": post,
                 "website": getattr(request, "website", False),
             })
 
         if Users.search_count([('login', '=', email)]) > 0:
-            return request.render('med_iot_command_center.med_signup_page', {
+            return request.render('MedicalIOT.med_signup_page', {
                 "error": "An account with this email already exists.",
                 "form_data": post,
                 "website": getattr(request, "website", False),
             })
 
-        doctor_group = request.env.ref('med_iot_command_center.group_med_senior_doctor').sudo()
+        doctor_group = request.env.ref('MedicalIOT.group_med_senior_doctor').sudo()
         internal_user_group = request.env.ref('base.group_user').sudo()
 
         new_user = Users.create({
@@ -158,7 +158,7 @@ class MedIoTAuthController(http.Controller):
                 'city': post.get('city', ''),
             })
 
-        return request.render('med_iot_command_center.med_signup_page', {
+        return request.render('MedicalIOT.med_signup_page', {
             "success": "Your account has been created successfully. You can sign in now.",
             "form_data": {},
             "website": getattr(request, "website", False),
@@ -183,8 +183,8 @@ class MedIoTAuthController(http.Controller):
         full_name = user.name or "User"
         first_name = full_name.split()[0] if full_name else "User"
 
-        is_admin = user.has_group('med_iot_command_center.group_med_admin')
-        is_doctor = user.has_group('med_iot_command_center.group_med_senior_doctor')
+        is_admin = user.has_group('MedicalIOT.group_med_admin')
+        is_doctor = user.has_group('MedicalIOT.group_med_senior_doctor')
 
         if is_admin:
             greeting = f"Welcome back Admin {first_name}"

@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    MedIoT Auth Portal CSS
    Restored file so Odoo frontend assets can compile
    ========================================================= */
@@ -1293,7 +1293,7 @@ button.med_btn {
     content: "" !important;
     position: absolute !important;
     inset: 0 !important;
-    background: url("/med_iot_command_center/static/description/hero_new.jpg") center center / cover no-repeat !important;
+    background: url("/MedicalIOT/static/description/hero_new.jpg") center center / cover no-repeat !important;
     filter: blur(10px) !important;
     transform: scale(1.08) !important;
     z-index: 0 !important;
@@ -1885,7 +1885,7 @@ footer#bottom,
     inset: 0;
     background:
         linear-gradient(rgba(20,34,64,.72), rgba(20,34,64,.72)),
-        url('/med_iot_command_center/static/description/bg.jpg') center center / cover no-repeat;
+        url('/MedicalIOT/static/description/bg.jpg') center center / cover no-repeat;
     filter: blur(10px);
     transform: scale(1.06);
     z-index: 0;
@@ -2869,7 +2869,7 @@ footer#bottom,
     inset: 0 !important;
     background:
         linear-gradient(135deg, rgba(18, 42, 78, 0.70), rgba(15, 47, 84, 0.72)),
-        url("/med_iot_command_center/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
+        url("/MedicalIOT/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
     filter: blur(10px) saturate(110%) !important;
     transform: scale(1.08) !important;
     z-index: 0 !important;
@@ -2983,7 +2983,7 @@ footer#bottom,
     inset: 0 !important;
     background:
         linear-gradient(135deg, rgba(16, 42, 78, 0.50), rgba(12, 45, 82, 0.58)),
-        url("/med_iot_command_center/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
+        url("/MedicalIOT/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
     filter: blur(10px) saturate(110%) !important;
     transform: scale(1.08) !important;
     z-index: 0 !important;
@@ -3077,7 +3077,7 @@ footer#bottom,
     inset: 0 !important;
     background:
         linear-gradient(135deg, rgba(16, 42, 78, 0.50), rgba(12, 45, 82, 0.58)),
-        url("/med_iot_command_center/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
+        url("/MedicalIOT/static/description/hero_new.jpg?v=2") center center / cover no-repeat !important;
     filter: blur(10px) saturate(110%) !important;
     transform: scale(1.08) !important;
     z-index: 0 !important;
@@ -8220,7 +8220,7 @@ body {
     content: "" !important;
     position: absolute !important;
     inset: -30px !important;
-    background: url('/med_iot_command_center/static/src/img/role_bg.png') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/src/img/role_bg.png') center center / cover no-repeat !important;
     filter: blur(18px) brightness(0.95) !important;
     opacity: 0.38 !important;
     transform: scale(1.08) !important;
@@ -8248,12 +8248,12 @@ body {
 
 /* ===== FIX ROLE BACKGROUND IMAGE PATH ===== */
 .med_role_page::before {
-    background: url('/med_iot_command_center/static/description/role_bg.png') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/description/role_bg.png') center center / cover no-repeat !important;
 }
 
 /* ===== FINAL ROLE BACKGROUND USING EXISTING IMAGE ===== */
 .med_role_page::before {
-    background: url('/med_iot_command_center/static/description/hero_new.jpg') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/description/hero_new.jpg') center center / cover no-repeat !important;
     filter: blur(18px) brightness(0.88) !important;
     opacity: 0.32 !important;
     transform: scale(1.08) !important;
@@ -8362,7 +8362,7 @@ body {
     content: "" !important;
     position: fixed !important;
     inset: -40px !important;
-    background-image: url('/med_iot_command_center/static/src/img/role_bg.png?v=rolebg2') !important;
+    background-image: url('/MedicalIOT/static/src/img/role_bg.png?v=rolebg2') !important;
     background-size: cover !important;
     background-position: center center !important;
     background-repeat: no-repeat !important;
@@ -8430,7 +8430,7 @@ a.med_role_home[href="/home-mediot"]:hover {
 /* ===== FINAL ROLE PAGE - USE DESCRIPTION ROLE_BG + UPPER BOX ===== */
 
 .med_role_page::before {
-    background: url('/med_iot_command_center/static/description/role_bg.png?v=rolebgfinal') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/description/role_bg.png?v=rolebgfinal') center center / cover no-repeat !important;
     filter: blur(9px) brightness(0.82) saturate(120%) !important;
     opacity: 0.80 !important;
 }
@@ -8457,7 +8457,7 @@ a.med_role_home[href="/home-mediot"]:hover {
 
 /* ===== FINAL ROLE BG CONFIRMED PATH ===== */
 .med_role_page::before {
-    background: url('/med_iot_command_center/static/src/img/role_bg.png?v=confirmed1') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/src/img/role_bg.png?v=confirmed1') center center / cover no-repeat !important;
     filter: blur(9px) brightness(0.82) saturate(120%) !important;
     opacity: 0.82 !important;
 }
@@ -8498,7 +8498,7 @@ a.med_role_home[href="/home-mediot"]:hover {
     content: "" !important;
     position: fixed !important;
     inset: -20px !important;
-    background: url('/med_iot_command_center/static/description/cordinateur.jpg?v=rolefresh7') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/description/cordinateur.jpg?v=rolefresh7') center center / cover no-repeat !important;
     filter: blur(11px) brightness(0.72) saturate(110%) !important;
     opacity: 0.88 !important;
     transform: scale(1.05) !important;
@@ -8691,7 +8691,7 @@ a.med_role_home[href="/home-mediot"]:hover {
     content: "" !important;
     position: absolute !important;
     inset: 0 !important;
-    background: url('/med_iot_command_center/static/src/img/rolefinal.png?v=rolefinal1') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/src/img/rolefinal.png?v=rolefinal1') center center / cover no-repeat !important;
     filter: blur(16px) brightness(0.72) saturate(105%) !important;
     opacity: 0.60 !important;
     transform: scale(1.05) !important;
@@ -8707,7 +8707,7 @@ a.med_role_home[href="/home-mediot"]:hover {
     content: "" !important;
     position: fixed !important;
     inset: -32px !important;
-    background: url('/med_iot_command_center/static/description/hero_new.jpg?v=oldElegant1') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/description/hero_new.jpg?v=oldElegant1') center center / cover no-repeat !important;
     filter: blur(12px) brightness(0.78) saturate(105%) !important;
     opacity: 0.58 !important;
     transform: scale(1.07) !important;
@@ -8796,7 +8796,7 @@ a.med_role_home[href="/home-mediot"]:hover {
     content: "" !important;
     position: fixed !important;
     inset: -28px !important;
-    background: url('/med_iot_command_center/static/src/img/rolefinal.png?v=rolefinal_fixed2') center center / cover no-repeat !important;
+    background: url('/MedicalIOT/static/src/img/rolefinal.png?v=rolefinal_fixed2') center center / cover no-repeat !important;
     filter: blur(11px) brightness(0.74) saturate(112%) !important;
     opacity: 0.86 !important;
     transform: scale(1.06) !important;

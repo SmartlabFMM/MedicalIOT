@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
     function forceHeroVideo() {
         const hero = document.querySelector(".med_video_hero");
         if (!hero) return;
@@ -15,7 +15,7 @@
             video.preload = "auto";
 
             const source = document.createElement("source");
-            source.src = "/med_iot_command_center/static/description/hero.mp4?v=forcejs";
+            source.src = "/MedicalIOT/static/description/hero.mp4?v=forcejs";
             source.type = "video/mp4";
             video.appendChild(source);
 

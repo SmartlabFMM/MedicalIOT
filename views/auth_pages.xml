@@ -12,7 +12,7 @@
        loop="loop"
        playsinline="playsinline"
        preload="auto">
-    <source src="/med_iot_command_center/static/description/hero.mp4?v=clean1" type="video/mp4"/>
+    <source src="/MedicalIOT/static/description/hero.mp4?v=clean1" type="video/mp4"/>
 </video>
                 <div class="med_video_overlay"></div>
 
@@ -117,7 +117,7 @@
 
                     <div class="med_testimonial_grid">
                         <div class="med_testimonial_card">
-                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/cordinateur.jpg" alt="Rapid Alerts"/></div>
+                            <div class="med_avatar med_avatar_photo"><img src="/MedicalIOT/static/description/cordinateur.jpg" alt="Rapid Alerts"/></div>
                             <div class="med_badge">Fast alert response</div>
                             <p>
                                 "MedIoT helped us react to For hospital teams changes much faster. The centralized insights
@@ -129,7 +129,7 @@
                         </div>
 
                         <div class="med_testimonial_card">
-                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/michale.jpg" alt="Vital Monitoring"/></div>
+                            <div class="med_avatar med_avatar_photo"><img src="/MedicalIOT/static/description/michale.jpg" alt="Vital Monitoring"/></div>
                             <div class="med_badge">Clear vital tracking</div>
                             <p>
                                 The heart-shaped monitoring case keeps For hospital teams data organized and easier to follow during hospital care.
@@ -140,7 +140,7 @@
                         </div>
 
                         <div class="med_testimonial_card">
-                            <div class="med_avatar med_avatar_photo"><img src="/med_iot_command_center/static/description/pationua.jpg" alt="Connected Dashboard"/></div>
+                            <div class="med_avatar med_avatar_photo"><img src="/MedicalIOT/static/description/pationua.jpg" alt="Connected Dashboard"/></div>
                             <div class="med_badge">Connected care view</div>
                             <p>
                                 "The Connected Hospital Use gave us continuous visibility into For hospital teams trends and helped
@@ -241,8 +241,8 @@
 
             </div>
         </t>
-        <script type="text/javascript" src="/med_iot_command_center/static/src/js/landing_stats_counter.js"></script>
-        <script type="text/javascript" src="/med_iot_command_center/static/src/js/force_play_hero_video.js?v=play4"></script>
+        <script type="text/javascript" src="/MedicalIOT/static/src/js/landing_stats_counter.js"></script>
+        <script type="text/javascript" src="/MedicalIOT/static/src/js/force_play_hero_video.js?v=play4"></script>
 </template>
     </data>
 </odoo>

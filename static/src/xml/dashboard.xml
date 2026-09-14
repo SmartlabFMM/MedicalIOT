@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
-    <t t-name="med_iot_command_center.Dashboard">
+    <t t-name="MedicalIOT.Dashboard">
         <div class="med_dashboard med_exact_dashboard">
 
             <!-- HERO -->

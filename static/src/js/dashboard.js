@@ -1,4 +1,4 @@
-﻿/* PATIENT_DIRECTORY_PHOTO_FIX_ONLY_START */
+/* PATIENT_DIRECTORY_PHOTO_FIX_ONLY_START */
 (function () {
     function txt(el) {
         return ((el && (el.innerText || el.textContent)) || "").replace(/\s+/g, " ").trim();
@@ -109,7 +109,7 @@ function buildSmoothAreaPath(points, w, h, minV, maxV) {
 }
 
 class MedDashboard extends Component {
-    static template = "med_iot_command_center.Dashboard";
+    static template = "MedicalIOT.Dashboard";
 
     setup() {
         this.orm           = useService("orm");
@@ -310,12 +310,12 @@ class MedDashboard extends Component {
         }
     }
 
-    openDashboard() { this.actionService.doAction("med_iot_command_center.action_med_dashboard"); }
-    openPatients()  { this.actionService.doAction("med_iot_command_center.action_med_patient"); }
-    openAlerts()    { this.actionService.doAction("med_iot_command_center.action_med_alert"); }
-    openDevices()   { this.actionService.doAction("med_iot_command_center.action_med_devices"); }
-    openHistory()   { this.actionService.doAction("med_iot_command_center.action_med_readings"); }
-    openSettings()  { this.actionService.doAction("med_iot_command_center.action_med_settings"); }
+    openDashboard() { this.actionService.doAction("MedicalIOT.action_med_dashboard"); }
+    openPatients()  { this.actionService.doAction("MedicalIOT.action_med_patient"); }
+    openAlerts()    { this.actionService.doAction("MedicalIOT.action_med_alert"); }
+    openDevices()   { this.actionService.doAction("MedicalIOT.action_med_devices"); }
+    openHistory()   { this.actionService.doAction("MedicalIOT.action_med_readings"); }
+    openSettings()  { this.actionService.doAction("MedicalIOT.action_med_settings"); }
     openCriticalPatients() {
         this.actionService.doAction({ type: "ir.actions.act_window", res_model: "med.patient",
             views: [[false,"list"],[false,"form"]], domain: [["status","=","critical"]], name: "Critical Patients" });
@@ -339,7 +339,7 @@ class MedDashboard extends Component {
         if (patient && patient[0]) {
             const p = patient[0];
             const filename = `Patient_Report_${p.ref}_${new Date().toISOString().split('T')[0]}.pdf`;
-            const url = `/report/pdf/med_iot_command_center.report_patient_medical_document/${patientId}?download=true`;
+            const url = `/report/pdf/MedicalIOT.report_patient_medical_document/${patientId}?download=true`;
             const link = document.createElement('a');
             link.href = url;
             link.download = filename;
@@ -350,7 +350,7 @@ class MedDashboard extends Component {
     }
 }
 
-registry.category("actions").add("med_iot_command_center.dashboard", MedDashboard);
+registry.category("actions").add("MedicalIOT.dashboard", MedDashboard);
 
 
 /* ===== FINAL DASHBOARD PAGINATION - 4 PATIENTS PER PAGE ===== */

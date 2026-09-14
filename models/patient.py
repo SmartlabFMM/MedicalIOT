@@ -523,7 +523,7 @@ class MedPatient(models.Model):
         self.ensure_one()
 
         report = self.env.ref(
-            "med_iot_command_center.action_report_patient_medical",
+            "MedicalIOT.action_report_patient_medical",
             raise_if_not_found=False,
         )
 

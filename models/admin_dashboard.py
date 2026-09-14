@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from html import escape
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -42,9 +42,9 @@ class MedAdminDashboard(models.Model):
         Users = self.env["res.users"].sudo()
 
         staff_group_xmlids = [
-            "med_iot_command_center.group_med_admin",
-            "med_iot_command_center.group_med_senior_doctor",
-            "med_iot_command_center.group_med_junior_staff",
+            "MedicalIOT.group_med_admin",
+            "MedicalIOT.group_med_senior_doctor",
+            "MedicalIOT.group_med_junior_staff",
         ]
 
         doctors = Users.browse()
@@ -80,7 +80,7 @@ class MedAdminDashboard(models.Model):
 
     def action_open_doctors(self):
         list_view = self.env.ref(
-            "med_iot_command_center.view_med_admin_users_list_clean",
+            "MedicalIOT.view_med_admin_users_list_clean",
             raise_if_not_found=False,
         )
         form_view = self.env.ref("base.view_users_form", raise_if_not_found=False)
@@ -108,7 +108,7 @@ class MedAdminDashboard(models.Model):
 
     def action_add_doctor(self):
         form_view = self.env.ref("base.view_users_form", raise_if_not_found=False)
-        doctor_group = self.env.ref("med_iot_command_center.group_med_senior_doctor", raise_if_not_found=False)
+        doctor_group = self.env.ref("MedicalIOT.group_med_senior_doctor", raise_if_not_found=False)
 
         ctx = {"create": True}
         if doctor_group:
@@ -125,13 +125,13 @@ class MedAdminDashboard(models.Model):
         }
 
     def action_open_patients(self):
-        return self.env.ref("med_iot_command_center.action_med_patient").read()[0]
+        return self.env.ref("MedicalIOT.action_med_patient").read()[0]
 
     def action_open_alerts(self):
-        return self.env.ref("med_iot_command_center.action_med_alert").read()[0]
+        return self.env.ref("MedicalIOT.action_med_alert").read()[0]
 
     def action_open_devices(self):
-        return self.env.ref("med_iot_command_center.action_med_settings").read()[0]
+        return self.env.ref("MedicalIOT.action_med_settings").read()[0]
 
 class ResUsers(models.Model):
     _inherit = "res.users"
@@ -148,9 +148,9 @@ class ResUsers(models.Model):
 
     @api.depends("group_ids", "name", "login", "email")
     def _compute_mediot_role_label(self):
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
-        senior_group = self.env.ref("med_iot_command_center.group_med_senior_doctor", raise_if_not_found=False)
-        junior_group = self.env.ref("med_iot_command_center.group_med_junior_staff", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
+        senior_group = self.env.ref("MedicalIOT.group_med_senior_doctor", raise_if_not_found=False)
+        junior_group = self.env.ref("MedicalIOT.group_med_junior_staff", raise_if_not_found=False)
 
         for user in self:
             if admin_group and admin_group in user.group_ids:
@@ -172,7 +172,7 @@ class ResUsersMedIoTActions(models.Model):
 
     def action_mediot_open_user(self):
         self.ensure_one()
-        form_view = self.env.ref("med_iot_command_center.view_med_user_role_modal_form", raise_if_not_found=False)
+        form_view = self.env.ref("MedicalIOT.view_med_user_role_modal_form", raise_if_not_found=False)
         return {
             "type": "ir.actions.act_window",
             "name": "Manage User",
@@ -181,7 +181,7 @@ class ResUsersMedIoTActions(models.Model):
             "view_mode": "form",
             "views": [(form_view.id, "form")] if form_view else [(False, "form")],
             "target": "new",
-            "context": {"form_view_ref": "med_iot_command_center.view_med_user_role_modal_form"},
+            "context": {"form_view_ref": "MedicalIOT.view_med_user_role_modal_form"},
         }
 
     def action_mediot_delete_user(self):
@@ -251,9 +251,9 @@ class MedAdminDashboardQuickAdd(models.Model):
 
         base_group = self.env.ref("base.group_user", raise_if_not_found=False)
         role_group = self.env.ref(
-            "med_iot_command_center.group_med_senior_doctor"
+            "MedicalIOT.group_med_senior_doctor"
             if role == "senior"
-            else "med_iot_command_center.group_med_junior_staff",
+            else "MedicalIOT.group_med_junior_staff",
             raise_if_not_found=False,
         )
 
@@ -284,7 +284,7 @@ class MedAdminDashboardAddDoctorPopup(models.Model):
     _inherit = "med.admin.dashboard"
 
     def action_open_add_doctor_popup(self):
-        view = self.env.ref("med_iot_command_center.view_med_admin_quick_doctor_wizard_form")
+        view = self.env.ref("MedicalIOT.view_med_admin_quick_doctor_wizard_form")
         return {
             "type": "ir.actions.act_window",
             "name": "Add Doctor",
@@ -330,9 +330,9 @@ class MedAdminQuickDoctorWizard(models.TransientModel):
 
         base_group = self.env.ref("base.group_user", raise_if_not_found=False)
         role_group = self.env.ref(
-            "med_iot_command_center.group_med_senior_doctor"
+            "MedicalIOT.group_med_senior_doctor"
             if self.role == "senior"
-            else "med_iot_command_center.group_med_junior_staff",
+            else "MedicalIOT.group_med_junior_staff",
             raise_if_not_found=False,
         )
 
@@ -366,7 +366,7 @@ class MedAdminDashboardOpenUserRolesPage(models.Model):
     _inherit = "med.admin.dashboard"
 
     def action_open_doctors(self):
-        return self.env.ref("med_iot_command_center.action_med_user_role_management").read()[0]
+        return self.env.ref("MedicalIOT.action_med_user_role_management").read()[0]
 
 
 class ResUsersMedIoTRoleManagementPage(models.Model):
@@ -394,9 +394,9 @@ class ResUsersMedIoTRoleManagementPage(models.Model):
 
     @api.depends("group_ids")
     def _compute_mediot_role_badge(self):
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
-        senior_group = self.env.ref("med_iot_command_center.group_med_senior_doctor", raise_if_not_found=False)
-        junior_group = self.env.ref("med_iot_command_center.group_med_junior_staff", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
+        senior_group = self.env.ref("MedicalIOT.group_med_senior_doctor", raise_if_not_found=False)
+        junior_group = self.env.ref("MedicalIOT.group_med_junior_staff", raise_if_not_found=False)
 
         for user in self:
             if admin_group and admin_group in user.group_ids:
@@ -433,9 +433,9 @@ class ResUsersMedIoTRoleManagementPage(models.Model):
                 )
 
     def _mediot_set_role(self, role):
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
-        senior_group = self.env.ref("med_iot_command_center.group_med_senior_doctor", raise_if_not_found=False)
-        junior_group = self.env.ref("med_iot_command_center.group_med_junior_staff", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
+        senior_group = self.env.ref("MedicalIOT.group_med_senior_doctor", raise_if_not_found=False)
+        junior_group = self.env.ref("MedicalIOT.group_med_junior_staff", raise_if_not_found=False)
         base_group = self.env.ref("base.group_user", raise_if_not_found=False)
 
         role_map = {
@@ -476,7 +476,7 @@ class ResUsersMedIoTRoleManagementPage(models.Model):
 
     def action_mediot_open_user(self):
         self.ensure_one()
-        form_view = self.env.ref("med_iot_command_center.view_med_user_role_modal_form", raise_if_not_found=False)
+        form_view = self.env.ref("MedicalIOT.view_med_user_role_modal_form", raise_if_not_found=False)
         return {
             "type": "ir.actions.act_window",
             "name": "Manage User",
@@ -485,7 +485,7 @@ class ResUsersMedIoTRoleManagementPage(models.Model):
             "view_mode": "form",
             "views": [(form_view.id, "form")] if form_view else [(False, "form")],
             "target": "new",
-            "context": {"form_view_ref": "med_iot_command_center.view_med_user_role_modal_form"},
+            "context": {"form_view_ref": "MedicalIOT.view_med_user_role_modal_form"},
         }
 
     def action_mediot_archive_user(self):
@@ -547,7 +547,7 @@ class ResUsersMedIoTAssignPatientColumn(models.Model):
 
     def action_mediot_open_assigned_patients(self):
         self.ensure_one()
-        action = self.env.ref("med_iot_command_center.action_med_patient").sudo().read()[0]
+        action = self.env.ref("MedicalIOT.action_med_patient").sudo().read()[0]
         action.update({
             "name": "Assign Patients - %s" % (self.name or self.login),
             "domain": ["|", ("assigned_doctor_id", "=", self.id), ("assigned_doctor_id", "=", False)],
@@ -604,7 +604,7 @@ class MedAssignPatientWizard(models.TransientModel):
 
     def _reopen_popup(self):
         self.ensure_one()
-        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        view = self.env.ref("MedicalIOT.view_med_assign_patient_wizard_form", raise_if_not_found=False)
         return {
             "type": "ir.actions.act_window",
             "name": "Manage Patients",
@@ -645,7 +645,7 @@ class ResUsersMedIoTAssignPatientPopupAction(models.Model):
         wizard = self.env["med.assign.patient.wizard"].create({
             "doctor_id": self.id,
         })
-        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        view = self.env.ref("MedicalIOT.view_med_assign_patient_wizard_form", raise_if_not_found=False)
         return {
             "type": "ir.actions.act_window",
             "name": "Manage Patients",
@@ -681,7 +681,7 @@ class ResUsersMedIoTAssignPatientFinalDetails(models.Model):
     @api.depends("group_ids")
     def _compute_med_assign_patient_final_details(self):
         Patient = self.env["med.patient"].sudo()
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
         max_count = 5
 
         grouped = Patient.read_group(
@@ -706,7 +706,7 @@ class ResUsersMedIoTAssignPatientFinalDetails(models.Model):
     def action_mediot_open_assigned_patients(self):
         self.ensure_one()
 
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
         if admin_group and admin_group in self.group_ids:
             return {
                 "type": "ir.actions.client",
@@ -722,7 +722,7 @@ class ResUsersMedIoTAssignPatientFinalDetails(models.Model):
         wizard = self.env["med.assign.patient.wizard"].sudo().create({
             "doctor_id": self.id,
         })
-        view = self.env.ref("med_iot_command_center.view_med_assign_patient_wizard_form", raise_if_not_found=False)
+        view = self.env.ref("MedicalIOT.view_med_assign_patient_wizard_form", raise_if_not_found=False)
         return {
             "type": "ir.actions.act_window",
             "name": "Manage Patients",
@@ -789,7 +789,7 @@ class ResUsersMedIoTAdminDashboardExact(models.Model):
 
     @api.depends("active", "group_ids")
     def _compute_mediot_admin_status_badge(self):
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
         for user in self:
             if admin_group and admin_group in user.group_ids:
                 user.mediot_admin_status_badge = "Active"
@@ -807,7 +807,7 @@ class ResUsersMedIoTOneDoctorAwaitingApproval(models.Model):
 
     @api.depends("active", "group_ids", "name", "login", "email")
     def _compute_mediot_admin_status_badge(self):
-        admin_group = self.env.ref("med_iot_command_center.group_med_admin", raise_if_not_found=False)
+        admin_group = self.env.ref("MedicalIOT.group_med_admin", raise_if_not_found=False)
 
         for user in self:
             identity = "%s %s %s" % (user.name or "", user.login or "", user.email or "")
